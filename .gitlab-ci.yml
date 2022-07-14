@@ -1,0 +1,143 @@
+stages:
+  - build
+  - test
+  - deploy_results
+  - clean
+# https://gitlab.com/bahmutov/gitlab-pages-example/-/blob/main/.gitlab-ci.yml
+# https://gitlab.com/cypress-io/cypress-example-docker-gitlab
+# https://blog.nimbleways.com/let-s-make-faster-gitlab-ci-cd-pipelines/
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
+# see the Node caching advice for GitLab CI
+# https://docs.gitlab.com/ee/ci/caching/#cache-nodejs-dependencies
+# see Cypress caching documentation at
+# https://on.cypress.io/caching
+# https://docs.cypress.io/guides/continuous-integration/introduction#Caching
+
+# https://docs.cypress.io/guides/continuous-integration/gitlab-ci#Worker-Jobs
+variables:
+  CI_ID: $CI_PIPELINE_ID
+  CI_JOB: $CI_JOB_ID
+  CI_P_DIR: $CI_PROJECT_DIR
+  CYPRESS_RECORD_KEY: ${K8S_SECRET_CYPRESS_RECORD_KEY}
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  CYPRESS_VERIFY_TIMEOUT: '500000'
+  QT_X11_NO_MITSHM: 1
+  _X11_NO_MITSHM: 1
+  _MITSHM: 0
+  CI: 1
+  # artifacts compressions
+  FF_USE_FASTZIP: "true"
+  ARTIFACT_COMPRESSION_LEVEL: "fast"
+  CACHE_COMPRESSION_LEVEL: "fast"
+
+cache:
+  key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+  untracked: true
+  paths:
+    - ~/.npm
+    - .cache/*
+    - cache/Cypress
+    - .npm
+    - cypress
+
+services:
+  - docker:dind
+  - cypress/browsers:node17.8.0-chrome99-ff97-slim
+  - node:17
+
+Install Data:
+  stage: build
+  #  tags:
+  #    - qa
+  image: node:17
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - rkstudio/fixtures/
+    policy: pull-push
+  script:
+    - rm -rf rkstudio/fixtures/run
+    - rm -rf rkstudio/fixtures/add_metrics.json
+    - ls rkstudio/fixtures
+    - npm ci
+    - cd rkstudio/fixtures/scripts/
+    - node -r esm add/add_metrics.data.bulder.js
+    - cd $CI_P_DIR
+    - ls
+  artifacts:
+    paths:
+      - '$CI_PROJECT_DIR/rkstudio/fixtures'
+    expire_in: 1 day
+  only:
+    - schedules
+
+Run Stage tests:
+  stage: test
+  tags:
+    - qa
+  image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+  needs:
+    - Install Data
+  parallel: 3
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - rkstudio/fixtures/
+    policy: pull-push
+  script:
+    - rm -rf rkstudio/fixtures/run
+    - ls rkstudio/fixtures
+    - npm ci
+    - npm run cy:verify
+    - npm run cy:ci_parallel || true
+  artifacts:
+    paths:
+      - '$CI_PROJECT_DIR/rkstudio/fixtures'
+    expire_in: 1 day
+  only:
+    - schedules
+
+Deploy results to TR:
+  stage: deploy_results
+  #  tags:
+  #    - qa
+  image: node:17
+  needs:
+    - Install Data
+    - Run Stage tests
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - rkstudio/fixtures/
+    policy: pull
+  script:
+    - ls rkstudio/fixtures/run
+    - npm ci
+    - cd rkstudio/fixtures/scripts/
+    - node -r esm tr_deploy/tr.deploy.js
+  only:
+    - schedules
+
+Clean Stage:
+  stage: clean
+  #  tags:
+  #    - qa
+  image: node:17
+  needs:
+    - Install Data
+    - Run Stage tests
+  cache:
+    key: $CI_COMMIT_REF_SLUG-$CI_PROJECT_DIR
+    paths:
+      - rkstudio/fixtures/
+    policy: pull
+  script:
+    - npm ci
+    - cd rkstudio/fixtures/scripts/
+    - node -r esm clear/clearing.env.json.js
+  only:
+    - schedules
+
+
