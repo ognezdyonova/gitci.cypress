@@ -9,15 +9,42 @@
 * Schedules, Add/Invite Participants, Participants, Activity)."
 * */
 
+import PO_Home from "../../pages/PO_Home";
+import PO_Surveys from "../../pages/PO_Surveys";
+
 describe("General site navigation", () => {
 
     before(() => {
-        cy.visit(Cypress.env("WEB_BASE_URL"));
-        cy.login()
+        cy.login();
     });
 
     it("Log In Form General Display", () => {
 
+        let home_page = new PO_Home();
+        home_page.header
+            .surveys_link()
+            .should("be.visible")
+            .click({force: true});
+
+        let surveys_list = new PO_Surveys();
+        surveys_list.search_survey_input_by_name()
+            .should("be.visible")
+            .type('Android Walk' + '{enter}');
+
+        surveys_list.survey_items()
+            .should("be.visible")
+            .and("contain.text",'Android Walk');
+
+        surveys_list.survey_copy_button()
+            .should("be.visible");
+
+        surveys_list.survey_remove_button()
+            .should("be.visible");
+
+        surveys_list.survey_associated_tags_button()
+            .should("be.visible")
+            .and("contain.text",'Core Project')
+            .and("contain.text",'Custom Field2');
     });
 
 

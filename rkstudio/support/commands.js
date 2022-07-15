@@ -28,14 +28,18 @@ import {env} from "./utils";
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+/**
+ * Authorization
+ * @param l user login
+ * @param p user password
+ */
 Cypress.Commands.add('login', (l, p) => {
     cy.visit(env("WEB_BASE_URL"));
+    cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
+
     const login = new CR_Main();
 
-    if (l == null && p == null)
-        login.goToSignIn(auth.user_login, auth.user_pass);
-    else
-        login.goToSignIn(l, p);
+    if (l == null && p == null) login.goToSignIn(auth.user_login, auth.user_pass); else login.goToSignIn(l, p);
 
     cy.wait(1000).get("body").then($body => {
         if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
@@ -46,4 +50,5 @@ Cypress.Commands.add('login', (l, p) => {
         }
     });
 });
+
 
