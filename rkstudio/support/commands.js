@@ -1,4 +1,4 @@
-import CR_Main from "../pages/main_page/CR_Main";
+import CR_Main from "../pages/PO_Main";
 import * as auth from "../constants/AuthData"
 import {env} from "./utils";
 
