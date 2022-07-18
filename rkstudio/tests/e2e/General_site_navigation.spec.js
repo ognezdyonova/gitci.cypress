@@ -43,8 +43,7 @@ describe("General site navigation", () => {
 
         surveys_list.survey_associated_tags_button()
             .should("be.visible")
-            .and("contain.text",'Core Project')
-            .and("contain.text",'Custom Field2');
+            .and("contain.text",'Core Project');
     });
 
 
