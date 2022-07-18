@@ -33,7 +33,7 @@ describe("General site navigation", () => {
 
         surveys_list.survey_items()
             .should("be.visible")
-            .and("contain.text",'Android Walk');
+            .and("contain.text", 'Android Walk');
 
         surveys_list.survey_copy_button()
             .should("be.visible");
@@ -43,7 +43,8 @@ describe("General site navigation", () => {
 
         surveys_list.survey_associated_tags_button()
             .should("be.visible")
-            .and("contain.text",'Core Project');
+            .and("contain.text", 'Core Project')
+            .and("contain.text", 'Custom Field2');
     });
 
 

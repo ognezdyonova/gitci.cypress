@@ -1,5 +1,4 @@
 import EnvVarLoader from "../constants/variables/EnvVarLoader";
-import dotenv from "dotenv";
 
 export const apiRequestHeaders = accessToken => {
     return {

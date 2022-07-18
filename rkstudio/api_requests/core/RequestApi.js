@@ -50,7 +50,7 @@ class RequestApi {
     _call(method, url, queryVariables, token, body) {
         console.log('\n\n Request:================================>');
         let xmlHttp = new XMLHttpRequest();
-        if(typeof  queryVariables === 'string' || queryVariables instanceof String){
+        if (typeof queryVariables === 'string' || queryVariables instanceof String) {
             url += '?' + queryVariables;
         } else if (queryVariables != null) {
             url += '?' + qs.stringify(queryVariables);
@@ -67,8 +67,8 @@ class RequestApi {
         }
         let URl = new URL(url);
 
-        xmlHttp.setRequestHeader('Cache-Control','no-cache');
-        xmlHttp.setRequestHeader('Host',  URl.host);
+        xmlHttp.setRequestHeader('Cache-Control', 'no-cache');
+        xmlHttp.setRequestHeader('Host', URl.host);
         xmlHttp.setRequestHeader('Content-Type', 'application/json');
         xmlHttp.setRequestHeader('Accept', 'application/json');
 

@@ -4,9 +4,9 @@ var HEADERS_TO_STRIP_LOWERCASE = [
 ];
 
 chrome.webRequest.onHeadersReceived.addListener(
-    function(details) {
+    function (details) {
         return {
-            responseHeaders: details.responseHeaders.filter(function(header) {
+            responseHeaders: details.responseHeaders.filter(function (header) {
                 return HEADERS_TO_STRIP_LOWERCASE.indexOf(header.name.toLowerCase()) < 0;
             })
         };
