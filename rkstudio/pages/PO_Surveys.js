@@ -130,14 +130,14 @@ class PO_Surveys {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     shared_surveys_search_input() {
-        return cy.get('.shared-surveys .search .input');
+        return cy.get('[ng-model="searchString"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     shared_survey_categories_search_results() {
-        return cy.get('.shared-surveys .search-results .shared-survey-category');
+        return cy.get('.shared-surveys .search-results .shared-survey-category .category-header');
     }
 
     /**

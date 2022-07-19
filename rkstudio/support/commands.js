@@ -49,6 +49,7 @@ Cypress.Commands.add('login', (l, p) => {
                 .click({force: true})
         }
     });
+
 });
 
 

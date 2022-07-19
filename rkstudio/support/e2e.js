@@ -25,7 +25,8 @@ Cypress.moment = dayjs
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-beforeEach(() => {
+before(() => {
+    cy.log("From e22e")
     cy.setCookie(env('ADMIN_SESSION_NAME'),
         env('ADMIN_SESSION_VALUE'));
 })

@@ -46,7 +46,7 @@ module.exports = defineConfig({
             cy: true
         },
         defaultCommandTimeout: 60000,
-        pageLoadTimeout: 50000,
+        pageLoadTimeout: 60000,
         waitForAnimations: true,
         projectId: "j7j39s",
         video: true,
@@ -105,14 +105,13 @@ module.exports = defineConfig({
 
                     return launchOptions;
                 }
-
-                Cypress.lifecycle({
-                    clearApp: true,
-                    clearInternals: true, // leave this on
-                    clearCookies: true, // nope
-                    clearLocalStorage: true,  // nope
-                    clearSessionStorage: true, // nope
-                })
+                // Cypress.lifecycle({
+                //     clearApp: true,
+                //     clearInternals: true, // leave this on
+                //     clearCookies: true, // nope
+                //     clearLocalStorage: true,  // nope
+                //     clearSessionStorage: true, // nope
+                // })
                 return config;
             });
 
