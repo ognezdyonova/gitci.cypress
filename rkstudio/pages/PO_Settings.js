@@ -9,14 +9,35 @@ class PO_Settings {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     title() {
-        return cy.get('.settings > h2');
+        return cy.get('h2');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    section_items() {
-        return cy.get('.section-select a');
+    settings_tab() {
+        return cy.get('[ng-class="{selected:vm.selectedSection == \'settings\'}"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    user_access_tab() {
+        return cy.get('[ng-class="{selected:vm.selectedSection == \'userAccess\'}"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    teams_tab() {
+        return cy.get('[ng-class="{selected:vm.selectedSection == \'teams\'}"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    service_accounts_tab() {
+        return cy.get('[ng-class="{selected:vm.selectedSection == \'serviceAccounts\'}"]');
     }
 
     /**
@@ -99,14 +120,14 @@ class PO_Settings {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    terms_items() {
+    teams_items() {
         return cy.get('[ng-show="vm.selectedSection == \'teams\'"] tbody tr');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    save_terms_button() {
+    save_teams_button() {
         return cy.get('[ng-show="vm.selectedSection == \'teams\'"] [ng-click="vm.startTeamAdd()"]');
     }
 
