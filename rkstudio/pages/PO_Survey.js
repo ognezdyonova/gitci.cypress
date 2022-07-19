@@ -121,21 +121,21 @@ class PO_Survey {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     editor_properties_tab_button() {
-        return cy.get('[ng-show="selectedTab == \'properties\'"]');
+        return cy.get('[ng-click="selectedTab = \'properties\'"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     editor_navigation_tab_button() {
-        return cy.get('[ng-show="selectedTab == \'navigation\' && !selectedLocale"]');
+        return cy.get('[ng-click="selectedTab = \'navigation\'"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     editor_validation_tab_button() {
-        return cy.get('[ng-show="selectedTab == \'validation\'"]');
+        return cy.get('[ng-click="selectedTab = \'validation\'"]');
     }
 
     /**
@@ -149,7 +149,7 @@ class PO_Survey {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     editor_look_and_feel_tab() {
-        return cy.get('[ng-show="selectedTab == \'look-and-feel\'"]');
+        return cy.get('[ng-click="selectedTab = \'look-and-feel\'"]');
     }
 
     /**
@@ -240,7 +240,7 @@ class PO_Survey {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     share_title() {
-        return cy.get('[ng-show="selectedEditorSection == \'share\'"] .section-header-title');
+        return cy.get('[ng-show="!selectedSurvey.IsShared"] > .section-header-title');
     }
 
     /**

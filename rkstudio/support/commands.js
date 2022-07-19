@@ -34,13 +34,16 @@ import {env} from "./utils";
  * @param p user password
  */
 Cypress.Commands.add('login', (l, p) => {
+    cy.session('login', ()=>{
+        cy.visit(env("WEB_BASE_URL"));
+        cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
+
+        const login = new CR_Main();
+
+        if (l == null && p == null) login.goToSignIn(auth.user_login, auth.user_pass); else login.goToSignIn(l, p);
+    })
+
     cy.visit(env("WEB_BASE_URL"));
-    cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
-
-    const login = new CR_Main();
-
-    if (l == null && p == null) login.goToSignIn(auth.user_login, auth.user_pass); else login.goToSignIn(l, p);
-
     cy.wait(1000).get("body").then($body => {
         if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
             cy.get('a')
@@ -49,7 +52,6 @@ Cypress.Commands.add('login', (l, p) => {
                 .click({force: true})
         }
     });
-
 });
 
 

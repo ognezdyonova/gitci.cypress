@@ -12,16 +12,12 @@
 import PO_Home from "../../../pages/PO_Home";
 import PO_Surveys from "../../../pages/PO_Surveys";
 import PO_Survey from "../../../pages/PO_Survey";
-import {env} from "../../../support/utils";
 
 describe("General site navigation", () => {
 
-
-context('some fix', ()=>{
-    before(() => {
+    beforeEach(() => {
         cy.login();
     });
-
 
     it("Check navigation to Surveys page", () => {
         let home = new PO_Home();
@@ -111,6 +107,11 @@ context('some fix', ()=>{
     });
 
     it("Check navigation to Survey page", () => {
+        let home = new PO_Home();
+        home.header.surveys_link()
+            .should("be.visible")
+            .click({force: true});
+
         let surveys = new PO_Surveys();
         surveys.header.organization_switcher_link()
             .should("be.visible");
@@ -166,15 +167,6 @@ context('some fix', ()=>{
         survey.force_publish_current_version_button()
             .should("be.visible");
 
-        survey.save_new_version_button()
-            .should("be.visible");
-
-        survey.save_and_publish_new_version_button()
-            .should("be.visible");
-
-        survey.revert_changes_button()
-            .should("be.visible");
-
         survey.save_to_pdf_button()
             .should("be.visible");
 
@@ -194,10 +186,12 @@ context('some fix', ()=>{
             .should("be.visible");
 
         survey.editor_navigation_tab_button()
-            .should("be.visible");
+            .should("be.visible")
+            .click({force: true});
 
         survey.editor_validation_tab_button()
-            .should("be.visible");
+            .should("be.visible")
+            .click({force: true});
 
         survey.editor_overview_tab()
             .should("be.visible");
@@ -208,8 +202,17 @@ context('some fix', ()=>{
         survey.editor_template_viewer()
             .should("be.visible");
 
+        survey.survey_settings_tab()
+            .should("be.visible")
+            .click({force: true});
+
         survey.settings_fields_notes_label()
-            .should("be.visible");
+            .should("be.visible")
+            .and("contain.text", 'For internal use within MyDataHelps Designer (not displayed to participants)')
+            .and("contain.text", 'Used when the survey is displayed to participants')
+            .and("contain.text", 'A brief description or preview of the survey, e.g. "2 minutes", "Questions about Alcohol"')
+            .and("contain.text", 'Allows previously submitted results for this survey to be deleted')
+            .and("contain.text", 'Allows tasks associated with the survey to be completed with a web link without participant login');
 
         survey.settings_name_survey_input()
             .should("be.visible");
@@ -226,12 +229,6 @@ context('some fix', ()=>{
         survey.settings_description_text_survey_input()
             .should("be.visible");
 
-        survey.settings_category_survey_select()
-            .should("be.visible");
-
-        survey.settings_selected_category_survey_input()
-            .should("be.visible");
-
         survey.settings_results_can_be_deleted_checkbox()
             .should("be.visible");
 
@@ -241,8 +238,13 @@ context('some fix', ()=>{
         survey.settings_save_survey_properties_button()
             .should("be.visible");
 
+        survey.survey_share_tab()
+            .should("be.visible")
+            .click({force: true});
+
         survey.share_title()
-            .should("be.visible");
+            .should("be.visible")
+            .and("contain.text", 'Sharing is not enabled for this survey');
 
         survey.share_description()
             .should("be.visible");
@@ -250,8 +252,6 @@ context('some fix', ()=>{
         survey.share_enable_button()
             .should("be.visible");
     });
-})
-
 });
 
 
