@@ -11,11 +11,7 @@
 
 import PO_Home from "../../../pages/PO_Home";
 
-describe("General site navigation", () => {
-
-    before(() => {
-        cy.login();
-    });
+describe("General site navigation", () => {;
 
     it("Check navigation to Home page", () => {
 

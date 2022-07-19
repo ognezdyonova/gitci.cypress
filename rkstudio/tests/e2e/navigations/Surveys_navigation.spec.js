@@ -15,10 +15,6 @@ import PO_Survey from "../../../pages/PO_Survey";
 
 describe("General site navigation", () => {
 
-    beforeEach(() => {
-        cy.login();
-    });
-
     it("Check navigation to Surveys page", () => {
         let home = new PO_Home();
         home.header.surveys_link()
