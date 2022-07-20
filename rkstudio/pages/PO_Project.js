@@ -28,49 +28,49 @@ class PO_Project {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     settings_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'settings\'}"]')
+        return cy.get('.editor-tabs a').contains('Settings')
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     sensor_data_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'sensordata\'}"]')
+        return cy.get('.editor-tabs a').contains('Sensor & EHR Data');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     app_layout_tab() {
-        return cy.get('ng-class="{selected:selectedEditorSection == \'applayout\'}"]')
+        return cy.get('.editor-tabs a').contains('App Layout ');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     schedules_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'schedules\'}"]')
+        return cy.get('.editor-tabs a').contains('Schedules');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     invitations_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'invitations\'}"]')
+        return cy.get('.editor-tabs a').contains('Add / Invite Participants');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     participants_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'participants\'}"]')
+        return cy.get('.editor-tabs > [ng-show="projectPermissions.indexOf(\'StudyParticipants\') != -1"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     activity_tab() {
-        return cy.get('[ng-class="{selected:selectedEditorSection == \'projectactivity\'}"]')
+        return cy.get('.editor-tabs a').contains('Activity');
     }
 }
 

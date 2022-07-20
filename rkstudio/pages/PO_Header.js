@@ -31,28 +31,28 @@ class PO_Header {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     projects_link() {
-        return cy.get('[title="Projects"]');
+        return cy.get('.projects-nav-item [title="Projects"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     surveys_link() {
-        return cy.get('[title="Surveys"]');
+        return cy.get('.projects-nav-item [title="Surveys"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     notifications_link() {
-        return cy.get('[title="Notifications"]');
+        return cy.get('.projects-nav-item [title="Notifications"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     settings_link() {
-        return cy.get('[title="Settings"]');
+        return cy.get('.projects-nav-item [title="Settings"]');
     }
 
     /**
