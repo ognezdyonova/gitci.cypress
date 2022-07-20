@@ -256,6 +256,14 @@ class PO_Survey {
     share_enable_button() {
         return cy.get('[ng-show="selectedEditorSection == \'share\'"] .confirm-button');
     }
+
+    add_survey_step() {
+        return cy.get('[ng-click="addStep()"]');
+    }
+
+    add_consent() {
+        return cy.get('[ng-click="addDefaultConsent()"]');
+    }
 }
 
 export default PO_Survey;
