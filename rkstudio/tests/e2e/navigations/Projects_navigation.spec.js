@@ -14,7 +14,7 @@ import PO_Projects from "../../../pages/PO_Projects";
 import PO_Project from "../../../pages/PO_Project";
 
 describe("General site navigation", () => {
-    it("Check navigation to Projects page", () => {
+    it ("Check navigation to Projects page", () => {
         let home = new PO_Home();
         home.header.projects_link()
             .should("be.visible")
@@ -61,7 +61,7 @@ describe("General site navigation", () => {
             .should("be.visible");
     });
 
-    it("Check navigation to Project page", () => {
+    it ("Check navigation to Project page", () => {
         let home = new PO_Home();
         home.header.projects_link()
             .should("be.visible")
