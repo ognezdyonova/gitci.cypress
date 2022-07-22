@@ -10,7 +10,6 @@ describe("Create a survey (copy the raw survey from an existing survey from anot
 
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
     it("Create survey", () => {
-
         let home = new PO_Home();
         home.header.surveys_link()
             .should("be.visible")
@@ -111,7 +110,6 @@ describe("Create a survey (copy the raw survey from an existing survey from anot
     });
 
     it("Copy survey", () => {
-
         let home = new PO_Home();
         home.header.surveys_link()
             .should("be.visible")
