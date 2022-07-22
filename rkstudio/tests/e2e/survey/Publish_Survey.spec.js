@@ -68,24 +68,7 @@ describe("Publish the new survey (test that you are able to select other version
     });
 
     it("Make new survey version and check it", () => {
-        let home = new PO_Home();
-        home.header.surveys_link()
-            .should("be.visible")
-            .click({force: true});
-
-        let surveys = new PO_Surveys();
-
-        surveys.filter_survey_select_by_category()
-            .should("be.visible");
-
-        surveys.search_survey_input_by_name()
-            .should("be.visible")
-            .type(survey_name)
-
-        surveys.survey_items()
-            .should("be.visible")
-            .eq(0)
-            .click({force: true});
+        cy.open_survey(survey_name);
 
         let survey_page = new PO_Survey();
         survey_page.breadcrumbs()
@@ -142,24 +125,7 @@ describe("Publish the new survey (test that you are able to select other version
     });
 
     it("Revert to the previous version", () => {
-        let home = new PO_Home();
-        home.header.surveys_link()
-            .should("be.visible")
-            .click({force: true});
-
-        let surveys = new PO_Surveys();
-
-        surveys.filter_survey_select_by_category()
-            .should("be.visible");
-
-        surveys.search_survey_input_by_name()
-            .should("be.visible")
-            .type(survey_name)
-
-        surveys.survey_items()
-            .should("be.visible")
-            .eq(0)
-            .click({force: true});
+        cy.open_survey(survey_name);
 
         let survey_page = new PO_Survey();
         survey_page.breadcrumbs()
@@ -199,24 +165,7 @@ describe("Publish the new survey (test that you are able to select other version
     });
 
     it("Select previous version", () => {
-        let home = new PO_Home();
-        home.header.surveys_link()
-            .should("be.visible")
-            .click({force: true});
-
-        let surveys = new PO_Surveys();
-
-        surveys.filter_survey_select_by_category()
-            .should("be.visible");
-
-        surveys.search_survey_input_by_name()
-            .should("be.visible")
-            .type(survey_name)
-
-        surveys.survey_items()
-            .should("be.visible")
-            .eq(0)
-            .click({force: true});
+        cy.open_survey(survey_name);
 
         let survey_page = new PO_Survey();
         survey_page.breadcrumbs()
@@ -249,6 +198,7 @@ describe("Publish the new survey (test that you are able to select other version
             .should("be.visible")
             .click({force: true});
 
+        let surveys = new PO_Surveys();
         surveys.filter_survey_select_by_category()
             .should("be.visible");
 

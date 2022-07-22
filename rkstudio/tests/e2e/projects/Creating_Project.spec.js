@@ -49,24 +49,9 @@ describe('Create a project, verify that a consent survey was created (the consen
     });
 
     it("Verify that a consent survey was created", () => {
-        let home = new PO_Home();
-        home.header
-            .projects_link()
-            .should("be.visible")
-            .click({force: true})
-
-        let projects = new PO_Projects();
-        projects.projects_list()
-            .should("be.visible")
-            .contains(project_name)
-            .parents('.items-list-item')
-            .click({force: true});
+        cy.open_project(project_name);
 
         let project = new PO_Project();
-        project.title()
-            .should("be.visible")
-            .and("contain.text", project_name);
-
         project.settings_tab()
             .should("be.visible")
             .click({force: true})
@@ -141,24 +126,56 @@ describe('Create a project, verify that a consent survey was created (the consen
     });
 
     it("Enable all Platforms, saving and check", () => {
-        let home = new PO_Home();
-        home.header
-            .projects_link()
-            .should("be.visible")
-            .click({force: true})
-
-        let projects = new PO_Projects();
-        projects.projects_list()
-            .should("be.visible")
-            .contains(project_name)
-            .parents('.items-list-item')
-            .click({force: true});
+        cy.open_project(project_name);
 
         let project = new PO_Project();
-        project.title()
+        project.settings_tab()
             .should("be.visible")
-            .and("contain.text", project_name);
+            .click({force: true});
 
+        project.settings.general_platforms_list()
+            .last()
+            .scrollIntoView()
+            .should("be.visible");
+
+        project.settings.general_platforms_list()
+            .find("input")
+            .uncheck({force: true})
+            .should('not.be.checked');
+
+        project.settings.general_save_button()
+            .should("be.visible")
+            .click({force: true});
+
+        cy.open_project(project_name);
+
+        project.settings_tab()
+            .should("be.visible")
+            .click({force: true});
+
+        project.settings.general_platforms_list()
+            .last()
+            .scrollIntoView()
+            .should("be.visible");
+
+        project.settings.general_platforms_list()
+            .find("input")
+            .should('not.be.checked');
+
+        project.settings.general_platforms_list()
+            .find("input")
+            .check({force: true})
+            .should('be.checked');
+
+        project.settings.general_save_button()
+            .should("be.visible")
+            .click({force: true});
+    });
+
+    it("Enable sensor data (e.g., Steps, Active Summary, Exercise Time) - e.g., Apple Health ", () => {
+        cy.open_project(project_name);
+
+        let project = new PO_Project();
         project.sensor_data_tab()
             .should("be.visible")
             .click({force: true});
@@ -269,7 +286,7 @@ describe('Create a project, verify that a consent survey was created (the consen
             .confirmation_modal
             .confirm_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         project.sensor_EHR.save_button()
             .should("be.visible")

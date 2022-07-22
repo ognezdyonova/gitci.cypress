@@ -110,6 +110,20 @@ class PO_Project_Settings_Tab {
     coordinator_surveys_list() {
         return cy.get('coordinator-entered-survey-settings .survey-list tbody tr');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    general_platforms_list() {
+        return cy.get('[ng-repeat="platform in vm.allPlatforms"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    general_save_button() {
+        return cy.get('[ng-click="vm.saveProjectProperties()"]');
+    }
 }
 
 export default PO_Project_Settings_Tab;

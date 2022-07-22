@@ -1,6 +1,10 @@
 import CR_Main from "../pages/PO_Main";
 import * as auth from "../constants/AuthData"
 import {env} from "./utils";
+import PO_Home from "../pages/PO_Home";
+import PO_Projects from "../pages/PO_Projects";
+import PO_Project from "../pages/PO_Project";
+import PO_Surveys from "../pages/PO_Surveys";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -34,7 +38,7 @@ import {env} from "./utils";
  * @param p user password
  */
 Cypress.Commands.add('login', (l, p) => {
-    cy.session('login', ()=>{
+    cy.session('login', () => {
         cy.visit(env("WEB_BASE_URL"));
         cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
 
@@ -54,4 +58,62 @@ Cypress.Commands.add('login', (l, p) => {
     });
 });
 
+Cypress.Commands.add('open_project', (name) => {
+    let home = new PO_Home();
+    home.header
+        .projects_link()
+        .should("be.visible")
+        .click({force: true})
 
+    let projects = new PO_Projects();
+    projects.projects_list()
+        .should("be.visible")
+        .contains(name)
+        .parents('.items-list-item')
+        .click({force: true});
+
+    let project = new PO_Project();
+    project.title()
+        .should("be.visible")
+        .and("contain.text", name);
+})
+
+Cypress.Commands.add('remove_project', (name) => {
+    let home = new PO_Home();
+    home.header
+        .projects_link()
+        .should("be.visible")
+        .click({force: true})
+
+    let projects = new PO_Projects();
+    projects.projects_list()
+        .should("be.visible")
+        .contains(name)
+        .parents('.items-list-item')
+        .find('.fa-trash')
+        .click({force: true});
+
+    projects.projects_list()
+        .should("not.contain.text", name);
+})
+
+Cypress.Commands.add('open_survey', (name) => {
+    let home = new PO_Home();
+    home.header.surveys_link()
+        .should("be.visible")
+        .click({force: true});
+
+    let surveys = new PO_Surveys();
+
+    surveys.filter_survey_select_by_category()
+        .should("be.visible");
+
+    surveys.search_survey_input_by_name()
+        .should("be.visible")
+        .type(name)
+
+    surveys.survey_items()
+        .should("be.visible")
+        .eq(0)
+        .click({force: true});
+})
