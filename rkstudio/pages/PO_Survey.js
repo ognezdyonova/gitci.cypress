@@ -1,8 +1,10 @@
 import PO_Header from "./PO_Header";
+import PO_SaveAndPublishModal from "./modals/PO_SaveAndPublishModal";
 
 class PO_Survey {
     constructor() {
         this.header = new PO_Header()
+        this.save_and_publish_modal = new PO_SaveAndPublishModal();
     }
 
     /**
@@ -257,12 +259,39 @@ class PO_Survey {
         return cy.get('[ng-show="selectedEditorSection == \'share\'"] .confirm-button');
     }
 
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     add_survey_step() {
         return cy.get('[ng-click="addStep()"]');
     }
 
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     add_consent() {
         return cy.get('[ng-click="addDefaultConsent()"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    survey_type_select() {
+        return cy.get('[ng-change="changedTemplateType()"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    survey_localization_type_select() {
+        return cy.get('[ng-model="localeToAdd"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    version_items_from_list() {
+        return cy.get('[ng-show="showVersions"] .dropdown-content-box tr');
     }
 }
 
