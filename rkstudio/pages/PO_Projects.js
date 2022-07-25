@@ -1,8 +1,10 @@
 import PO_Header from "./PO_Header";
+import PO_Notification from "./PO_Notification";
 
 class PO_Projects {
     constructor() {
-        this.header = new PO_Header()
+        this.header = new PO_Header();
+        this.notification = new PO_Notification();
     }
 
     /**

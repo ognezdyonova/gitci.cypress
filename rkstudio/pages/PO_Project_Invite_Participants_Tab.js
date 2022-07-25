@@ -1,4 +1,11 @@
+import PO_PreviewAndSendInvitations from "./modals/PO_PreviewAndSendInvitations";
+
 class PO_Project_Invite_Participants_Tab {
+
+    constructor() {
+        this.invitations_modal = new PO_PreviewAndSendInvitations();
+    }
+
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
@@ -31,7 +38,7 @@ class PO_Project_Invite_Participants_Tab {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     send_button() {
-        return cy.get('.csv-area > .confirm-button');
+        return cy.get('[ng-click="vm.startSendInvitations()"]');
     }
 }
 

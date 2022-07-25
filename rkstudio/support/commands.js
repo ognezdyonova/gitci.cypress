@@ -78,6 +78,23 @@ Cypress.Commands.add('open_project', (name) => {
         .and("contain.text", name);
 })
 
+Cypress.Commands.add('add_project', (project_name) => {
+    let home = new PO_Home();
+    home.new_project_input_name()
+        .should("be.visible")
+        .type(project_name)
+
+    home.new_project_add_button()
+        .should("be.visible")
+        .click({force: true});
+
+    let project = new PO_Project();
+
+    project.title()
+        .should("be.visible")
+        .and("contain.text", project_name);
+})
+
 Cypress.Commands.add('remove_project', (name) => {
     let home = new PO_Home();
     home.header

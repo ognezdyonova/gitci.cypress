@@ -5,6 +5,7 @@ import PO_Project_Invite_Participants_Tab from "./PO_Project_Invite_Participants
 import PO_Project_Participants_list_Tab from "./PO_Project_Participants_list_Tab"
 import PO_Project_Schedules_Tab from "./PO_Project_Schedules_Tab"
 import PO_Project_SensorEHRData_Tab from "./PO_Project_SensorEHRData_Tab"
+import PO_Notification from "./PO_Notification";
 
 class PO_Project {
     constructor() {
@@ -15,6 +16,7 @@ class PO_Project {
         this.participants_list = new PO_Project_Participants_list_Tab();
         this.schedules = new PO_Project_Schedules_Tab();
         this.sensor_EHR = new PO_Project_SensorEHRData_Tab();
+        this.notification = new PO_Notification();
     }
 
     /**
