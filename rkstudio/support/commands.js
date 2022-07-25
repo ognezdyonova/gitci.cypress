@@ -112,6 +112,30 @@ Cypress.Commands.add('remove_project', (name) => {
 
     projects.projects_list()
         .should("not.contain.text", name);
+
+    home.header.surveys_link()
+        .should("be.visible")
+        .click({force: true});
+
+    let surveys = new PO_Surveys();
+
+    surveys.filter_survey_select_by_category()
+        .should("be.visible");
+
+    surveys.search_survey_input_by_name()
+        .should("be.visible")
+        .type(name)
+
+    surveys.survey_items()
+        .should("be.visible")
+        .and("contain.text", name);
+
+    surveys.survey_remove_button()
+        .should("be.visible")
+        .click({force: true, multiple:true})
+
+    surveys.survey_items()
+        .should("not.exist");
 })
 
 Cypress.Commands.add('open_survey', (name) => {

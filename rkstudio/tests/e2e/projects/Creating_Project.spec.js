@@ -5,6 +5,7 @@
 import PO_Home from "../../../pages/PO_Home";
 import PO_Project from "../../../pages/PO_Project";
 import PO_Projects from "../../../pages/PO_Projects";
+import PO_Surveys from "../../../pages/PO_Surveys";
 
 describe('Create a project, verify that a consent survey was created (the consent will be ' +
     'the name of the project unless changed on survey settings), enable all Platforms, Save', () => {
@@ -310,5 +311,29 @@ describe('Create a project, verify that a consent survey was created (the consen
 
         projects.projects_list()
             .should("not.contain.text", project_name);
+
+        home.header.surveys_link()
+            .should("be.visible")
+            .click({force: true});
+
+        let surveys = new PO_Surveys();
+
+        surveys.filter_survey_select_by_category()
+            .should("be.visible");
+
+        surveys.search_survey_input_by_name()
+            .should("be.visible")
+            .type(project_name)
+
+        surveys.survey_items()
+            .should("be.visible")
+            .and("contain.text", project_name);
+
+        surveys.survey_remove_button()
+            .should("be.visible")
+            .click({force: true, multiple:true})
+
+        surveys.survey_items()
+            .should("not.exist");
     });
 })
