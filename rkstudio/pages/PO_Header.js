@@ -115,14 +115,14 @@ class PO_Header {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     user_link() {
-        return cy.get('.fa-user');
+        return cy.get('.fa-user').parents('.navigation-link');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     user_profile_link() {
-        return cy.get('.fa-gear');
+        return cy.get('.nav-dropdown .fa-gear').parents('a');
     }
 
     /**
