@@ -1,10 +1,12 @@
 import CR_Main from "../pages/PO_Main";
 import * as auth from "../constants/AuthData"
+import {test_participant} from "../constants/AuthData"
 import {env} from "./utils";
 import PO_Home from "../pages/PO_Home";
 import PO_Projects from "../pages/PO_Projects";
 import PO_Project from "../pages/PO_Project";
 import PO_Surveys from "../pages/PO_Surveys";
+import PO_Project_Participants_list_Tab from "../pages/PO_Project_Participants_list_Tab";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -132,7 +134,7 @@ Cypress.Commands.add('remove_project', (name) => {
 
     surveys.survey_remove_button()
         .should("be.visible")
-        .click({force: true, multiple:true})
+        .click({force: true, multiple: true})
 
     surveys.survey_items()
         .should("not.exist");
@@ -157,4 +159,65 @@ Cypress.Commands.add('open_survey', (name) => {
         .should("be.visible")
         .eq(0)
         .click({force: true});
+})
+
+Cypress.Commands.add('add_paticipant', (name) => {
+    let project = new PO_Project();
+    project.invitations_tab()
+        .should("be.visible")
+        .click({force: true});
+
+    project.invite_participants.paste_mode_button()
+        .should("be.visible");
+
+    project.invite_participants.csv_data_textarea()
+        .should("be.visible")
+        .clear()
+        .type(test_participant);
+
+    project.invite_participants.send_button()
+        .should("be.visible")
+        .click({force: true});
+
+    project.invite_participants
+        .invitations_modal
+        .invitation_list()
+        .should("be.visible")
+        .and("include.text", 'jdoe@example.com')
+        .and("include.text", 'John')
+        .and("include.text", 'James');
+
+    project.invite_participants
+        .invitations_modal
+        .send_invitation_button()
+        .should("be.visible")
+        .click({force: true});
+
+    project.notification
+        .message_info()
+        .should("be.visible")
+        .and("contain.text", '1 participants created, 0 updated');
+})
+
+Cypress.Commands.add('remove_paticipant', (name) => {
+    let project = new PO_Project();
+    project.participants_tab()
+        .should("be.visible")
+        .click({force: true});
+
+    let participants = new PO_Project_Participants_list_Tab();
+    participants.participants_items()
+        .should("be.visible")
+        .and("have.length", 1)
+        .and('include.text', 'jdoe@example.com')
+        .and("include.text", 'John')
+        .and("include.text", 'James');
+
+    participants.remove_buttons()
+        .should("be.visible")
+        .eq(0)
+        .click({force: true})
+
+    participants.participants_items()
+        .should("not.be.visible")
 })

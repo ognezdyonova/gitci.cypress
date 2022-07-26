@@ -6,6 +6,10 @@ import PO_Project_Participants_list_Tab from "./PO_Project_Participants_list_Tab
 import PO_Project_Schedules_Tab from "./PO_Project_Schedules_Tab"
 import PO_Project_SensorEHRData_Tab from "./PO_Project_SensorEHRData_Tab"
 import PO_Notification from "./PO_Notification";
+import PO_ChooseScheduleTypeModal from "./modals/PO_ChooseScheduleTypeModal";
+import PO_DateBasedScheduleModal from "./modals/PO_DateBasedScheduleModal";
+import PO_EventBasedScheduleModal from "./modals/PO_EventBasedScheduleModal";
+import PO_EnrollmentBasedScheduleModal from "./modals/PO_EnrollmentBasedScheduleModal";
 
 class PO_Project {
     constructor() {
@@ -17,6 +21,10 @@ class PO_Project {
         this.schedules = new PO_Project_Schedules_Tab();
         this.sensor_EHR = new PO_Project_SensorEHRData_Tab();
         this.notification = new PO_Notification();
+        this.choose_schedule_type_modal = new PO_ChooseScheduleTypeModal();
+        this.date_based_schedule_modal = new PO_DateBasedScheduleModal();
+        this.event_based_schedule_modal = new PO_EventBasedScheduleModal();
+        this.enrollment_based_schedule_modal = new PO_EnrollmentBasedScheduleModal();
     }
 
     /**
