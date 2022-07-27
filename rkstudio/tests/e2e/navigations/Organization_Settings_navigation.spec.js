@@ -108,7 +108,7 @@ describe("General site navigation", () => {
         org_settings.teams_items()
             .should("be.visible");
 
-        org_settings.save_teams_button()
+        org_settings.new_team_button()
             .should("be.visible");
 
         org_settings.service_accounts_tab()

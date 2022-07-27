@@ -1,8 +1,10 @@
 import PO_Header from "./PO_Header";
+import PO_NewTeamModal from "./modals/PO_NewTeamModal";
 
 class PO_Settings {
     constructor() {
-        this.header = new PO_Header()
+        this.header = new PO_Header();
+        this.new_team_modal = new PO_NewTeamModal();
     }
 
     /**
@@ -125,10 +127,36 @@ class PO_Settings {
     }
 
     /**
+     * Get edit team button
+     * @param name - name of team
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    save_teams_button() {
-        return cy.get('[ng-show="vm.selectedSection == \'teams\'"] [ng-click="vm.startTeamAdd()"]');
+    edit_team(name) {
+        return this.teams_items()
+            .should("be.visible")
+            .contains(name)
+            .parents('tr')
+            .find('[ng-click="vm.selectedTeam = team"]')
+    }
+
+    /**
+     * Get remove team button
+     * @param name - name of team
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    remove_team(name) {
+        return this.teams_items()
+            .should("be.visible")
+            .contains(name)
+            .parents('tr')
+            .find('[ng-click="vm.deleteTeam(team)"]')
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    new_team_button() {
+        return cy.get('[ng-click="vm.startTeamAdd()"]');
     }
 
     /**
