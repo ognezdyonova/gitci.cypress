@@ -7,6 +7,7 @@ import PO_Projects from "../pages/PO_Projects";
 import PO_Project from "../pages/PO_Project";
 import PO_Surveys from "../pages/PO_Surveys";
 import PO_Project_Participants_list_Tab from "../pages/PO_Project_Participants_list_Tab";
+import PO_Survey from "../pages/PO_Survey";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -159,6 +160,48 @@ Cypress.Commands.add('open_survey', (name) => {
         .should("be.visible")
         .eq(0)
         .click({force: true});
+})
+
+Cypress.Commands.add('add_survey', (survey_name) => {
+    let home = new PO_Home();
+    home.new_survey_input_name()
+        .should("be.visible")
+        .type(survey_name);
+
+    home.new_survey_add_button()
+        .should("be.visible")
+        .click({force: true});
+
+    let survey_page = new PO_Survey();
+    survey_page.breadcrumbs()
+        .should("be.visible")
+        .and("contain.text", survey_name);
+
+})
+
+Cypress.Commands.add('remove_survey', (survey_name) => {
+    let home = new PO_Home();
+    home.header.surveys_link()
+        .should("be.visible")
+        .click({force: true});
+
+    let surveys = new PO_Surveys();
+
+    surveys.filter_survey_select_by_category()
+        .should("be.visible");
+
+    surveys.search_survey_input_by_name()
+        .should("be.visible")
+        .clear()
+        .type(survey_name)
+
+    surveys.survey_items()
+        .should("be.visible")
+        .and("contain.text", survey_name);
+
+    surveys.survey_remove_button()
+        .should("be.visible")
+        .click({force: true})
 })
 
 Cypress.Commands.add('add_paticipant', (name) => {

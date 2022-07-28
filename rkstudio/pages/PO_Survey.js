@@ -1,10 +1,12 @@
 import PO_Header from "./PO_Header";
 import PO_SaveAndPublishModal from "./modals/PO_SaveAndPublishModal";
+import PO_SurveyContentPreview from "./modals/PO_SurveyContentPreview";
 
 class PO_Survey {
     constructor() {
         this.header = new PO_Header()
         this.save_and_publish_modal = new PO_SaveAndPublishModal();
+        this.survey_content_preview = new PO_SurveyContentPreview();
     }
 
     /**
@@ -263,7 +265,7 @@ class PO_Survey {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     add_survey_step() {
-        return cy.get('[ng-click="addStep()"]');
+        return cy.get('[ng-show="!loading && !template.steps.length && (template.type == \'RKStudioOrderedTask\' || template.type == \'RKStudioNavigableOrderedTask\')"] > [ng-click="addStep()"]');
     }
 
     /**
@@ -271,6 +273,27 @@ class PO_Survey {
      */
     add_consent() {
         return cy.get('[ng-click="addDefaultConsent()"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    slides() {
+        return cy.get('.slider-step');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    default_value_input() {
+        return cy.get('[ng-model="templateElement.answerFormat.defaultValue"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    next_slide_button() {
+        return cy.get('.template-viewer > template-slider.ng-isolate-scope > .template-slider > .right-arrow');
     }
 
     /**
@@ -292,6 +315,27 @@ class PO_Survey {
      */
     version_items_from_list() {
         return cy.get('[ng-show="showVersions"] .dropdown-content-box tr');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    try_it_out_button() {
+        return cy.get('.preview-button');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    try_it_out_for_participant_button() {
+        return cy.get('[ng-click="toggleParticipantDropdown()"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    preview_participant_id_button() {
+        return cy.get('[ng-model="previewParticipantIdentifier"]');
     }
 }
 
