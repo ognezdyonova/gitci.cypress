@@ -83,54 +83,6 @@ describe("On the \"Try it out,\" there is the capability to search a survey by u
 
         cy.get('body').trigger('keydown', {keyCode: 27});
     });
-
-    // it.skip("Add Step", () => {
-    //     cy.add_survey(survey_name);
-    //
-    //     let survey_page = new PO_Survey();
-    //
-    //     survey_page.try_it_out_button()
-    //         .should("be.visible")
-    //         .and("be.disabled");
-    //
-    //     survey_page.add_survey_step()
-    //         .should("be.visible")
-    //         .click({force: true});
-    //
-    //     survey_page.try_it_out_button()
-    //         .should("be.visible")
-    //         .and("be.enabled");
-    //
-    //     survey_page.slides()
-    //         .should("be.visible")
-    //         .and("have.length", 1)
-    //         .eq(0)
-    //         .and("have.class", 'selected');
-    //
-    //     survey_page.default_value_input()
-    //         .should("be.visible")
-    //         .click({force: true})
-    //         .type(new Date().getTime().toString());
-    //
-    //     cy.wait(1200);
-    //
-    //     survey_page.try_it_out_button()
-    //         .should("be.visible")
-    //         .click({force: true});
-    //
-    //     survey_page.survey_content_preview
-    //         .answer_input()
-    //         .should("be.visible");
-    //
-    //     survey_page.survey_content_preview
-    //         .done_button()
-    //         .should("be.visible")
-    //         .click({force: true});
-    //
-    //     survey_page.survey_content_preview
-    //         .done_button()
-    //         .should("not.exist")
-    // });
 });
 
 
