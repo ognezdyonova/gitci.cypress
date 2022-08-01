@@ -1,11 +1,13 @@
 import PO_Header from "./PO_Header";
 import PO_Survey from "./PO_Survey";
+import PO_SelectInstrumentsToImportModal from "./modals/PO_SelectInstrumentsToImportModal";
 
 class PO_Surveys {
 
     constructor() {
         this.header = new PO_Header();
         this.survey_page = new PO_Survey();
+        this.select_instrumentsT_to_import_modal = new PO_SelectInstrumentsToImportModal();
     }
 
     /**
@@ -101,8 +103,8 @@ class PO_Surveys {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    file_import_button() {
-        return cy.get('.import-from-file-label');
+    surveys_file_import() {
+        return cy.get('input[type=file]#import-from-redcap');
     }
 
     /**

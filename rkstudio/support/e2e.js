@@ -17,7 +17,7 @@
 import './commands'
 import "cypress-real-events/support"
 import '@shelex/cypress-allure-plugin';
-import {env} from "./utils";
+import 'cypress-file-upload'
 
 const dayjs = require('dayjs')
 

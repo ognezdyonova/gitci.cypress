@@ -337,6 +337,13 @@ class PO_Survey {
     preview_participant_id_button() {
         return cy.get('[ng-model="previewParticipantIdentifier"]');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    steps_list() {
+        return cy.get('.template-step-list-wrapper tbody tr');
+    }
 }
 
 export default PO_Survey;

@@ -76,7 +76,7 @@ describe("General site navigation", () => {
         surveys.survey_associated_tags_button()
             .should("be.visible");
 
-        surveys.file_import_button()
+        surveys.surveys_file_import()
             .should("be.visible");
 
         surveys.survey_store_button()
