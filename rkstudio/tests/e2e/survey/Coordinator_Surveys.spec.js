@@ -7,7 +7,7 @@
  * */
 
 
-import PO_Project from "../../../pages/PO_Project";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe("Coordinator survey ", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());

@@ -14,9 +14,9 @@
  * - Import 'Test survey for importing' from RedCap as Test_2018-12-17_0943.REDCap.xml
  * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Surveys from "../../../pages/PO_Surveys";
-import PO_Survey from "../../../pages/PO_Survey";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
+import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("Import survey from RedCap", () => {
 

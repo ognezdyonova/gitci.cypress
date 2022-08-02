@@ -6,8 +6,8 @@
  * A popup displays indicating the email is not associated with an existing RKStudio user, click okay to invite them them to your organization
  */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Settings from "../../../pages/PO_Settings";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Settings from "../../../pages/ResearchKitStudio/PO_Settings";
 
 describe('Org Permissions', () => {
     let project_name = 'test project for team'.concat(new Date().getTime().toString());

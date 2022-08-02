@@ -2,10 +2,10 @@
  * Create a project, verify that a consent survey was created (the consent will be the name of the project unless changed on survey settings), enable all Platforms, Save
  */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Project from "../../../pages/PO_Project";
-import PO_Projects from "../../../pages/PO_Projects";
-import PO_Surveys from "../../../pages/PO_Surveys";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
+import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
 
 describe('Create a project, verify that a consent survey was created (the consent will be ' +
     'the name of the project unless changed on survey settings), enable all Platforms, Save', () => {

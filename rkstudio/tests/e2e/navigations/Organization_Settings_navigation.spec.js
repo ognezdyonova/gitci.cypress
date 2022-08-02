@@ -9,8 +9,8 @@
 * Schedules, Add/Invite Participants, Participants, Activity)."
 * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Settings from "../../../pages/PO_Settings";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Settings from "../../../pages/ResearchKitStudio/PO_Settings";
 describe("General site navigation", () => {
     it("Check navigation to Organization settings page", () => {
         let home = new PO_Home();

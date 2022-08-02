@@ -3,9 +3,9 @@
 - You are able to select other versions on mature surveys
 * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Surveys from "../../../pages/PO_Surveys";
-import PO_Survey from "../../../pages/PO_Survey";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
+import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("Publish the new survey (test that you are able to select other versions on mature surveys)", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());

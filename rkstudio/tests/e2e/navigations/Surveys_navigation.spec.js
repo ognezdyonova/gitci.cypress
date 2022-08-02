@@ -9,9 +9,9 @@
 * Schedules, Add/Invite Participants, Participants, Activity)."
 * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Surveys from "../../../pages/PO_Surveys";
-import PO_Survey from "../../../pages/PO_Survey";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
+import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("General site navigation", () => {
 

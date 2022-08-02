@@ -2,11 +2,11 @@
  * - Export the project's data using CSV and then JSON (your coordinator user will need to have the Admin role)
  * - Delete a project (can't delete a project if it has participants; if there are participants, delete participants and then delete project)
  */
-import PO_Project from "../../../pages/PO_Project";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 import {test_participant} from "../../../constants/AuthData";
-import PO_Project_Participants_list_Tab from "../../../pages/PO_Project_Participants_list_Tab";
-import PO_Home from "../../../pages/PO_Home";
-import PO_Projects from "../../../pages/PO_Projects";
+import PO_Project_Participants_list_Tab from "../../../pages/ResearchKitStudio/PO_Project_Participants_list_Tab";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 
 describe('Export the project\'s data using CSV and then JSON (your coordinator user will need to have the Admin role) ', () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());

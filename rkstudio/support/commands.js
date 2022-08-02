@@ -1,13 +1,13 @@
-import CR_Main from "../pages/PO_Main";
+import CR_Main from "../pages/ResearchKitStudio/PO_Main";
 import * as auth from "../constants/AuthData"
 import {test_participant} from "../constants/AuthData"
 import {env} from "./utils";
-import PO_Home from "../pages/PO_Home";
-import PO_Projects from "../pages/PO_Projects";
-import PO_Project from "../pages/PO_Project";
-import PO_Surveys from "../pages/PO_Surveys";
-import PO_Project_Participants_list_Tab from "../pages/PO_Project_Participants_list_Tab";
-import PO_Survey from "../pages/PO_Survey";
+import PO_Home from "../pages/ResearchKitStudio/PO_Home";
+import PO_Projects from "../pages/ResearchKitStudio/PO_Projects";
+import PO_Project from "../pages/ResearchKitStudio/PO_Project";
+import PO_Surveys from "../pages/ResearchKitStudio/PO_Surveys";
+import PO_Project_Participants_list_Tab from "../pages/ResearchKitStudio/PO_Project_Participants_list_Tab";
+import PO_Survey from "../pages/ResearchKitStudio/PO_Survey";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -40,7 +40,7 @@ import PO_Survey from "../pages/PO_Survey";
  * @param l user login
  * @param p user password
  */
-Cypress.Commands.add('login', (l, p) => {
+Cypress.Commands.add('login', (l, p, main_page) => {
     cy.session('login', () => {
         cy.visit(env("WEB_BASE_URL"));
         cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
@@ -51,12 +51,20 @@ Cypress.Commands.add('login', (l, p) => {
     })
 
     cy.visit(env("WEB_BASE_URL"));
+
     cy.wait(1000).get("body").then($body => {
         if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
-            cy.get('a')
-                .should('be.visible')
-                .contains('ResearchKit Studio')
-                .click({force: true})
+            if (main_page == null) {
+                cy.get('a')
+                    .should('be.visible')
+                    .contains('ResearchKit Studio')
+                    .click({force: true})
+            } else {
+                cy.get('a')
+                    .should('be.visible')
+                    .contains(main_page)
+                    .click({force: true})
+            }
         }
     });
 });

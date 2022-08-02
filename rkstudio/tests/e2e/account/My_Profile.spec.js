@@ -2,8 +2,8 @@
  * Select the My Account/Profile: verify you see the 5 tabs, and also Back and Logout links
  */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Profile from "../../../pages/PO_Profile";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Profile from "../../../pages/ResearchKitStudio/PO_Profile";
 
 describe('Select the My Account/Profile: verify you see the 5 tabs, and also Back and Logout links', () => {
     it("Verify the My Account/Profile", () => {

@@ -9,9 +9,9 @@
 * Schedules, Add/Invite Participants, Participants, Activity)."
 * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Projects from "../../../pages/PO_Projects";
-import PO_Project from "../../../pages/PO_Project";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe("General site navigation", () => {
     it ("Check navigation to Projects page", () => {

@@ -3,7 +3,7 @@
  */
 
 
-import PO_Survey from "../../../pages/PO_Survey";
+import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("Using 'Surveys' screen, 'Try it Out' the new survey", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());

@@ -9,8 +9,8 @@
 * Schedules, Add/Invite Participants, Participants, Activity)."
 * */
 
-import PO_Home from "../../../pages/PO_Home";
-import PO_Notifications from "../../../pages/PO_Notifications";
+import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
+import PO_Notifications from "../../../pages/ResearchKitStudio/PO_Notifications";
 
 describe("General site navigation", () => {
     it("Check navigation to Notifications page", () => {

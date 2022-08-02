@@ -6,7 +6,7 @@
  * selected to be delivered after enrolling
  * - Add a new segment, verify the resulting number of participants is correct
  */
-import PO_Project from "../../../pages/PO_Project";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe('Project Scheduling', () => {
     let project_name = 'test project for Scheduling'.concat(new Date().getTime().toString());

@@ -4,7 +4,7 @@
  */
 
 
-import PO_Survey from "../../../pages/PO_Survey";
+import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("On the \"Try it out,\" there is the capability to search a survey by using the ppt ID for a ppt who " +
     "participated previously on the survey", () => {
