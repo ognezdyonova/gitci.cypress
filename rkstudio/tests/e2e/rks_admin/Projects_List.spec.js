@@ -8,7 +8,7 @@
 
 import PO_AdminRKS_Projects from "../../../pages/RKSAdmin/PO_AdminRKS_Projects";
 
-describe('Patient list', () => {
+describe('RKS Admin: Project list', () => {
     beforeEach('Open RKS admin', () => {
         cy.login(null, null, 'RKStudio Admin');
 
