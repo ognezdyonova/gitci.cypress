@@ -130,9 +130,6 @@ Cypress.Commands.add('remove_project', (name) => {
 
     let surveys = new PO_Surveys();
 
-    surveys.filter_survey_select_by_category()
-        .should("be.visible");
-
     surveys.search_survey_input_by_name()
         .should("be.visible")
         .type(name)
