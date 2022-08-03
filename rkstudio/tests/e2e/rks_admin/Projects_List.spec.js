@@ -4,9 +4,13 @@
  * - Projects list elements
  * - Search for projects
  * - Paging works
+ * - Dynamic Visualizations
+ * 1.Select an existing one, the details display
+ * 2.Add one - but do not publish, delete the one you added
  */
 
 import PO_AdminRKS_Projects from "../../../pages/RKSAdmin/PO_AdminRKS_Projects";
+import PO_AdminRKS_Project from "../../../pages/RKSAdmin/PO_AdminRKS_Project";
 
 describe('RKS Admin: Project list', () => {
     beforeEach('Open RKS admin', () => {
@@ -188,4 +192,66 @@ describe('RKS Admin: Project list', () => {
             .and("have.length", 10);
     });
 
+    it("Open project", () => {
+        let projects = new PO_AdminRKS_Projects();
+
+        projects.projects_list()
+            .should("be.visible")
+            .and("have.length", 10);
+
+        projects.search_input()
+            .should("be.visible")
+            .type('Alt test');
+
+        projects.projects_list()
+            .should("have.length", 1)
+            .eq(0)
+            .click({force:true});
+
+        let project = new PO_AdminRKS_Project();
+
+        project.header
+            .navigation_buttons()
+            .should("be.visible");
+
+        project.header
+            .navigation_button('Recent Patients')
+            .should("be.visible");
+
+        project.header
+            .navigation_button('My Patient Lists')
+            .should("be.visible");
+
+        project.header
+            .navigation_button('Beacon Surveillance')
+            .should("be.visible");
+
+        project.header
+            .navigation_button('Administration')
+            .should("be.visible");
+
+        project.header
+            .navigation_button('Provide Feedback')
+            .should("be.visible");
+
+        project.header
+            .navigation_tabs()
+            .should("be.visible");
+
+        project.header
+            .navigation_tab('Projects')
+            .should("be.visible");
+
+        project.header
+            .navigation_tab('Users and Participants')
+            .should("be.visible");
+
+        project.header
+            .global_search_input()
+            .should("be.visible");
+
+        project.surveys_list()
+            .should("be.visible")
+            .and("have.length.above",0)
+    });
 })
