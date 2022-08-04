@@ -35,6 +35,8 @@ before(() => {
             return false
         } else if (err.message.includes('hashedUsername is not defined')) {
             return false
+        } else if (err.message.includes("Cannot read properties of undefined (reading 'length')")) {
+            return false
         }
     })
 })

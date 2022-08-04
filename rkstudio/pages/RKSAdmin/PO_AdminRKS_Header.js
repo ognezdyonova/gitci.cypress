@@ -25,6 +25,13 @@ class PO_AdminRKS_Header {
     }
 
     /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    dropdown_menu() {
+        return cy.get('.navigation-dropdown .navigation-dropdown-item');
+    }
+
+    /**
      * @param name name of tab button
      * @returns {Cypress.Chainable<Subject>}
      */
