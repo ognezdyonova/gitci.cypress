@@ -1,4 +1,4 @@
-/*
+/**
 * "General site navigation:
 * Select an existing Org, verify each tab loads as expected (e.g., Home, Projects (expands the drop down),
 *  Surveys, Notifications)
@@ -77,7 +77,7 @@ describe("General site navigation", () => {
             .should("be.visible");
 
         surveys.surveys_file_import()
-            .should("be.visible");
+            .should("exist");
 
         surveys.survey_store_button()
             .should("be.visible");

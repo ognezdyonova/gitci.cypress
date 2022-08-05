@@ -59,14 +59,14 @@ class PO_Project_Settings_Tab {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     general_consent_survey_edit_button() {
-        return cy.get('[ng-click="vm.editSelectedConsent()"]');
+        return cy.get('[ng-click="vm.editSelectedEnrollmentSurvey()"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     general_consent_survey_preview_button() {
-        return cy.get('[ng-click="vm.previewSelectedConsent()"]');
+        return cy.get('[ng-click="vm.previewSelectedEnrollmentSurvey()"]');
     }
 
     /**
