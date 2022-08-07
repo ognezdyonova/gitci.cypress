@@ -38,7 +38,7 @@ class PO_Project_Schedules_Tab {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     new_schedule_button() {
-        return cy.get('.add-button');
+        return cy.get('.schedule-control-bar > .editor-controls-button');
     }
 
     /**
