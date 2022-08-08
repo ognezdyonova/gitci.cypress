@@ -233,7 +233,7 @@ describe("General site navigation", () => {
         project.schedules.action_filter_select()
             .should("be.visible");
 
-        project.schedules.new_schedule_button()
+        project.schedules.new_schedule_from_list_button()
             .should("be.visible");
 
 

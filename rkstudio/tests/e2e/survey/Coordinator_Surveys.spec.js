@@ -52,6 +52,7 @@ describe("Coordinator survey ", () => {
 
         project.settings.coordinator_surveys_list()
             .should("be.visible")
+            .and("have.length.above", 0)
             .and("contain.text", project_name.concat(' Project Consent'))
             .eq(0)
             .find('input')
