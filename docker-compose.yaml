@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  e2e:
+    image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+    build: .
+    container_name: cypress_tests
+    entrypoint: npm run cy:run
+    environment:
+      - CI=1
+      - QT_X11_NO_MITSHM=1
+      - _X11_NO_MITSHM=1
+      - _MITSHM=0
+    user: root
+    volumes:
+      - artifacts_data:/cypress/allure-results
+      - artifacts_data:/cypress/rkstudio/logs
+
+  allure_report:
+    build: .
+    depends_on:
+      - e2e
+    container_name: cypress_tests_report
+    command: npm run allure:report
+    user: root
+    ports:
+      - "8080:8080"
+    volumes:
+      - artifacts_data:/cypress/allure-results
+      - artifacts_data:/cypress/rkstudio/logs
+
+volumes:
+  artifacts_data:
