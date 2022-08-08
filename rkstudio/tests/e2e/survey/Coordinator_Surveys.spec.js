@@ -14,7 +14,6 @@ describe("Coordinator survey ", () => {
 
     afterEach('Remove survey', () => {
         cy.open_project(project_name);
-        cy.remove_paticipant();
         cy.remove_project(project_name);
     });
 
@@ -53,16 +52,15 @@ describe("Coordinator survey ", () => {
 
         project.settings.coordinator_surveys_list()
             .should("be.visible")
-            .should("contain.text", project_name.concat(' Project Consent'))
+            .and("contain.text", project_name.concat(' Project Consent'))
             .eq(0)
             .find('input')
+            .and("be.visible")
             .check();
 
         project.settings.coordinator_surveys_save_button()
             .should("be.visible")
             .click({force: true});
-
-        cy.add_paticipant();
     });
 
 });

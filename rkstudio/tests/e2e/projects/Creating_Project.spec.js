@@ -145,6 +145,7 @@ describe('Create a project, verify that a consent survey was created (the consen
             .should('not.be.checked');
 
         project.settings.general_save_button()
+            .scrollIntoView()
             .should("be.visible")
             .click({force: true});
 
@@ -169,6 +170,7 @@ describe('Create a project, verify that a consent survey was created (the consen
             .should('be.checked');
 
         project.settings.general_save_button()
+            .scrollIntoView()
             .should("be.visible")
             .click({force: true});
     });

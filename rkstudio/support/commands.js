@@ -267,5 +267,9 @@ Cypress.Commands.add('remove_paticipant', (name) => {
         .click({force: true})
 
     participants.participants_items()
-        .should("not.be.visible")
+        .should("not.be.visible");
+
+    participants.no_results_line()
+        .should("be.visible")
+        .and("contain.text", 'No Results');
 })

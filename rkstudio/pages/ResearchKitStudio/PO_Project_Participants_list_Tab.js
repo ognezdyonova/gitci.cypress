@@ -15,6 +15,13 @@ class PO_Project_Participants_list_Tab {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
+    no_results_line() {
+        return cy.get('tbody > :nth-child(2) > .ng-scope');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     remove_buttons() {
         return cy.get('[ng-click="vm.deleteParticipant(participant.id); $event.stopPropagation();"]');
     }
