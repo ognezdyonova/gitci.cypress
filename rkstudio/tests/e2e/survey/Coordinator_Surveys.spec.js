@@ -57,7 +57,7 @@ describe("Coordinator survey ", () => {
             .eq(0)
             .find('input')
             .and("be.visible")
-            .check();
+            .click({force:true});
 
         project.settings.coordinator_surveys_save_button()
             .should("be.visible")

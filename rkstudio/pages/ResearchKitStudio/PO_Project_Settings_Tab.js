@@ -108,6 +108,7 @@ class PO_Project_Settings_Tab {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     coordinator_surveys_list() {
+        cy.get('[ng-model="coordSurvey.IsSingleInstance"]').should("be.visible");
         return cy.get('coordinator-entered-survey-settings .survey-list tbody tr');
     }
 
