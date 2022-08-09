@@ -1,24 +1,26 @@
-# cypressUITemplate
-Faster template for writing tests on cypress
+# RkStudio Cypress tests
 
-Start writing tests:
- - Clone this repository from https://github.com/ognezdyonova/cypressUITemplate.git
- - Update dependencies 'npm install' from root repository 
- - Rename the project_name folder to your project name 
- - Set new project name to the cypress.json file 
+First you need to install:
 
- # Folders
- 
- - api-requests: Folder for additional api requests for test configuration
+- node 16+
+- Java 8+
+- your IDE
 
-   - --> constants: folder containing additional constant files for api tests(e.g Endpoints.js)   
-   - --> core/requests: Here are the files with api requests
- - constants: Folder for additional constants for cypress tests 
-   
-   - --> variables: you can save the env variables for different env. Create a file using a mask .env.[env name] .Get data from variable env("API_GATEWAY_URL")
-   - --> variables/EnvVarLoader.js - you need to init all files of variables 
+Start running tests:
 
- - extensions: You can connect some extensions to the browser 
- - fixtures: folder for savin some generated data and scripts for generating 
- - pages: page objects
- - plugins: cypress plugins initialization 
+- Need to clone all source to your folder`git clone https://github.com/CareEvolution/rkstudio.cypress_tests.git`
+- Open project in your IDE
+- First, you need to install all dependencies `npm install`
+- After you open the `package.json` file in the scripts section, you should see a list of commands for running scripts
+  and generating reports
+
+  _**But you can run tests and get reports without using the code editor, just go to the root of the project through the
+  console and start executing
+  the provided commands.**_
+- To run the tests, you need to run the command in the terminal `npm run cy:run`
+- After running the tests, a new **_allure-results_** folder should appear
+- To generate a report, execute the commands one by one
+    - `npm run allure:history`
+    - `npm run allure:report`
+    - `npm run allure:server`
+
