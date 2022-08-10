@@ -69,14 +69,6 @@ Cypress.Commands.add('login', (l, p, main_page) => {
     });
 });
 
-Cypress.Commands.add('open', (url) => {
-    cy.session('open', () => {
-        cy.visit(url);
-        cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
-    })
-    cy.visit(url);
-});
-
 Cypress.Commands.add('open_project', (name) => {
     let home = new PO_Home();
     home.header
