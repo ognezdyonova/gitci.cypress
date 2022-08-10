@@ -1,10 +1,10 @@
 class Token {
-    get_source(email, password) {
+    auth(email, password) {
         return cy.request({
             method: 'POST',
             url: 'https://api.mail.tm/token',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             },
             body: {
                 "address": email,

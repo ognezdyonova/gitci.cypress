@@ -8,6 +8,7 @@ import PO_Project from "../pages/ResearchKitStudio/PO_Project";
 import PO_Surveys from "../pages/ResearchKitStudio/PO_Surveys";
 import PO_Project_Participants_list_Tab from "../pages/ResearchKitStudio/PO_Project_Participants_list_Tab";
 import PO_Survey from "../pages/ResearchKitStudio/PO_Survey";
+import PO_AdminRKS_User_Security from "../pages/RKSAdmin/PO_AdminRKS_User_Security";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -67,6 +68,15 @@ Cypress.Commands.add('login', (l, p, main_page) => {
             }
         }
     });
+});
+
+Cypress.Commands.add('open', (url) => {
+    cy.session('open', () => {
+        cy.visit(url);
+        cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
+    })
+
+    cy.visit(url);
 });
 
 Cypress.Commands.add('open_project', (name) => {
@@ -272,4 +282,35 @@ Cypress.Commands.add('remove_paticipant', (name) => {
     participants.no_results_line()
         .should("be.visible")
         .and("contain.text", 'No Results');
+})
+
+Cypress.Commands.add('remove_user', () => {
+    cy.login(null, null, 'User Security');
+    let user_security = new PO_AdminRKS_User_Security();
+    user_security
+        .email_input()
+        .should("be.visible")
+        .then(input => {
+            cy.get('@account')
+                .then(s => {
+                    cy.log(s)
+                    cy.wrap(input).type(s.address)
+                });
+        });
+
+    user_security
+        .search_button
+        .should("be.visible")
+        .click({force: true});
+
+    user_security.delete_button()
+        .should("be.visible")
+        .click({force: true});
+
+    user_security.approving_delete_button()
+        .should("be.visible")
+        .click({force: true});
+
+    user_security.delete_button()
+        .should("not.exist");
 })

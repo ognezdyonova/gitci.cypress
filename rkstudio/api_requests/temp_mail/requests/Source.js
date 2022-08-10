@@ -4,7 +4,7 @@ class Source {
             method: 'GET',
             url: 'https://api.mail.tm/sources/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {

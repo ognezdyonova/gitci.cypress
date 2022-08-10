@@ -1,11 +1,10 @@
 class Domain {
-    get_domains(token) {
+    get_domains() {
         return cy.request({
             method: 'GET',
             url: 'https://api.mail.tm/domains',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '.concat(token)
+                'Accept': 'application/json',
             }
         }).then(response => {
             expect(response.status).to.eq(200)
@@ -13,12 +12,12 @@ class Domain {
         }).its('body')
     }
 
-    get_domain(id, token) {
+    get_domain(id) {
         return cy.request({
             method: 'GET',
             url: 'https://api.mail.tm/domains/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {

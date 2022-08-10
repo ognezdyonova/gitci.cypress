@@ -4,7 +4,7 @@ class Message {
             method: 'GET',
             url: 'https://api.mail.tm/messages',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
@@ -18,7 +18,7 @@ class Message {
             method: 'GET',
             url: 'https://api.mail.tm/messages/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
@@ -32,7 +32,7 @@ class Message {
             method: 'DELETE',
             url: 'https://api.mail.tm/messages/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
@@ -46,7 +46,7 @@ class Message {
             method: 'PATCH',
             url: 'https://api.mail.tm/messages/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             },
             body: {

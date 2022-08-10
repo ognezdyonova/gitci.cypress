@@ -1,22 +1,25 @@
 /**
  * Cases:
  * - Create a new RKS Coordinator account
+ * 1)Create a new RKS Coordinator account: check elements of interface
+ * 2)Create a new RKS Coordinator account: back to login form
+ * 3)Create a new RKS Coordinator account: check validation
+ * 4)Create a new RKS Coordinator account: add new account
+ * 5)Create a new RKS Coordinator account: remove new account
  * - Verify that new account displays in Slack #new-rkstudio-users, receive UG in email
  */
 
-import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
-import PO_Profile from "../../../pages/ResearchKitStudio/PO_Profile";
 import CR_Main from "../../../pages/ResearchKitStudio/PO_Main";
 import {env} from "../../../support/utils";
 import PO_Register_New_Account from "../../../pages/RegisterNewAccount/PO_Register_New_Account";
 import TempMail from "../../../api_requests/temp_mail/TempMail";
+import PO_AdminRKS_User_Security from "../../../pages/RKSAdmin/PO_AdminRKS_User_Security";
+import * as auth from "../../../constants/AuthData";
 
 describe('Register new account', () => {
-    beforeEach(()=>{
-        cy.open(env("WEB_BASE_URL"));
-    })
 
     it.skip("Create a new RKS Coordinator account: check elements of interface", () => {
+        cy.open(env("WEB_BASE_URL"));
         let login = new CR_Main();
         login.username_input()
             .should("be.visible");
@@ -63,6 +66,7 @@ describe('Register new account', () => {
     });
 
     it.skip("Create a new RKS Coordinator account: back to login form", () => {
+        cy.open(env("WEB_BASE_URL"));
         let login = new CR_Main();
         login.new_user_link()
             .should("be.visible")
@@ -71,7 +75,7 @@ describe('Register new account', () => {
         let register = new PO_Register_New_Account();
         register.back_to_login_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         login.username_input()
             .should("be.visible");
@@ -90,6 +94,7 @@ describe('Register new account', () => {
     });
 
     it.skip("Create a new RKS Coordinator account: check validation", () => {
+        cy.open(env("WEB_BASE_URL"));
         let login = new CR_Main();
         login.new_user_link()
             .should("be.visible")
@@ -115,7 +120,7 @@ describe('Register new account', () => {
         register.register_button()
             .should("be.visible")
             .and("be.enabled")
-            .click({force:true});
+            .click({force: true});
 
         register.validation_messages()
             .should("be.visible")
@@ -123,6 +128,8 @@ describe('Register new account', () => {
     });
 
     it("Create a new RKS Coordinator account: add new account", () => {
+        cy.open(env("WEB_BASE_URL"));
+        let temp_mail = new TempMail();
         let login = new CR_Main();
         login.new_user_link()
             .should("be.visible")
@@ -131,57 +138,85 @@ describe('Register new account', () => {
         let register = new PO_Register_New_Account();
         register.firstname_input()
             .should("be.visible")
-            .then($s=>$s.type('test'));
+            .type('test'.concat(temp_mail.makeHash_(5)));
 
         register.lastname_input()
             .should("be.visible")
-            .type('test');
+            .type('test'.concat(temp_mail.makeHash_(5)));
 
         register.username_input()
             .should("be.visible")
-            .type('test');
+            .type('test'.concat(temp_mail.makeHash_(5)));
 
-        let temp_mail = new TempMail();
-        let user = temp_mail.newEmail();
+
+        temp_mail.createAccount();
 
         register.email_input()
             .should("be.visible")
-            .then(($s)=>{
-                user.then(user_data=>{
-                    $s.type
-                        .type(user_data.username);
-                })
-            })
-        // user.then(user_data=>{
-        //     register.email_input()
-        //         .should("be.visible")
-        //         .type(user_data.username);
-        // })
+            .then(input => {
+                cy.get('@account')
+                    .then(s => {
+                        cy.log(s)
+                        cy.wrap(input).type(s.address)
+                    });
+            });
+
+        temp_mail.auth(cy.get('@account'));
 
         register.register_button()
             .should("be.visible")
             .and("be.enabled")
-            .click({force:true});
+            .click({force: true});
 
         register.validation_messages()
             .should("not.be.visible");
 
-        cy.wait(5000);
+        register.back_to_login_button()
+            .should("be.visible")
+            .click({force: true});
+        cy.wait(30000);
 
-        let messages = user.then(u => {
-            console.log(u)
-            temp_mail.login(u.username, u.password)
-                .then(console.log)
-            return temp_mail.getMessages();
-        })
-
-        let message = messages.then(list=>{
-            return temp_mail.getMessage(list[0].id)
-        })
-
-        message.then(m=>{
-            console.log(m)
-        })
-
+        temp_mail.getMessages().should("have.length", 1);
     });
+
+    context('remove account', () => {
+        it("Create a new RKS Coordinator account: remove new account", () => {
+            cy.session('login', () => {
+                cy.visit(env("WEB_BASE_URL"));
+                cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
+
+                const login = new CR_Main();
+
+                login.goToSignIn(auth.user_login, auth.user_pass);
+
+                let user_security = new PO_AdminRKS_User_Security();
+                user_security
+                    .email_input()
+                    .should("be.visible")
+                    .then(input => {
+                        cy.get('@account')
+                            .then(s => {
+                                cy.log(s)
+                                cy.wrap(input).type(s.address)
+                            });
+                    });
+
+                user_security
+                    .search_button()
+                    .should("be.visible")
+                    .click({force: true});
+
+                user_security.delete_button()
+                    .should("be.visible")
+                    .click({force: true});
+
+                user_security.approving_delete_button()
+                    .should("be.visible")
+                    .click({force: true});
+
+                user_security.delete_button()
+                    .should("not.exist");
+            });
+        });
+    })
 })

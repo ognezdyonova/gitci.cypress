@@ -4,7 +4,7 @@ class Account {
             method: 'POST',
             url: 'https://api.mail.tm/accounts',
             headers: {
-                'Content-Type': 'application/json'
+                'Accept': 'application/json',
             },
             body: {
                 "address": email,
@@ -21,7 +21,7 @@ class Account {
             method: 'GET',
             url: 'https://api.mail.tm/accounts/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
@@ -35,7 +35,7 @@ class Account {
             method: 'GET',
             url: 'https://api.mail.tm/me',
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
@@ -49,7 +49,7 @@ class Account {
             method: 'DELETE',
             url: 'https://api.mail.tm/accounts/'.concat(id),
             headers: {
-                'Content-Type': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': 'Bearer '.concat(token)
             }
         }).then(response => {
