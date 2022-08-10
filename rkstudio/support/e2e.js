@@ -18,6 +18,7 @@ import './commands'
 import "cypress-real-events/support"
 import '@shelex/cypress-allure-plugin';
 import 'cypress-file-upload'
+import '@cemalgnlts/mailjs'
 
 const dayjs = require('dayjs')
 
