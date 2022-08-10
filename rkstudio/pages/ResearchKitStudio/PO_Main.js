@@ -28,6 +28,13 @@ class PO_Main {
     }
 
     /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    new_user_link() {
+        return cy.get('.fa-user-plus').parents('a');
+    }
+
+    /**
      * User login
      *
      * @param username
