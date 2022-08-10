@@ -129,7 +129,7 @@ class PO_Header {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     user_sign_out_link() {
-        return cy.get('.fa-sign-out');
+        return cy.get('.nav-dropdown  .fa-sign-out').parents('a');
     }
 
     /**
