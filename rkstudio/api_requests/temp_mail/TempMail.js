@@ -37,6 +37,8 @@ class TempMail {
         return this.mail
             .deleteMe()
     }
+
+
 }
 
 export default TempMail;
