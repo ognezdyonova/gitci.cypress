@@ -6,19 +6,19 @@ class PO_PreviewAndSendInvitations {
         return cy.get('[ng-repeat="invitation in vm.previewInvitations"]');
     }
 
-    invite_to_enroll_checkbox(){
+    invite_to_enroll_checkbox() {
         return cy.get('[ng-model="vm.inviteToEnroll"]');
     }
 
-    send_email_checkbox(){
+    send_email_checkbox() {
         return cy.get('[ng-model="vm.sendEmail"]');
     }
 
-    allow_update_checkbox(){
+    allow_update_checkbox() {
         return cy.get('[ng-model="vm.allowUpdate"]');
     }
 
-    send_invitation_button(){
+    send_invitation_button() {
         return cy.get('[ng-click="vm.finishSendInvitations()"]');
     }
 }

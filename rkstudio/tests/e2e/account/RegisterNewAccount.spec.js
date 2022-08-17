@@ -134,14 +134,14 @@ describe('Register new account', () => {
     it("Create a new RKS Coordinator account: add new account", () => {
         cy.open(env("WEB_BASE_URL"));
         let temp_mail = new TempMail();
-                let login = new CR_Main();
-                login.new_user_link()
-                    .should("be.visible")
-                    .click();
+        let login = new CR_Main();
+        login.new_user_link()
+            .should("be.visible")
+            .click();
 
-                let register = new PO_Register_New_Account();
-                register.firstname_input()
-                    .should("be.visible")
+        let register = new PO_Register_New_Account();
+        register.firstname_input()
+            .should("be.visible")
             .type('test'.concat(temp_mail.makeHash_(5)));
 
         register.lastname_input()
@@ -167,13 +167,13 @@ describe('Register new account', () => {
 
         temp_mail.auth(cy.get('@account'));
 
-                register.register_button()
-                    .should("be.visible")
-                    .and("be.enabled")
-                    .click({force: true});
+        register.register_button()
+            .should("be.visible")
+            .and("be.enabled")
+            .click({force: true});
 
-                register.validation_messages()
-                    .should("not.be.visible");
+        register.validation_messages()
+            .should("not.be.visible");
 
         register.back_to_login_button()
             .should("be.visible")

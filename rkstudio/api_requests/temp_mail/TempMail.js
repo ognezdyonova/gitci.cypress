@@ -1,4 +1,3 @@
-import Mailjs from "@cemalgnlts/mailjs";
 import Domain from "./requests/Domain";
 import Message from "./requests/Message";
 import Source from "./requests/Source";
@@ -55,9 +54,9 @@ class TempMail {
     getMessage() {
         return cy.get('@token').then(t => {
             return cy.get('@messages')
-                .then(messages=>{
+                .then(messages => {
                     return this.message
-                        .get_message(messages[0].id,t.token).as('message');
+                        .get_message(messages[0].id, t.token).as('message');
                 })
         }).then(d => {
             cy.log();

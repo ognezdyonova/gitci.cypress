@@ -5,6 +5,7 @@ class PO_Notification {
     message_error() {
         return cy.get('.user-message-error');
     }
+
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */

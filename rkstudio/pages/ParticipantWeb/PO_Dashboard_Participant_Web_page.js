@@ -19,6 +19,7 @@ class PO_Dashboard_Participant_Web_page {
     tabs() {
         return cy.get('tabs[participant-info="participantInfo"] a');
     }
+
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
