@@ -13,6 +13,10 @@ describe('Org Permissions', () => {
     let project_name = 'test project for team'.concat(new Date().getTime().toString());
     let team_name = 'team '.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     after('remove created project', () => {
         cy.remove_project(project_name);
     });
@@ -210,7 +214,7 @@ describe('Org Permissions', () => {
         org_settings.new_access_username_save_button()
             .should("be.visible")
             .and("be.enabled")
-            .click({force:true});
+            .click({force: true});
 
         org_settings.user_invitation_items()
             .should("be.visible")
@@ -253,13 +257,13 @@ describe('Org Permissions', () => {
             .contains('testuser@maildomain.com')
             .parents('tr')
             .find('button')
-            .click({force:true});
+            .click({force: true});
 
         org_settings.user_invitation_items()
             .and("not.have.text", 'testuser@maildomain.com');
 
     });
-    
+
     it('Remove a Team', () => {
         let home = new PO_Home();
         home.header.settings_link()
@@ -286,5 +290,5 @@ describe('Org Permissions', () => {
             .should("be.visible")
             .and("not.contain.text", 'edited ' + team_name);
     });
-    
+
 })

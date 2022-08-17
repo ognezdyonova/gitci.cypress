@@ -4,15 +4,13 @@
  * - Verify that new account displays in Slack #new-rkstudio-users, receive UG in email
  */
 
-import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
-import PO_Profile from "../../../pages/ResearchKitStudio/PO_Profile";
 import CR_Main from "../../../pages/ResearchKitStudio/PO_Main";
 import {env} from "../../../support/utils";
 import PO_Register_New_Account from "../../../pages/RegisterNewAccount/PO_Register_New_Account";
 import TempMail from "../../../api_requests/temp_mail/TempMail";
 
 describe('Register new account', () => {
-    beforeEach(()=>{
+    beforeEach(() => {
         cy.open(env("WEB_BASE_URL"));
     })
 
@@ -71,7 +69,7 @@ describe('Register new account', () => {
         let register = new PO_Register_New_Account();
         register.back_to_login_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         login.username_input()
             .should("be.visible");
@@ -115,14 +113,14 @@ describe('Register new account', () => {
         register.register_button()
             .should("be.visible")
             .and("be.enabled")
-            .click({force:true});
+            .click({force: true});
 
         register.validation_messages()
             .should("be.visible")
             .and("contain.text", 'Invalid email address.');
     });
 
-    it("Create a new RKS Coordinator account: add new account", () => {
+    it.skip("Create a new RKS Coordinator account: add new account", () => {
         let login = new CR_Main();
         login.new_user_link()
             .should("be.visible")
@@ -131,7 +129,7 @@ describe('Register new account', () => {
         let register = new PO_Register_New_Account();
         register.firstname_input()
             .should("be.visible")
-            .then($s=>$s.type('test'));
+            .then($s => $s.type('test'));
 
         register.lastname_input()
             .should("be.visible")
@@ -146,8 +144,8 @@ describe('Register new account', () => {
 
         register.email_input()
             .should("be.visible")
-            .then(($s)=>{
-                user.then(user_data=>{
+            .then(($s) => {
+                user.then(user_data => {
                     $s.type
                         .type(user_data.username);
                 })
@@ -161,7 +159,7 @@ describe('Register new account', () => {
         register.register_button()
             .should("be.visible")
             .and("be.enabled")
-            .click({force:true});
+            .click({force: true});
 
         register.validation_messages()
             .should("not.be.visible");
@@ -175,11 +173,11 @@ describe('Register new account', () => {
             return temp_mail.getMessages();
         })
 
-        let message = messages.then(list=>{
+        let message = messages.then(list => {
             return temp_mail.getMessage(list[0].id)
         })
 
-        message.then(m=>{
+        message.then(m => {
             console.log(m)
         })
 

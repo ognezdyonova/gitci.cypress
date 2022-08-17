@@ -12,6 +12,10 @@ describe('Project Scheduling', () => {
     let project_name = 'test project for Scheduling'.concat(new Date().getTime().toString());
     let schedule_name = 'test Schedule'.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     afterEach('remove created project', () => {
         cy.remove_project(project_name);
     });

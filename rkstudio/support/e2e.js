@@ -26,9 +26,6 @@ Cypress.moment = dayjs
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-beforeEach(() => {
-    cy.login();
-})
 
 before(() => {
     Cypress.on('uncaught:exception', (err, runnable) => {

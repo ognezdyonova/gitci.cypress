@@ -1,19 +1,22 @@
 /**
-* "General site navigation:
-* Select an existing Org, verify each tab loads as expected (e.g., Home, Projects (expands the drop down),
-*  Surveys, Notifications)
-* Note: The Projects workflow has been enhanced and when selected in the 'tab' state, the drop down displays
-* every project available within the Org. Also, in the expanded tab state, you may select the desired project
-* and launch directly into project. In addition, you can expand the caret (>) on the project of choice and select
-* the specific setting(s). You should be taken directly to that setting (Settings, Sensor & EHR Data, App Layout,
-* Schedules, Add/Invite Participants, Participants, Activity)."
-* */
+ * "General site navigation:
+ * Select an existing Org, verify each tab loads as expected (e.g., Home, Projects (expands the drop down),
+ *  Surveys, Notifications)
+ * Note: The Projects workflow has been enhanced and when selected in the 'tab' state, the drop down displays
+ * every project available within the Org. Also, in the expanded tab state, you may select the desired project
+ * and launch directly into project. In addition, you can expand the caret (>) on the project of choice and select
+ * the specific setting(s). You should be taken directly to that setting (Settings, Sensor & EHR Data, App Layout,
+ * Schedules, Add/Invite Participants, Participants, Activity)."
+ * */
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
 import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("General site navigation", () => {
+    beforeEach(() => {
+        cy.login();
+    })
 
     it("Check navigation to Surveys page", () => {
         let home = new PO_Home();

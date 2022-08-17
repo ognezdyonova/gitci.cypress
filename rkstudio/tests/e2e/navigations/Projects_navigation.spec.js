@@ -1,4 +1,4 @@
-/*
+/**
 * "General site navigation:
 * Select an existing Org, verify each tab loads as expected (e.g., Home, Projects (expands the drop down),
 *  Surveys, Notifications)
@@ -14,7 +14,11 @@ import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe("General site navigation", () => {
-    it ("Check navigation to Projects page", () => {
+    beforeEach(() => {
+        cy.login();
+    })
+
+    it("Check navigation to Projects page", () => {
         let home = new PO_Home();
         home.header.projects_link()
             .should("be.visible")
@@ -61,7 +65,7 @@ describe("General site navigation", () => {
             .should("be.visible");
     });
 
-    it ("Check navigation to Project page", () => {
+    it("Check navigation to Project page", () => {
         let home = new PO_Home();
         home.header.projects_link()
             .should("be.visible")

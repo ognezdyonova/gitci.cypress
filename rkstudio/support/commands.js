@@ -69,6 +69,28 @@ Cypress.Commands.add('login', (l, p, main_page) => {
     });
 });
 
+Cypress.Commands.add('new_login_session', (session_name) => {
+    cy.session(session_name, () => {
+        cy.visit(env("WEB_BASE_URL"));
+        cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
+
+        const login = new CR_Main();
+
+        login.goToSignIn(auth.user_login, auth.user_pass);
+    })
+
+    cy.visit(env("WEB_BASE_URL"));
+
+    cy.wait(1000).get("body").then($body => {
+        if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
+            cy.get('a')
+                .should('be.visible')
+                .contains('ResearchKit Studio')
+                .click({force: true})
+        }
+    });
+});
+
 Cypress.Commands.add('open', (url) => {
     cy.session('open', () => {
         cy.visit(url);

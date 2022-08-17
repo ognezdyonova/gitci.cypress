@@ -11,7 +11,10 @@
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 
-describe("General site navigation", () => {;
+describe("General site navigation", () => {
+    beforeEach(() => {
+        cy.login();
+    })
 
     it("Check navigation to Home page", () => {
 

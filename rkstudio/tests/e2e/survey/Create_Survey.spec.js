@@ -1,6 +1,6 @@
-/*
-Create a survey (copy the raw survey from an existing survey from another org, then paste in new org)
-* */
+/**
+ Create a survey (copy the raw survey from an existing survey from another org, then paste in new org)
+ */
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
@@ -9,6 +9,11 @@ import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 describe("Create a survey (copy the raw survey from an existing survey from another org, then paste in new org)", () => {
 
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
+
+    beforeEach(() => {
+        cy.login();
+    })
+
     it("Create survey", () => {
         let home = new PO_Home();
         home.header.surveys_link()
@@ -127,7 +132,7 @@ describe("Create a survey (copy the raw survey from an existing survey from anot
 
         surveys.survey_copy_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         let survey_page = new PO_Survey();
         survey_page.breadcrumbs()
@@ -230,7 +235,7 @@ describe("Create a survey (copy the raw survey from an existing survey from anot
 
         surveys.survey_remove_button()
             .should("be.visible")
-            .click({force: true, multiple:true})
+            .click({force: true, multiple: true})
 
         surveys.survey_items()
             .should("not.exist");

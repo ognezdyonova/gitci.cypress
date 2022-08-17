@@ -1,12 +1,16 @@
 /**
+ * Cases:
  * - Log out
  */
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
-import PO_Profile from "../../../pages/ResearchKitStudio/PO_Profile";
 import CR_Main from "../../../pages/ResearchKitStudio/PO_Main";
 
 describe('Log out', () => {
+    before(() => {
+        cy.new_login_session('logout_session');
+    })
+
     it("Log out", () => {
         let home_page = new PO_Home();
         home_page.header.organization_switcher_link()

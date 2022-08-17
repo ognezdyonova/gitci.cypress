@@ -11,6 +11,10 @@ describe('Create a project, verify that a consent survey was created (the consen
     'the name of the project unless changed on survey settings), enable all Platforms, Save', () => {
     let project_name = 'test project '.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     it('Create project from home page', () => {
         let home = new PO_Home();
         home.new_project_input_name()
@@ -333,7 +337,7 @@ describe('Create a project, verify that a consent survey was created (the consen
 
         surveys.survey_remove_button()
             .should("be.visible")
-            .click({force: true, multiple:true})
+            .click({force: true, multiple: true})
 
         surveys.survey_items()
             .should("not.exist");

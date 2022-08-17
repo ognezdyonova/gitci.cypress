@@ -10,6 +10,10 @@ describe("On the \"Try it out,\" there is the capability to search a survey by u
     "participated previously on the survey", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     afterEach('Remove survey', () => {
         cy.open_project(project_name);
         cy.remove_paticipant();

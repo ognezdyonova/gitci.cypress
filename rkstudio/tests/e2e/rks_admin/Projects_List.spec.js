@@ -20,6 +20,10 @@ import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 describe('RKS Admin: Project list', () => {
     let project_name = 'test project '.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     it('Projects list elements', () => {
         cy.login(null, null, 'RKStudio Admin');
 
