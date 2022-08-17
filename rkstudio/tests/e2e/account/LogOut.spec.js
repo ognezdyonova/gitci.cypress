@@ -1,4 +1,5 @@
 /**
+ * Cases:
  * - Log out
  */
 
