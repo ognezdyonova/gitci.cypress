@@ -20,6 +20,10 @@ import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("Import survey from RedCap", () => {
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     it("Import survey from RedCap: select survey type", () => {
         let home = new PO_Home();
         home.header.surveys_link()

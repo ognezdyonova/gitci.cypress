@@ -18,6 +18,7 @@ import './commands'
 import "cypress-real-events/support"
 import '@shelex/cypress-allure-plugin';
 import 'cypress-file-upload'
+import '@cemalgnlts/mailjs'
 import '@deepsquare/cypress-iframe';
 
 const dayjs = require('dayjs')
@@ -26,9 +27,6 @@ Cypress.moment = dayjs
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
-beforeEach(() => {
-    cy.login();
-})
 
 before(() => {
     Cypress.on('uncaught:exception', (err, runnable) => {

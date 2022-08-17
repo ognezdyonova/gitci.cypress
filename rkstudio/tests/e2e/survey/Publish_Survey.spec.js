@@ -1,7 +1,7 @@
-/*
-- Publish the new survey (test that you are able to select other versions on mature surveys)
-- You are able to select other versions on mature surveys
-* */
+/**
+ - Publish the new survey (test that you are able to select other versions on mature surveys)
+ - You are able to select other versions on mature surveys
+ */
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
@@ -9,6 +9,38 @@ import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 
 describe("Publish the new survey (test that you are able to select other versions on mature surveys)", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
+
+    beforeEach(() => {
+        cy.login();
+    })
+
+    after('Remove survey', () => {
+        let home = new PO_Home();
+        home.header.surveys_link()
+            .should("be.visible")
+            .click({force: true});
+
+        let surveys = new PO_Surveys();
+
+        surveys.filter_survey_select_by_category()
+            .should("be.visible");
+
+        surveys.search_survey_input_by_name()
+            .should("be.visible")
+            .clear()
+            .type(survey_name)
+
+        surveys.survey_items()
+            .should("be.visible")
+            .and("contain.text", survey_name);
+
+        surveys.survey_remove_button()
+            .should("be.visible")
+            .click({force: true, multiple: true})
+
+        surveys.survey_items()
+            .should("not.exist");
+    });
 
     it("Publish survey", () => {
         let home = new PO_Home();
@@ -218,35 +250,6 @@ describe("Publish the new survey (test that you are able to select other version
             .should('have.text', 'Reaction Time');
 
     });
-
-    after('Remove survey', () => {
-        let home = new PO_Home();
-        home.header.surveys_link()
-            .should("be.visible")
-            .click({force: true});
-
-        let surveys = new PO_Surveys();
-
-        surveys.filter_survey_select_by_category()
-            .should("be.visible");
-
-        surveys.search_survey_input_by_name()
-            .should("be.visible")
-            .clear()
-            .type(survey_name)
-
-        surveys.survey_items()
-            .should("be.visible")
-            .and("contain.text", survey_name);
-
-        surveys.survey_remove_button()
-            .should("be.visible")
-            .click({force: true, multiple: true})
-
-        surveys.survey_items()
-            .should("not.exist");
-    });
-
 });
 
 

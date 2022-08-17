@@ -13,10 +13,14 @@ import CR_Main from "../../../pages/ResearchKitStudio/PO_Main";
 import {env} from "../../../support/utils";
 import PO_Register_New_Account from "../../../pages/RegisterNewAccount/PO_Register_New_Account";
 import TempMail from "../../../api_requests/temp_mail/TempMail";
-import PO_AdminRKS_User_Security from "../../../pages/RKSAdmin/PO_AdminRKS_User_Security";
 import * as auth from "../../../constants/AuthData";
+import PO_AdminRKS_User_Security from "../../../pages/RKSAdmin/PO_AdminRKS_User_Security";
 
 describe('Register new account', () => {
+
+    beforeEach(() => {
+        cy.open(env("WEB_BASE_URL"));
+    })
 
     it.skip("Create a new RKS Coordinator account: check elements of interface", () => {
         cy.open(env("WEB_BASE_URL"));
@@ -130,14 +134,14 @@ describe('Register new account', () => {
     it("Create a new RKS Coordinator account: add new account", () => {
         cy.open(env("WEB_BASE_URL"));
         let temp_mail = new TempMail();
-        let login = new CR_Main();
-        login.new_user_link()
-            .should("be.visible")
-            .click();
+                let login = new CR_Main();
+                login.new_user_link()
+                    .should("be.visible")
+                    .click();
 
-        let register = new PO_Register_New_Account();
-        register.firstname_input()
-            .should("be.visible")
+                let register = new PO_Register_New_Account();
+                register.firstname_input()
+                    .should("be.visible")
             .type('test'.concat(temp_mail.makeHash_(5)));
 
         register.lastname_input()
@@ -163,13 +167,13 @@ describe('Register new account', () => {
 
         temp_mail.auth(cy.get('@account'));
 
-        register.register_button()
-            .should("be.visible")
-            .and("be.enabled")
-            .click({force: true});
+                register.register_button()
+                    .should("be.visible")
+                    .and("be.enabled")
+                    .click({force: true});
 
-        register.validation_messages()
-            .should("not.be.visible");
+                register.validation_messages()
+                    .should("not.be.visible");
 
         register.back_to_login_button()
             .should("be.visible")

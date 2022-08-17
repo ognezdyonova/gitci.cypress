@@ -70,7 +70,6 @@ Cypress.Commands.add('login', (l, p, main_page) => {
         }
     });
 });
-
 Cypress.Commands.add('open', (url) => {
     cy.session('open', () => {
         cy.visit(url);
@@ -126,25 +125,27 @@ Cypress.Commands.add('openWindow', (url, features) => {
     })
 })
 
-Cypress.Commands.add('open_project', (name) => {
-    let home = new PO_Home();
-    home.header
-        .projects_link()
-        .should("be.visible")
-        .click({force: true})
+Cypress.Commands.add('new_login_session', (session_name) => {
+    cy.session(session_name, () => {
+        cy.visit(env("WEB_BASE_URL"));
+        cy.setCookie(env('ADMIN_SESSION_NAME'), env('ADMIN_SESSION_VALUE'));
 
-    let projects = new PO_Projects();
-    projects.projects_list()
-        .should("be.visible")
-        .contains(name)
-        .parents('.items-list-item')
-        .click({force: true});
+        const login = new CR_Main();
 
-    let project = new PO_Project();
-    project.title()
-        .should("be.visible")
-        .and("contain.text", name);
-})
+        login.goToSignIn(auth.user_login, auth.user_pass);
+    })
+
+    cy.visit(env("WEB_BASE_URL"));
+
+    cy.wait(1000).get("body").then($body => {
+        if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
+            cy.get('a')
+                .should('be.visible')
+                .contains('ResearchKit Studio')
+                .click({force: true})
+        }
+    });
+});
 
 Cypress.Commands.add('add_project', (project_name) => {
     let home = new PO_Home();

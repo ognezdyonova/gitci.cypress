@@ -9,6 +9,10 @@ describe("Using 'Surveys' screen, 'Try it Out' the new survey", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     afterEach('Remove survey', () => {
         cy.remove_survey(survey_name);
     });

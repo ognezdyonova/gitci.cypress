@@ -4,7 +4,10 @@
 import PO_AdminRKS_Beacon_Queries from "../../../pages/RKSAdmin/PO_AdminRKS_Beacon_Queries";
 import PO_AdminRKS_Deployment_Administration from "../../../pages/RKSAdmin/PO_AdminRKS_Deployment_Administration";
 
-describe('Testing Beacon Administration page', ()=>{
+describe('Testing Beacon Administration page', () => {
+    beforeEach(() => {
+        cy.login();
+    })
 
     it('Check Deployment Admin, Beacon Services for any extensive errors', () => {
         cy.login(null, null, 'Beacon Admin');
@@ -22,13 +25,13 @@ describe('Testing Beacon Administration page', ()=>{
             .dropdown_menu()
             .should("be.visible")
             .contains('Deployment Administration')
-            .click({force:true});
+            .click({force: true});
 
 
         let deployment_page = new PO_AdminRKS_Deployment_Administration();
         deployment_page.search_input()
             .should("be.visible")
-            .type('BeaconNodeService03'+'{enter}');
+            .type('BeaconNodeService03' + '{enter}');
 
         deployment_page.title()
             .should("be.visible")

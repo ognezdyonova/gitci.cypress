@@ -1,4 +1,4 @@
-import Account from "./requests/Account";
+import Mailjs from "@cemalgnlts/mailjs";
 import Domain from "./requests/Domain";
 import Message from "./requests/Message";
 import Source from "./requests/Source";

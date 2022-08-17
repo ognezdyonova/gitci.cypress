@@ -11,6 +11,7 @@ Start running tests:
 - Need to clone all source to your folder`git clone https://github.com/CareEvolution/rkstudio.cypress_tests.git`
 - Open project in your IDE
 - First, you need to install all dependencies `npm install`
+- Add your Admin credentials in .env.dev file
 - After you open the `package.json` file in the scripts section, you should see a list of commands for running scripts
   and generating reports
 

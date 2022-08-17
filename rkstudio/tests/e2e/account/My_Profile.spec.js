@@ -6,6 +6,10 @@ import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Profile from "../../../pages/ResearchKitStudio/PO_Profile";
 
 describe('Select the My Account/Profile: verify you see the 5 tabs, and also Back and Logout links', () => {
+    beforeEach(() => {
+        cy.login();
+    })
+
     it("Verify the My Account/Profile", () => {
         let home_page = new PO_Home();
         home_page.header.organization_switcher_link()

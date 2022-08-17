@@ -6,6 +6,9 @@ import PO_AdminRKS_Beacon_Queries from "../../../pages/RKSAdmin/PO_AdminRKS_Beac
 import PO_AdminRKS_Beacon_Tester from "../../../pages/RKSAdmin/PO_AdminRKS_Beacon_Tester";
 
 describe('Testing the Beacon Admin page', () => {
+    beforeEach(() => {
+        cy.login();
+    })
 
     it('Beacon Admin Page elements ', () => {
         cy.login(null, null, 'Beacon Admin');

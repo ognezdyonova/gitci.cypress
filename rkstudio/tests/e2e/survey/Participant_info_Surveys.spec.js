@@ -11,6 +11,10 @@ import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 describe("Participant survey ", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     afterEach('Remove survey', () => {
         cy.open_project(project_name);
         cy.remove_paticipant();
@@ -135,7 +139,7 @@ describe("Participant survey ", () => {
             .participant_info
             .close_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
     });
 
     it("Complete survey task ", () => {
@@ -226,7 +230,7 @@ describe("Participant survey ", () => {
             .participant_info
             .close_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
     });
 
     it("Close survey task ", () => {
@@ -317,7 +321,7 @@ describe("Participant survey ", () => {
             .participant_info
             .close_button()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
     });
 
 });

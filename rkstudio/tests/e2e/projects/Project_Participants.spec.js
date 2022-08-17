@@ -11,6 +11,10 @@ import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 describe('Export the project\'s data using CSV and then JSON (your coordinator user will need to have the Admin role) ', () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
+    beforeEach(() => {
+        cy.login();
+    })
+
     after('remove created project', () => {
         cy.remove_project(project_name);
     });

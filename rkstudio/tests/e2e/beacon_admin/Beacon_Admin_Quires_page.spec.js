@@ -6,6 +6,9 @@
 import PO_AdminRKS_Beacon_Queries from "../../../pages/RKSAdmin/PO_AdminRKS_Beacon_Queries";
 
 describe('Testing Beacon Admin page', () => {
+    beforeEach(() => {
+        cy.login();
+    })
 
     it('Check elements of the main page', () => {
         cy.login(null, null, 'Beacon Admin');
@@ -200,7 +203,7 @@ describe('Testing Beacon Admin page', () => {
 
         beacon.search_input()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         beacon.queries_list()
             .should("be.visible")
@@ -219,7 +222,7 @@ describe('Testing Beacon Admin page', () => {
 
         beacon.search_input()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
     });
 
 });
