@@ -9,6 +9,7 @@ import PO_Surveys from "../pages/ResearchKitStudio/PO_Surveys";
 import PO_Project_Participants_list_Tab from "../pages/ResearchKitStudio/PO_Project_Participants_list_Tab";
 import PO_Survey from "../pages/ResearchKitStudio/PO_Survey";
 import PO_AdminRKS_User_Security from "../pages/RKSAdmin/PO_AdminRKS_User_Security";
+import TempMail from "../api_requests/temp_mail/TempMail";
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -78,6 +79,52 @@ Cypress.Commands.add('open', (url) => {
 
     cy.visit(url);
 });
+
+Cypress.Commands.add('_origin', (url, additionalDomain) => {
+    let path = url;
+
+    cy.window().then(win => {
+        return win.open(path, '_self');
+    });
+
+    if (additionalDomain !== null) {
+        cy.url().then((url) => {
+            let domain = (new URL(url));
+            path = additionalDomain.concat(domain.pathname).concat(domain.search)
+
+
+            cy.window().then(win => {
+                return win.open(path, '_self');
+            });
+        })
+    }
+})
+
+Cypress.Commands.add('openWindow', (url, features) => {
+    const w = Cypress.config('viewportWidth')
+    const h = Cypress.config('viewportHeight')
+    if (!features) {
+        features = `width=${w}, height=${h}`
+    }
+    console.log('openWindow %s "%s"', url, features)
+
+    return new Promise(resolve => {
+        if (window.top.aut) {
+            console.log('window exists already')
+            window.top.aut.close()
+        }
+        // https://developer.mozilla.org/en-US/docs/Web/API/Window/open
+        window.top.aut = window.top.open(url, 'aut', features)
+
+        // letting page enough time to load and set "document.domain = localhost"
+        // so we can access it
+        setTimeout(() => {
+            cy.state('document', window.top.aut.document)
+            cy.state('window', window.top.aut)
+            resolve()
+        }, 10000)
+    })
+})
 
 Cypress.Commands.add('open_project', (name) => {
     let home = new PO_Home();
@@ -156,6 +203,21 @@ Cypress.Commands.add('remove_project', (name) => {
         .should("not.exist");
 })
 
+Cypress.Commands.add('open_project', (name) => {
+    let home = new PO_Home();
+    home.header
+        .projects_link()
+        .should("be.visible")
+        .click({force: true})
+
+    let projects = new PO_Projects();
+    projects.projects_list()
+        .should("be.visible")
+        .contains(name)
+        .parents('.items-list-item')
+        .click({force: true});
+})
+
 Cypress.Commands.add('open_survey', (name) => {
     let home = new PO_Home();
     home.header.surveys_link()
@@ -219,7 +281,7 @@ Cypress.Commands.add('remove_survey', (survey_name) => {
         .click({force: true})
 })
 
-Cypress.Commands.add('add_paticipant', (name) => {
+Cypress.Commands.add('add_paticipant', () => {
     let project = new PO_Project();
     project.invitations_tab()
         .should("be.visible")
@@ -257,6 +319,60 @@ Cypress.Commands.add('add_paticipant', (name) => {
         .and("contain.text", '1 participants created, 0 updated');
 })
 
+Cypress.Commands.add('add_real_participant', (account) => {
+    let project = new PO_Project();
+    let temp = new TempMail();
+    temp.createAccount();
+
+    project.invitations_tab()
+        .should("be.visible")
+        .click({force: true});
+
+    project.invite_participants.paste_mode_button()
+        .should("be.visible");
+
+    project.invite_participants.csv_data_textarea()
+        .should("be.visible")
+        .clear()
+        .then(input => {
+            cy.get('@account')
+                .then(s => {
+
+                    cy.log(s)
+                    let first = `${'lastname' + temp.makeHash_(5)}`
+                    let last = `${'firstname' + temp.makeHash_(5)}`
+                    let str = "Email,MobilePhone,ParticipantIdentifier,FirstName,MiddleName,LastName,DOB,Gender,PreferredLanguage,Street1,Street2,City,State,PostalCode,SecondaryIdentifier\n" +
+                        s.address + ",555-555-5555,1234593889238," + `${first}` + ",James,+" + `${last}` + "+,4/15/1965,M,en,123 Main St,Apt A,Sacramento,CA,95814,ABC123";
+
+                    cy.wrap(input)
+                        .type(str)
+                });
+        });
+
+    temp.auth(cy.get('@account'));
+
+    project.invite_participants.send_button()
+        .should("be.visible")
+        .click({force: true});
+
+    project.invite_participants
+        .invitations_modal
+        .invitation_list()
+        .should("be.visible")
+        .and("have.length.above", 0);
+
+    project.invite_participants
+        .invitations_modal
+        .send_invitation_button()
+        .should("be.visible")
+        .click({force: true});
+
+    project.notification
+        .message_info()
+        .should("be.visible")
+        .and("contain.text", '1 participants created, 0 updated');
+})
+
 Cypress.Commands.add('remove_paticipant', (name) => {
     let project = new PO_Project();
     project.participants_tab()
@@ -266,10 +382,7 @@ Cypress.Commands.add('remove_paticipant', (name) => {
     let participants = new PO_Project_Participants_list_Tab();
     participants.participants_items()
         .should("be.visible")
-        .and("have.length", 1)
-        .and('include.text', 'jdoe@example.com')
-        .and("include.text", 'John')
-        .and("include.text", 'James');
+        .and("have.length", 1);
 
     participants.remove_buttons()
         .should("be.visible")
@@ -314,3 +427,16 @@ Cypress.Commands.add('remove_user', () => {
     user_security.delete_button()
         .should("not.exist");
 })
+
+/**
+ * Wait for iframe to load, and call callback
+ */
+Cypress.Commands.add('getElementFromFrame', ($iframe, $element) => {
+    return cy.get($iframe, {timeout: 20000})
+        .should("be.visible")
+        .and(($iframe) => {
+            expect($iframe.contents().find($element)).to.exist
+        }).then(($iframe) => {
+            return cy.wrap($iframe.contents().find($element))
+        });
+});

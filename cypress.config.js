@@ -55,7 +55,7 @@ module.exports = defineConfig({
         numTestsKeptInMemory: 9,
         experimentalRunEvents: true,
         experimentalSourceRewriting: true,
-        experimentalSessionAndOrigin:true,
+        experimentalSessionAndOrigin: true,
         screenshotOnRunFailure: true,
         trashAssetsBeforeRuns: false,
         retries: {

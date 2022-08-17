@@ -24,7 +24,7 @@
     "@bahmutov/all-logs": "1.8.1",
     "@bahmutov/cy-api": "^2.1.3",
     "chai-jquery": "^2.1.0",
-    "cypress": "10.3.0",
+    "cypress": "10.6.0",
     "cypress-multi-reporters": "^1.5.0",
     "cypress-wait-until": "^1.6.0",
     "dayjs": "^1.10.6",
