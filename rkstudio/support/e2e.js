@@ -19,7 +19,6 @@ import "cypress-real-events/support"
 import '@shelex/cypress-allure-plugin';
 import 'cypress-file-upload'
 import '@cemalgnlts/mailjs'
-import '@deepsquare/cypress-iframe';
 
 const dayjs = require('dayjs')
 
@@ -37,6 +36,10 @@ before(() => {
         } else if (err.message.includes("Cannot read properties of undefined (reading 'length')")) {
             return false
         } else if (err.message.includes("Closing client. Could not access localStorage")) {
+            return false
+        } else if (err.message.includes("Cannot read properties of undefined")) {
+            return false
+        }else if (err.message.includes("jQuery.hubConnection is not a function")) {
             return false
         }
     })

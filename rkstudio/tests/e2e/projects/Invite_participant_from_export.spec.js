@@ -1,6 +1,6 @@
 /**
  * Invite a participant (invite yourself as a test participant)
- * After participant completes the consent survey  and then the enrollment survey using MDH - confirm participant data is correct in RKS (Survey Results tab) and that the task (survey) is marked as complete (Task List tab)
+ * After participant completes the consent survey  and then the enrollment survey using MDH -   is correct in RKS (Survey Results tab) and that the task (survey) is marked as complete (Task List tab)
  * If you are using iOS to validate; verify MDH Dashboard displays sensor data
  */
 
@@ -11,7 +11,7 @@ import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 import PO_Welcome_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Welcome_Participant_Web_page";
 import PO_Dashboard_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Dashboard_Participant_Web_page";
 
-describe('Invite a participant', () => {
+describe('Invite a participant from export', () => {
     let project_name = 'test project for invite'.concat(new Date().getTime().toString());
 
     after('remove created project', () => {
@@ -21,7 +21,7 @@ describe('Invite a participant', () => {
         cy.remove_project(project_name);
     });
 
-    it('Invite a participant', () => {
+    it('Get Invite for a participant from email', () => {
         cy.login();
         let temp = new TempMail();
         cy.add_project(project_name);
@@ -85,7 +85,7 @@ describe('Invite a participant', () => {
             })
     });
 
-    it('test2', () => {
+    it('Invite a participant from export', () => {
         cy.session('new_user', () => {
 
             cy._origin(Cypress.env('mydatahelps_link'), null)

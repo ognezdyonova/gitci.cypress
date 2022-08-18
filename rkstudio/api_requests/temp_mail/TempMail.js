@@ -2,6 +2,7 @@ import Domain from "./requests/Domain";
 import Message from "./requests/Message";
 import Source from "./requests/Source";
 import Token from "./requests/Token";
+import Account from "./requests/Account";
 
 class TempMail {
     constructor() {

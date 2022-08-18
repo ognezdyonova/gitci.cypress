@@ -6,11 +6,11 @@ class PO_AdminRKS_User_Security {
     }
 
     email_input() {
-        return cy.get('input[type="email"]');
+        return cy.get('#user-search [type="email"]');
     }
 
     search_button() {
-        return cy.get('button.search[type="submit"]');
+        return cy.get('#user-search [type="submit"]');
     }
 
     delete_button() {
