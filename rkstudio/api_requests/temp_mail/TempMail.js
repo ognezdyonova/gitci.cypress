@@ -52,12 +52,12 @@ class TempMail {
         })
     }
 
-    getMessage() {
+    getMessage(id) {
         return cy.get('@token').then(t => {
             return cy.get('@messages')
                 .then(messages => {
-                    return this.message
-                        .get_message(messages[0].id, t.token).as('message');
+                    if (id) return this.message.get_message(messages[id].id, t.token).as('message');
+                    else return this.message.get_message(messages[0].id, t.token).as('message');
                 })
         }).then(d => {
             cy.log();

@@ -14,7 +14,7 @@ class PO_Welcome_Participant_Web_page {
     }
 
     cancel_button() {
-        return cy.get('.cancel-button > .ng-scope');
+        return cy.get('.cancel-button')
     }
 }
 

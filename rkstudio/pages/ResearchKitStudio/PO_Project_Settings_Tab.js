@@ -69,6 +69,14 @@ class PO_Project_Settings_Tab {
         return cy.get('[ng-click="vm.previewSelectedEnrollmentSurvey()"]');
     }
 
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    general_copy_project_url_button() {
+        return cy.get('[ng-show="vm.project.EnrollmentSettings.AllowCodeEnrollment"] [ng-click="copyToClipboard($event)"]');
+    }
+
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
