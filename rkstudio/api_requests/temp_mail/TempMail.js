@@ -43,25 +43,44 @@ class TempMail {
     }
 
     getMessages() {
-        return cy.get('@token').then(t => {
+        if (Cypress.env('token_temp')) {
             return this.message
-                .get_messages(t.token)
+                .get_messages(Cypress.env('token_temp'))
                 .as('messages');
-        }).then(d => {
-            cy.log();
-        })
+        } else {
+            return cy.get('@token').then(t => {
+                return this.message
+                    .get_messages(t.token)
+                    .as('messages');
+            }).then(d => {
+                cy.log();
+            })
+        }
     }
 
     getMessage(id) {
-        return cy.get('@token').then(t => {
+        if (Cypress.env('token_temp')) {
             return cy.get('@messages')
                 .then(messages => {
-                    if (id) return this.message.get_message(messages[id].id, t.token).as('message');
-                    else return this.message.get_message(messages[0].id, t.token).as('message');
+                    if (id) return this.message.get_message(messages[id].id, Cypress.env('token_temp')).as('message');
+                    else return this.message.get_message(messages[0].id, Cypress.env('token_temp')).as('message');
                 })
-        }).then(d => {
-            cy.log();
-        })
+        } else {
+            return cy.get('@token').then(t => {
+                return cy.get('@messages')
+                    .then(messages => {
+                        if (id) return this.message.get_message(messages[id].id, t.token).as('message');
+                        else return this.message.get_message(messages[0].id, t.token).as('message');
+                    })
+            }).then(d => {
+                cy.log();
+            })
+        }
+    }
+
+    detectURLs(message) {
+        let urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        return message.match(urlRegex)
     }
 }
 
