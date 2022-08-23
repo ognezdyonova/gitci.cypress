@@ -58,6 +58,12 @@ class TempMail {
         }
     }
 
+    getMessagesByToken(token) {
+        return this.message
+            .get_messages(token)
+            .as('messages');
+    }
+
     getMessage(id) {
         if (Cypress.env('token_temp')) {
             return cy.get('@messages')

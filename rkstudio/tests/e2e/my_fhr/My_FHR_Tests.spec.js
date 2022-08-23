@@ -5,6 +5,9 @@
  * - Upload gif profile photo file
  * - Upload png profile photo file
  * - Upload jpg profile photo file
+ * - Add notes data
+ * - check Providers list: elements, searching
+ * - Sharing page
  * - Logout participant
  */
 
@@ -94,6 +97,9 @@ describe("MyFHR  tests", () => {
             .click();
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
 
         participant_dashboard_page.tabs()
             .should("contain.text", 'Me')
@@ -169,6 +175,9 @@ describe("MyFHR  tests", () => {
             .click({force: true});
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
 
         participant_dashboard_page.tabs()
             .should("contain.text", 'Me')
@@ -219,13 +228,17 @@ describe("MyFHR  tests", () => {
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
         participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
             .profile_photo()
             .should("be.visible")
             .find('input[type="file"]')
             .attachFile('upload_files/user3.gif')
 
         participant_dashboard_page
-            .profile_photo_error()
+            .error_message()
             .should("be.visible")
             .and("contain.text", 'error-uploading-photo');
     });
@@ -258,19 +271,21 @@ describe("MyFHR  tests", () => {
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
         participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
             .profile_photo()
             .should("be.visible")
             .find('input[type="file"]')
             .attachFile('upload_files/user2.png')
 
         participant_dashboard_page
-            .profile_photo_error()
+            .error_message()
             .should("not.be.visible");
     });
 
     it('Upload jpg profile photo file', () => {
-        //cas9t@arxxwalls.com
-        Cypress.env('account','cas9t@arxxwalls.com')
         cy.open(env('WEB_BASE_URL_MY_FHR'));
 
         let participant_main_page = new PO_Main_Participant_Web_page();
@@ -297,6 +312,10 @@ describe("MyFHR  tests", () => {
             .click({force: true});
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
         participant_dashboard_page
             .profile_photo()
             .should("be.visible")
@@ -304,12 +323,13 @@ describe("MyFHR  tests", () => {
             .attachFile('upload_files/user2.png')
 
         participant_dashboard_page
-            .profile_photo_error()
+            .error_message()
             .should("not.be.visible");
     });
 
-    it('Logout participant', () => {
-        Cypress.env('account', 'ioaqb@arxxwalls.com')
+    it('Add notes data', () => {
+        let note_data = 'Test notes ' + new TempMail().makeHash_(12);
+
         cy.open(env('WEB_BASE_URL_MY_FHR'));
 
         let participant_main_page = new PO_Main_Participant_Web_page();
@@ -336,6 +356,324 @@ describe("MyFHR  tests", () => {
             .click({force: true});
 
         let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .clear()
+            .type(note_data)
+            .type('{enter}');
+
+        cy.reload();
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .and("have.value", note_data);
+
+        participant_dashboard_page.logout_link()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .and("have.value", note_data);
+
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .clear()
+            .type('{enter}');
+
+        cy.reload();
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .and("have.value", '');
+
+        participant_dashboard_page.logout_link()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .note_input()
+            .should("be.visible")
+            .and("have.value", '');
+    });
+
+    it('check Providers list: elements, searching', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .health_profile_section()
+            .should("be.visible")
+            .click({force: true})
+
+        participant_dashboard_page
+            .providers_search_input()
+            .should("be.visible");
+
+        participant_dashboard_page
+            .providers_list()
+            .should("be.visible")
+            .and("have.length.above", 1);
+
+        participant_dashboard_page
+            .providers_search_input()
+            .should("be.visible")
+            .type('test');
+
+        participant_dashboard_page
+            .providers_list()
+            .should("be.visible")
+            .and("have.length.above", 1)
+            .and("include.text", 'test');
+
+        participant_dashboard_page
+            .providers_search_input()
+            .should("be.visible")
+            .clear()
+            .type(new TempMail().makeHash_(5));
+
+        participant_dashboard_page
+            .providers_list()
+            .should("not.exist");
+    });
+
+    it('Sharing page', () => {
+     //   Cypress.env('account', 'cas9t@arxxwalls.com')
+
+        cy.session('sharing_dashboard'+new TempMail().makeHash_(4), () => {
+            let temp = new TempMail();
+            cy.visit(env('WEB_BASE_URL_MY_FHR'));
+
+            let participant_main_page = new PO_Main_Participant_Web_page();
+
+            participant_main_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            let participant_login_page = new PO_Login_Participant_Web_page();
+            participant_login_page.email_input()
+                .should("be.visible")
+                .type(Cypress.env('account'))
+
+            participant_login_page.start_login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_login_page.password_input()
+                .should("be.visible")
+                .type('@Agent007')
+
+            participant_login_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+
+            temp.createAccount();
+            temp.auth(cy.get('@account'));
+
+            participant_dashboard_page
+                .loader()
+                .should("not.be.visible");
+
+            participant_dashboard_page
+                .tabs()
+                .contains('Share')
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page
+                .title_page()
+                .should("be.visible")
+                .and("contain.text", 'Share')
+
+            participant_dashboard_page.share_email_input()
+                .should("be.visible");
+
+            participant_dashboard_page.share_send_request_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page.error_message()
+                .should("be.visible")
+                .and("contain.text", 'Invalid email address');
+
+            participant_dashboard_page.share_email_input()
+                .should("be.visible")
+                .clear()
+                .type(temp.makeHash_(5));
+
+            participant_dashboard_page.share_send_request_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page.error_message()
+                .should("be.visible")
+                .and("contain.text", 'Invalid email address');
+
+            cy.get('@account')
+                .then(l => {
+                    participant_dashboard_page.share_email_input()
+                        .should("be.visible")
+                        .clear()
+                        .type(l.address.toString());
+                })
+
+            participant_dashboard_page.share_request_type_select()
+                .should("be.visible")
+                .select('access');
+
+            participant_dashboard_page.share_send_request_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page.shared_accounts_list()
+                .should("be.visible")
+                .and("have.length", 1);
+
+            cy.wait(15000);
+            cy.get('@token')
+                .then(l => {
+                    temp.getMessagesByToken(l.token.toString())
+                })
+
+            cy.get('@messages')
+                .then((body) => {
+                    cy.log(body)
+                    expect(body.length).to.eqls(1);
+                    expect(body[0].subject).to.contains('is requesting access to your data');
+                });
+
+            cy.get('@account')
+                .then(l => {
+                    participant_dashboard_page.share_email_input()
+                        .should("be.visible")
+                        .clear()
+                        .type(l.address.toString());
+                })
+
+            participant_dashboard_page.share_request_type_select()
+                .should("be.visible")
+                .select('share');
+
+            participant_dashboard_page.share_send_request_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page.shared_accounts_list()
+                .should("be.visible")
+                .and("have.length", 2);
+
+            cy.wait(15000);
+            cy.get('@token')
+                .then(l => {
+                    temp.getMessagesByToken(l.token.toString())
+                })
+
+            cy.get('@messages')
+                .then((body) => {
+                    cy.log(body)
+                    expect(body.length).to.eqls(2);
+                    expect(body[0].subject).to.contains('wants to share data with you');
+                });
+
+            participant_dashboard_page
+                .share_cancel_request_button()
+                .should("be.visible")
+                .click({
+                    force: true,
+                    multiple: true
+                });
+
+            participant_dashboard_page.shared_accounts_list()
+                .should("not.exist");
+        })
+    });
+
+    it('Logout participant', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
         participant_dashboard_page.tabs()
             .should("contain.text", 'Me')
             .and("contain.text", 'Share')
@@ -351,7 +689,7 @@ describe("MyFHR  tests", () => {
 
         participant_dashboard_page.logout_link()
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         participant_login_page.password_input()
             .should("be.visible");
