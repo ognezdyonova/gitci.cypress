@@ -8,6 +8,7 @@
  * - Add notes data
  * - check Providers list: elements, searching
  * - Sharing page
+ * - Timeline page: check elements, open timeline
  * - Logout participant
  */
 
@@ -491,9 +492,7 @@ describe("MyFHR  tests", () => {
     });
 
     it('Sharing page', () => {
-     //   Cypress.env('account', 'cas9t@arxxwalls.com')
-
-        cy.session('sharing_dashboard'+new TempMail().makeHash_(4), () => {
+        cy.session('sharing_dashboard' + new TempMail().makeHash_(4), () => {
             let temp = new TempMail();
             cy.visit(env('WEB_BASE_URL_MY_FHR'));
 
@@ -641,6 +640,103 @@ describe("MyFHR  tests", () => {
             participant_dashboard_page.shared_accounts_list()
                 .should("not.exist");
         })
+    });
+
+    it('Timeline page: check elements, open timeline', () => {
+        // Cypress.env('account', 'd74zl@arxxwalls.com')
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('Timeline')
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        cy.scrollTo('bottom')
+            .scrollTo('bottom')
+            .scrollTo('bottom')
+
+        participant_dashboard_page
+            .days_bucket_list()
+            .should("be.visible")
+            .last()
+            .and("contain.text", 'Born');
+
+        participant_dashboard_page
+            .days_bucket_list()
+            .should("contain.text", '1 years old')
+            .and("contain.text", '2 years old')
+            .and("contain.text", '3 years old')
+            .and("contain.text", '4 years old')
+            .and("contain.text", '5 years old')
+            .and("contain.text", '6 years old');
+
+        participant_dashboard_page
+            .days_bucket_list()
+            .last()
+            .find('.fa-chevron-right')
+            .should("be.visible")
+            .click({force:true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('Timeline')
+            .parent('a')
+            .should("be.visible")
+            .and("have.class", 'selected');
+
+        participant_dashboard_page.tabs()
+            .should("contain.text", 'Me')
+            .and("contain.text", 'Share')
+            .and("contain.text", 'Timeline')
+            .and("contain.text", 'More')
+            .contains('Me')
+            .parent('a')
+            .and("not.have.class", 'selected');
+
+        participant_dashboard_page.participant_name()
+            .should("be.visible")
+            .and("contain.text", Cypress.env('first_n') + ' ' + Cypress.env('last_n'));
+
+        participant_dashboard_page.participant_email()
+            .should("be.visible")
+            .and("contain.text", Cypress.env('account'));
     });
 
     it('Logout participant', () => {

@@ -138,6 +138,13 @@ class PO_Dashboard_Participant_Web_page {
     share_cancel_request_button() {
         return cy.get('.outbound-request .decline-button');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    days_bucket_list() {
+        return cy.get('.day-bucket');
+    }
 }
 
 export default PO_Dashboard_Participant_Web_page;
