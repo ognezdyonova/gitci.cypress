@@ -3,8 +3,9 @@ const TestRaiImporter = require("tr_cypress_reporter_simple");
 const path = require("path");
 const fs = require("fs");
 const xlsx = require("node-xlsx").default;
+const pdf = require('pdf-parse')
 
-const downloadDirectory = path.join(__dirname, './rkstudio/', 'downloads');
+const downloadDirectory = path.join(__dirname, './cypress/', 'downloads');
 const AllureWriter = require('@shelex/cypress-allure-plugin/writer');
 
 const findFile = (filename) => {
@@ -152,6 +153,23 @@ module.exports = defineConfig({
                         try {
                             const jsonData = xlsx.parse(fs.readFileSync(filePath));
                             resolve(jsonData);
+                        } catch (e) {
+                            reject(e);
+                        }
+                    });
+                }
+            });
+
+            on("task", {
+                readPdf({filePath}) {
+                    return new Promise((resolve, reject) => {
+                        try {
+                            const resolvedPath = path.resolve(filePath)
+                            let dataBuffer = fs.readFileSync(resolvedPath);
+                            let file_data = pdf(dataBuffer).then(function ({ text }) {
+                                return text
+                            });
+                            resolve(file_data);
                         } catch (e) {
                             reject(e);
                         }

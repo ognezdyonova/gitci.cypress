@@ -30,6 +30,13 @@ class PO_Login_Participant_Web_page {
     start_login_button() {
         return cy.get('[ng-click="startLogin()"]');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    error_message() {
+        return cy.get('.error');
+    }
 }
 
 export default PO_Login_Participant_Web_page;

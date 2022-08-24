@@ -9,7 +9,12 @@
  * - check Providers list: elements, searching
  * - Sharing page
  * - Timeline page: check elements, open timeline
+ * - More page: check elements
+ * - More page: contact support
+ * - More page: update profile
+ * - More page: Download / Share Health Record
  * - Logout participant
+ * - More page: Cancel account
  */
 
 import {env} from "../../../support/utils";
@@ -23,6 +28,8 @@ import PO_Login_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Logi
 describe("MyFHR  tests", () => {
     before(() => {
         let temp = new TempMail();
+        cy.task('cleanupDownloads');
+
         cy.open(env('WEB_BASE_URL_MY_FHR'));
 
         temp.createAccount();
@@ -708,7 +715,7 @@ describe("MyFHR  tests", () => {
             .last()
             .find('.fa-chevron-right')
             .should("be.visible")
-            .click({force:true});
+            .click({force: true});
 
         participant_dashboard_page
             .loader()
@@ -737,6 +744,362 @@ describe("MyFHR  tests", () => {
         participant_dashboard_page.participant_email()
             .should("be.visible")
             .and("contain.text", Cypress.env('account'));
+    });
+
+    it('More page: check elements', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('More')
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .more_links()
+            .should("be.visible")
+            .and("contain.text", 'User Guide')
+            .and("contain.text", 'Contact Support')
+            .and("contain.text", 'Update Profile')
+            .and("contain.text", 'Privacy Policy')
+            .and("contain.text", 'Download / Share Health Record')
+            .and("contain.text", 'Cancel Account')
+    });
+
+    it('More page: contact support', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('More')
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .provide_feedback_menu_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page.provide_feedback_instruction()
+            .should("be.visible")
+            .and("contain.text", 'Please share any suggestions or questions you have about this App and how it functions.   NOTE: please do not use this Feedback for any medical questions about your health -- contact your physician or health care provider regarding any concerns about your health.');
+
+        participant_dashboard_page.provide_feedback_subject_select()
+            .should("be.visible")
+            .select('Bug Report');
+
+        participant_dashboard_page.provide_feedback_comment_input()
+            .should("be.visible")
+            .type('Test bug report ' + new TempMail().makeHash_(10));
+
+        participant_dashboard_page.provide_feedback_submit_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .more_links()
+            .should("be.visible")
+            .and("contain.text", 'User Guide')
+            .and("contain.text", 'Contact Support')
+            .and("contain.text", 'Update Profile')
+            .and("contain.text", 'Privacy Policy')
+            .and("contain.text", 'Download / Share Health Record')
+            .and("contain.text", 'Cancel Account')
+    });
+
+    it('More page: update profile', () => {
+        let temp = new TempMail()
+        cy.session('new_email_user' + temp.makeHash_(3), () => {
+            cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+            let participant_main_page = new PO_Main_Participant_Web_page();
+
+            participant_main_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            let participant_login_page = new PO_Login_Participant_Web_page();
+            participant_login_page.email_input()
+                .should("be.visible")
+                .type(Cypress.env('account'))
+
+            participant_login_page.start_login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_login_page.password_input()
+                .should("be.visible")
+                .type('@Agent007')
+
+            participant_login_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+            participant_dashboard_page
+                .loader()
+                .should("not.be.visible");
+
+            participant_dashboard_page
+                .tabs()
+                .contains('More')
+                .should("be.visible")
+                .click({force: true});
+
+            participant_dashboard_page
+                .loader()
+                .should("not.be.visible");
+
+            participant_dashboard_page
+                .update_profile_menu_button()
+                .should("be.visible")
+                .click({force: true});
+
+            cy.wait(5000);
+
+            participant_dashboard_page
+                .update_email_line()
+                .should("be.visible")
+                .find('.fa-edit')
+                .click({force: true});
+
+
+            participant_dashboard_page
+                .update_profile_email_input()
+                .should("be.visible")
+                .type(temp.makeHash_(12));
+
+            participant_dashboard_page
+                .update_profile_submit_button()
+                .should("be.visible")
+                .click({force: true})
+
+            temp.createAccount();
+            temp.auth(cy.get('@account'))
+
+
+            cy.get('@account')
+                .then(l => {
+                    participant_dashboard_page
+                        .update_profile_email_input()
+                        .should("be.visible")
+                        .clear()
+                        .type(l.address.toString());
+                })
+
+            participant_dashboard_page
+                .update_profile_submit_button()
+                .should("be.visible")
+                .click({force: true});
+
+            cy.wait(10000);
+
+            cy.get('@token')
+                .then(l => {
+                    temp.getMessagesByToken(l.token.toString())
+                        .then(messages => {
+                            return temp.message.get_message(messages[0].id, l.token.toString()).as('message')
+                                .then((body) => {
+                                    cy.log(body)
+                                    expect(body.subject).to.contain("Verify your email address");
+                                    cy.wrap(temp.detectURLs(body.text))
+                                        .as('new_verify_link')
+                                });
+                        })
+                })
+
+            cy.get('@new_verify_link')
+                .then(l => {
+                    cy.log(l)
+                    Cypress.env('new_verify_link', l.toString())
+                })
+
+            cy.session('user_verify_'.concat(temp.makeHash_(12)), () => {
+                cy._origin(Cypress.env('new_verify_link'), null);
+                let participant_login_page = new PO_Login_Participant_Web_page();
+                participant_login_page.title()
+                    .should("be.visible");
+                cy.wait(5000)
+            })
+
+            cy.open(env('WEB_BASE_URL_MY_FHR'));
+            participant_main_page = new PO_Main_Participant_Web_page();
+            participant_main_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+
+            participant_login_page = new PO_Login_Participant_Web_page();
+            cy.get('@account')
+                .then(l => {
+                    participant_login_page.email_input()
+                        .should("be.visible")
+                        .type(l.address.toString());
+                    Cypress.env('account', l.address.toString());
+                })
+
+
+            participant_login_page.start_login_button()
+                .should("be.visible")
+                .click({force: true});
+
+            participant_login_page.password_input()
+                .should("be.visible")
+                .type('@Agent007')
+
+            participant_login_page.login_button()
+                .should("be.visible")
+                .click({force: true});
+
+
+            participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+            participant_dashboard_page
+                .loader()
+                .should("not.be.visible");
+
+            participant_dashboard_page.tabs()
+                .should("contain.text", 'Me')
+                .and("contain.text", 'Share')
+                .and("contain.text", 'Timeline')
+                .and("contain.text", 'More')
+                .contains('Me')
+                .parent('a')
+                .and("have.class", 'selected');
+        });
+    });
+
+    it('More page: Download / Share Health Record ', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('More')
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .download_health_record()
+            .should("be.visible")
+            .click({force: true});
+
+        cy.task("isExistDownloadFile", "portablehealthrecord.pdf", 5000)
+            .should("equal", true);
+
+        cy.readPdf('./cypress/downloads/portablehealthrecord.pdf').then(
+            text => {
+                console.log(text);
+                cy.log(text.toString());
+                expect(text.toString()).to.includes('myFHR  Health Record');
+                expect(text.toString()).to.includes('Generated: ' + Cypress.moment().format('M/DD/YYYY'));
+                expect(text.toString()).to.includes('Lab Results');
+                expect(text.toString()).to.includes('Medication History');
+                expect(text.toString()).to.includes('Allergies');
+                expect(text.toString()).to.includes('Conditions');
+            });
     });
 
     it('Logout participant', () => {
@@ -792,5 +1155,83 @@ describe("MyFHR  tests", () => {
 
         participant_login_page.login_button()
             .should("be.visible");
+    });
+
+    it('More page: Cancel account', () => {
+        cy.open(env('WEB_BASE_URL_MY_FHR'));
+
+        let participant_main_page = new PO_Main_Participant_Web_page();
+
+        participant_main_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_login_page = new PO_Login_Participant_Web_page();
+        participant_login_page.email_input()
+            .should("be.visible")
+            .type(Cypress.env('account'))
+
+        participant_login_page.start_login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007')
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        let participant_dashboard_page = new PO_Dashboard_Participant_Web_page();
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .tabs()
+            .contains('More')
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .loader()
+            .should("not.be.visible");
+
+        participant_dashboard_page
+            .cancel_account()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .cancel_account_link()
+            .should("be.visible");
+
+        participant_dashboard_page
+            .cancel_account_link()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .cancel_account()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_dashboard_page
+            .cancel_account_confirm_link()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.password_input()
+            .should("be.visible")
+            .type('@Agent007');
+
+        participant_login_page.login_button()
+            .should("be.visible")
+            .click({force: true});
+
+        participant_login_page.error_message()
+            .should("be.visible")
+            .and("include.text", 'invalid-password');
     });
 })

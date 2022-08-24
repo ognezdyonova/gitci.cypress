@@ -145,6 +145,106 @@ class PO_Dashboard_Participant_Web_page {
     days_bucket_list() {
         return cy.get('.day-bucket');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    more_links() {
+        return cy.getElementFromFrame('iframe', '.more-link');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    provide_feedback_menu_button() {
+        return cy.getElementFromFrame('iframe', '.provide-feedback');
+        c;
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    provide_feedback_instruction() {
+        return cy.get('.instructions');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    provide_feedback_subject_select() {
+        return cy.get('[ng-model="vm.feedbackSubject"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    provide_feedback_comment_input() {
+        return cy.get('[ng-model="vm.feedbackComment"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    provide_feedback_submit_button() {
+        return cy.get('[ng-click="vm.submitFeedback()"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    update_profile_menu_button() {
+        return cy.getElementFromFrame('iframe', '.update-profile');
+        c;
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    update_email_line() {
+        return cy.getElementFromFrame('iframe', '.health-profile-section').eq(0);
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    update_profile_email_input() {
+        return cy.get('.current-survey-content input');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    update_profile_submit_button() {
+        return cy.get('.current-survey-content .footer button');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    download_health_record() {
+        return cy.getElementFromFrame('iframe', '.portable-health-record');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    cancel_account() {
+        return cy.getElementFromFrame('iframe', '.cancel-account');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    cancel_account_confirm_link() {
+        return cy.get('.cancel-account-confirm');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    cancel_account_link() {
+        return cy.get('[ng-click="vm.hidePrompt()"]');
+    }
 }
 
 export default PO_Dashboard_Participant_Web_page;

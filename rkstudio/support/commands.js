@@ -441,3 +441,8 @@ Cypress.Commands.add('getElementFromFrame', ($iframe, $element) => {
             return cy.wrap($iframe.contents().find($element))
         });
 });
+
+
+Cypress.Commands.add("readPdf", (inputFile) => {
+    return cy.task('readPdf', {filePath: inputFile})
+});
