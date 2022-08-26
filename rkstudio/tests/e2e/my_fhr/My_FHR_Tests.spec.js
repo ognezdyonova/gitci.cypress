@@ -248,7 +248,7 @@ describe("MyFHR  tests", () => {
         participant_dashboard_page
             .error_message()
             .should("be.visible")
-            .and("contain.text", 'error-uploading-photo');
+            .and("contain.text", 'There was an error uploading your photo. Please try again.');
     });
 
     it('Upload png profile photo file', () => {
@@ -1232,6 +1232,6 @@ describe("MyFHR  tests", () => {
 
         participant_login_page.error_message()
             .should("be.visible")
-            .and("include.text", 'invalid-password');
+            .and("include.text", 'Invalid password. Please try again or select "Forgot password".');
     });
 })

@@ -12,16 +12,12 @@ import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 describe("Coordinator survey ", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
-    beforeEach(() => {
-        cy.login();
-    })
-
     afterEach('Remove survey', () => {
-        cy.open_project(project_name);
         cy.remove_project(project_name);
     });
 
     it("Add coordinator survey ", () => {
+        cy.login();
         cy.add_project(project_name);
         let project = new PO_Project();
 

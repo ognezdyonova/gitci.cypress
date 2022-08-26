@@ -24,7 +24,7 @@ class PO_Header {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     home_link() {
-        return cy.get('[ng-if="vm.layoutContext.CurrentResearchOrganizationNavigation.HomeUrl"]');
+        return cy.get('[title="Home"]');
     }
 
     /**
