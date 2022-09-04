@@ -59,7 +59,7 @@ Cypress.Commands.add('login', (l, p, main_page) => {
             if (main_page == null) {
                 cy.get('a')
                     .should('be.visible')
-                    .contains('ResearchKit Studio')
+                    .contains('MyDataHelps Designer')
                     .click({force: true})
             } else {
                 cy.get('a')
@@ -141,7 +141,7 @@ Cypress.Commands.add('new_login_session', (session_name) => {
         if ($body.find(".dashboard-links").length > 0) {   //evaluates as true
             cy.get('a')
                 .should('be.visible')
-                .contains('ResearchKit Studio')
+                .contains('MyDataHelps Designer')
                 .click({force: true})
         }
     });
