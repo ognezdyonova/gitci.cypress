@@ -373,7 +373,8 @@ describe("MyFHR  tests", () => {
             .should("be.visible")
             .clear()
             .type(note_data)
-            .type('{enter}');
+            .type('{enter}')
+            .wait(2000);
 
         cy.reload();
 

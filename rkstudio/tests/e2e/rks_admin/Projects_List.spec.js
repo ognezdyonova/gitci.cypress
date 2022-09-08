@@ -25,7 +25,7 @@ describe('RKS Admin: Project list', () => {
     })
 
     it('Projects list elements', () => {
-        cy.login(null, null, 'RKStudio Admin');
+        cy.login(null, null, 'MyDataHelps Designer Administration');
 
         let projects = new PO_AdminRKS_Projects();
 
@@ -86,7 +86,7 @@ describe('RKS Admin: Project list', () => {
     });
 
     it('Search for projects', () => {
-        cy.login(null, null, 'RKStudio Admin');
+        cy.login(null, null, 'MyDataHelps Designer Administration');
 
         let projects = new PO_AdminRKS_Projects();
 
@@ -113,7 +113,7 @@ describe('RKS Admin: Project list', () => {
     });
 
     it('Paging works', () => {
-        cy.login(null, null, 'RKStudio Admin');
+        cy.login(null, null, 'MyDataHelps Designer Administration');
 
         let projects = new PO_AdminRKS_Projects();
 
@@ -205,7 +205,7 @@ describe('RKS Admin: Project list', () => {
     });
 
     it("Open project", () => {
-        cy.login(null, null, 'RKStudio Admin');
+        cy.login(null, null, 'MyDataHelps Designer Administration');
 
         let projects = new PO_AdminRKS_Projects();
 
@@ -273,7 +273,7 @@ describe('RKS Admin: Project list', () => {
         cy.add_project(project_name);
         cy.add_paticipant();
 
-        cy.login(null, null, 'RKStudio Admin');
+        cy.login(null, null, 'MyDataHelps Designer Administration');
         let projects = new PO_AdminRKS_Projects();
         projects.header
             .navigation_tab('Users and Participants')
