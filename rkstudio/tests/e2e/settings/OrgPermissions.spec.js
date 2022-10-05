@@ -8,6 +8,7 @@
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Settings from "../../../pages/ResearchKitStudio/PO_Settings";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe('Org Permissions', () => {
     let project_name = 'test project for team'.concat(new Date().getTime().toString());
@@ -24,8 +25,8 @@ describe('Org Permissions', () => {
     it('Add a Team, selecting minimal permissions (e.g., Survey Author and Survey Publisher)', () => {
         cy.add_project(project_name);
 
-        let home = new PO_Home();
-        home.header.settings_link()
+        let project = new PO_Project();
+        project.header.settings_link()
             .should("be.visible")
             .click({force: true});
 
@@ -109,8 +110,8 @@ describe('Org Permissions', () => {
     });
 
     it('Edit a Team, selecting minimal permissions (e.g., Survey Author and Survey Publisher)', () => {
-        let home = new PO_Home();
-        home.header.settings_link()
+        let project = new PO_Project();
+        project.header.settings_link()
             .should("be.visible")
             .click({force: true});
 
@@ -194,8 +195,8 @@ describe('Org Permissions', () => {
     });
 
     it("On the User Access tab, add an email address that is not already an existing RKStudio user (use a variation of your CE email address)", () => {
-        let home = new PO_Home();
-        home.header.settings_link()
+        let project = new PO_Project();
+        project.header.settings_link()
             .should("be.visible")
             .click({force: true});
 
@@ -261,12 +262,11 @@ describe('Org Permissions', () => {
 
         org_settings.user_invitation_items()
             .and("not.have.text", 'testuser@maildomain.com');
-
     });
 
     it('Remove a Team', () => {
-        let home = new PO_Home();
-        home.header.settings_link()
+        let project = new PO_Project();
+        project.header.settings_link()
             .should("be.visible")
             .click({force: true});
 
