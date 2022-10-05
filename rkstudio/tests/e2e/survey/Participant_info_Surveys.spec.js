@@ -7,6 +7,7 @@
 
 
 import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 
 describe("Participant survey ", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
@@ -16,16 +17,37 @@ describe("Participant survey ", () => {
     })
 
     afterEach('Remove survey', () => {
-        cy.open_project(project_name);
+        let project = new PO_Project();
+        project.header.projects_link()
+            .should("be.visible")
+            .click({force:true});
+
+        let projects = new PO_Projects();
+        projects.projects_list()
+            .should("be.visible")
+            .contains(project_name)
+            .parents('.items-list-item')
+            .click({force: true});
+
+
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
         cy.remove_paticipant();
         cy.remove_project(project_name);
     });
 
     it("Participant info elements available", () => {
         cy.add_project(project_name);
-        cy.add_paticipant();
-
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
+        cy.add_paticipant();
 
         project.participants_tab()
             .click({force: true});
@@ -144,9 +166,14 @@ describe("Participant survey ", () => {
 
     it("Complete survey task ", () => {
         cy.add_project(project_name);
-        cy.add_paticipant();
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
+        cy.add_paticipant();
 
         project.participants_tab()
             .click({force: true});
@@ -235,9 +262,14 @@ describe("Participant survey ", () => {
 
     it("Close survey task ", () => {
         cy.add_project(project_name);
-        cy.add_paticipant();
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
+        cy.add_paticipant();
 
         project.participants_tab()
             .click({force: true});
