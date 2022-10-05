@@ -159,9 +159,6 @@ Cypress.Commands.add('add_project', (project_name) => {
     project.enrollment_instructions_items()
         .should("be.visible");
 
-    project.project_segment_items()
-        .should("be.visible");
-
     project.header.projects_link()
         .should("be.visible")
         .click({force: true});

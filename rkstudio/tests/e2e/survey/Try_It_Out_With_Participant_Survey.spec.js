@@ -5,23 +5,49 @@
 
 
 import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 
 describe("On the \"Try it out,\" there is the capability to search a survey by using the ppt ID for a ppt who " +
     "participated previously on the survey", () => {
     let project_name = 'test project for export'.concat(new Date().getTime().toString());
 
-    beforeEach(() => {
+    before(() => {
         cy.login();
     })
 
-    afterEach('Remove survey', () => {
-        cy.open_project(project_name);
+    after('Remove survey', () => {
+        let survey_page = new PO_Survey();
+        survey_page.header.projects_link()
+            .should("be.visible")
+            .click({force:true});
+
+        let projects = new PO_Projects();
+        projects.projects_list()
+            .should("be.visible")
+            .contains(project_name)
+            .parents('.items-list-item')
+            .click({force: true});
+
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         cy.remove_paticipant();
         cy.remove_project(project_name);
     });
 
     it("Add Consent form", () => {
         cy.add_project(project_name);
+
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         cy.add_paticipant();
         cy.open_survey(project_name);
 
