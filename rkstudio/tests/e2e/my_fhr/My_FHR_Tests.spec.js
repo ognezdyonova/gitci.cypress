@@ -472,31 +472,40 @@ describe("MyFHR  tests", () => {
             .providers_search_input()
             .should("be.visible");
 
-        participant_dashboard_page
-            .providers_list()
-            .should("be.visible")
-            .and("have.length.above", 1);
+        cy.get('body').then(($body) => {
+            if ($body.find('.provider').length) {
+                participant_dashboard_page
+                    .providers_list()
+                    .should("be.visible")
+                    .and("have.length.above", 1);
 
-        participant_dashboard_page
-            .providers_search_input()
-            .should("be.visible")
-            .type('test');
+                participant_dashboard_page
+                    .providers_search_input()
+                    .should("be.visible")
+                    .type('test');
 
-        participant_dashboard_page
-            .providers_list()
-            .should("be.visible")
-            .and("have.length.above", 1)
-            .and("include.text", 'test');
+                participant_dashboard_page
+                    .providers_list()
+                    .should("be.visible")
+                    .and("have.length.above", 1)
+                    .and("include.text", 'test');
 
-        participant_dashboard_page
-            .providers_search_input()
-            .should("be.visible")
-            .clear()
-            .type(new TempMail().makeHash_(5));
+                participant_dashboard_page
+                    .providers_search_input()
+                    .should("be.visible")
+                    .clear()
+                    .type(new TempMail().makeHash_(5));
 
-        participant_dashboard_page
-            .providers_list()
-            .should("not.exist");
+                participant_dashboard_page
+                    .providers_list()
+                    .should("not.exist");
+            } else {
+                participant_dashboard_page
+                    .providers_list_no_results()
+                    .should("be.visible")
+                    .and("contain.text", 'No results')
+            }
+        });
     });
 
     it('Sharing page', () => {
@@ -1095,7 +1104,7 @@ describe("MyFHR  tests", () => {
                 console.log(text);
                 cy.log(text.toString());
                 expect(text.toString()).to.includes('myFHR  Health Record');
-                expect(text.toString()).to.includes('Generated: ' + Cypress.moment().format('M/DD/YYYY'));
+                expect(text.toString()).to.includes('Generated: ' + Cypress.moment().format('M/D/YYYY'));
                 expect(text.toString()).to.includes('Lab Results');
                 expect(text.toString()).to.includes('Medication History');
                 expect(text.toString()).to.includes('Allergies');

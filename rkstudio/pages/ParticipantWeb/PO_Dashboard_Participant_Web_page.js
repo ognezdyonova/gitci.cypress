@@ -86,6 +86,13 @@ class PO_Dashboard_Participant_Web_page {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
+    providers_list_no_results() {
+        return cy.get('.no-results');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     providers_search_input() {
         return cy.get('.search-wrap input');
     }
