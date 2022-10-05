@@ -244,8 +244,8 @@ Cypress.Commands.add('open_project', (name) => {
 })
 
 Cypress.Commands.add('open_survey', (name) => {
-    let home = new PO_Home();
-    home.header.surveys_link()
+    let project = new PO_Project();
+    project.header.surveys_link()
         .should("be.visible")
         .click({force: true});
 
@@ -346,6 +346,11 @@ Cypress.Commands.add('add_paticipant', () => {
 
 Cypress.Commands.add('add_real_participant', (account) => {
     let project = new PO_Project();
+    project.project_setup_items()
+        .should("be.visible")
+        .contains('About')
+        .click({force: true});
+
     let temp = new TempMail();
     temp.createAccount();
 

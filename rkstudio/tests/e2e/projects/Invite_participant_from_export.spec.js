@@ -10,6 +10,7 @@ import PO_Join_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Join_
 import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
 import PO_Welcome_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Welcome_Participant_Web_page";
 import PO_Dashboard_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Dashboard_Participant_Web_page";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe('Invite a participant from export', () => {
     let project_name = 'test project for invite'.concat(new Date().getTime().toString());
@@ -17,7 +18,15 @@ describe('Invite a participant from export', () => {
     after('remove created project', () => {
         cy.login();
         cy.open_project(project_name);
+
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         cy.remove_paticipant();
+
         cy.remove_project(project_name);
     });
 
