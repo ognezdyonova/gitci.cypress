@@ -27,9 +27,6 @@ describe("General site navigation", () => {
         notifications.header.organization_switcher_link()
             .should("be.visible");
 
-        notifications.header.home_link()
-            .should("be.visible");
-
         notifications.header.projects_link()
             .should("be.visible");
 

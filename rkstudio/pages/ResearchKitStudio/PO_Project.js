@@ -37,6 +37,27 @@ class PO_Project {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
+    project_setup_items() {
+        return cy.get('project-dashboard-panel .summary-item')
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    enrollment_instructions_items() {
+        return cy.get('project-enrollment-instructions .enrollment-instructions-section')
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    project_segment_items() {
+        return cy.get('project-segment-summary .segment-item')
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     settings_tab() {
         return cy.get('.editor-tabs a').contains('Settings')
     }

@@ -11,7 +11,7 @@
 
 import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 
-describe("General site navigation", () => {
+describe.skip("General site navigation", () => {
     beforeEach(() => {
         cy.login();
     })
@@ -20,9 +20,6 @@ describe("General site navigation", () => {
 
         let home_page = new PO_Home();
         home_page.header.organization_switcher_link()
-            .should("be.visible");
-
-        home_page.header.home_link()
             .should("be.visible");
 
         home_page.header.projects_link()

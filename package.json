@@ -6,7 +6,7 @@
   "scripts": {
     "cy:run": "TZ=America/Denver ./node_modules/.bin/cypress run --browser chrome --env allure=true",
     "cy:open": "TZ=America/Denver ./node_modules/.bin/cypress open",
-    "cy:instal": "TZ=America/Denver ./node_modules/.bin/cypress install",
+    "cy:install": "TZ=America/Denver ./node_modules/.bin/cypress install",
     "cy:verify": "$(npm bin)/cypress verify",
     "cy:info": "cypress info",
     "cy:version": "cypress version",

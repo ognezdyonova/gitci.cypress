@@ -19,6 +19,21 @@ describe("General site navigation", () => {
     })
 
     it("Check navigation to Projects page", () => {
+
+        let project = new PO_Project();
+        project.title()
+            .should("be.visible")
+            .and("contain.text", 'Projects');
+
+        project.project_setup_items()
+            .should("be.visible");
+
+        project.enrollment_instructions_items()
+            .should("be.visible");
+
+        project.project_segment_items()
+            .should("be.visible");
+
         let home = new PO_Home();
         home.header.projects_link()
             .should("be.visible")
@@ -26,9 +41,6 @@ describe("General site navigation", () => {
 
         let projects = new PO_Projects();
         projects.header.organization_switcher_link()
-            .should("be.visible");
-
-        projects.header.home_link()
             .should("be.visible");
 
         projects.header.projects_link()
@@ -66,22 +78,23 @@ describe("General site navigation", () => {
     });
 
     it("Check navigation to Project page", () => {
-        let home = new PO_Home();
-        home.header.projects_link()
-            .should("be.visible")
-            .click({force: true});
-
-        let projects = new PO_Projects();
-        projects.projects_list()
-            .should("be.visible")
-            .eq(0)
-            .click({force: true});
-
         let project = new PO_Project();
-        project.header.organization_switcher_link()
+        project.title()
+            .should("be.visible")
+            .and("contain.text", 'Projects');
+
+        project.enrollment_instructions_items()
             .should("be.visible");
 
-        project.header.home_link()
+        project.project_segment_items()
+            .should("be.visible");
+
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force:true});
+
+        project.header.organization_switcher_link()
             .should("be.visible");
 
         project.header.projects_link()
@@ -132,7 +145,12 @@ describe("General site navigation", () => {
 
         project.settings.menu_items()
             .should("be.visible")
-            .contains('General')
+            .contains('About')
+            .click({force: true});
+
+        project.settings.menu_items()
+            .should("be.visible")
+            .contains('Enrollment')
             .click({force: true});
 
         project.settings.menu_items()

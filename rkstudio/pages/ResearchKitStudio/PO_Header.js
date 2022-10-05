@@ -21,6 +21,7 @@ class PO_Header {
     }
 
     /**
+     * Was removed
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     home_link() {

@@ -28,9 +28,6 @@ describe("General site navigation", () => {
         surveys.header.organization_switcher_link()
             .should("be.visible");
 
-        surveys.header.home_link()
-            .should("be.visible");
-
         surveys.header.projects_link()
             .should("be.visible");
 
@@ -121,8 +118,6 @@ describe("General site navigation", () => {
             .click({force: true});
 
         let survey = new PO_Survey();
-        survey.header.home_link()
-            .should("be.visible");
 
         survey.header.projects_link()
             .should("be.visible");
