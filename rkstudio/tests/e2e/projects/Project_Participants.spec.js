@@ -23,6 +23,11 @@ describe('Export the project\'s data using CSV and then JSON (your coordinator u
         cy.add_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.invitations_tab()
             .should("be.visible")
             .click({force: true});
@@ -70,8 +75,11 @@ describe('Export the project\'s data using CSV and then JSON (your coordinator u
     });
 
     it("Remove project with active participant", () => {
-        let home = new PO_Home();
-        home.header
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+
+        project.header
             .projects_link()
             .should("be.visible")
             .click({force: true})
@@ -98,6 +106,11 @@ describe('Export the project\'s data using CSV and then JSON (your coordinator u
         cy.open_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.participants_tab()
             .should("be.visible")
             .click({force: true});
