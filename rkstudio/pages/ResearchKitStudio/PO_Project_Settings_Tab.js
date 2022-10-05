@@ -51,21 +51,21 @@ class PO_Project_Settings_Tab {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    general_consent_survey_select() {
+    enrollment_consent_survey_select() {
         return cy.get('[ng-model="vm.project.EnrollmentSettings.SurveyID"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    general_consent_survey_edit_button() {
+    enrollment_consent_survey_edit_button() {
         return cy.get('[ng-click="vm.editSelectedEnrollmentSurvey()"]');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    general_consent_survey_preview_button() {
+    enrollment_consent_survey_preview_button() {
         return cy.get('[ng-click="vm.previewSelectedEnrollmentSurvey()"]');
     }
 
@@ -123,7 +123,7 @@ class PO_Project_Settings_Tab {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
-    general_platforms_list() {
+    enrollment_platforms_list() {
         return cy.get('[ng-repeat="platform in vm.allPlatforms"]');
     }
 
@@ -131,7 +131,7 @@ class PO_Project_Settings_Tab {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     general_save_button() {
-        return cy.get('[ng-click="vm.saveProjectProperties()"]');
+        return cy.get('.save-control-bar [ng-click="vm.saveProjectProperties()"]');
     }
 }
 

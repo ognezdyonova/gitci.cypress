@@ -89,7 +89,7 @@ describe('Joining a project - after each method, verify that participant display
 
         project.settings.menu_items()
             .should("be.visible")
-            .contains('General')
+            .contains('About')
             .click({force: true});
 
         project.settings.general_copy_project_url_button()

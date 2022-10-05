@@ -2,7 +2,6 @@
  * Create a project, verify that a consent survey was created (the consent will be the name of the project unless changed on survey settings), enable all Platforms, Save
  */
 
-import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
@@ -16,20 +15,37 @@ describe('Create a project, verify that a consent survey was created (the consen
     })
 
     it('Create project from home page', () => {
-        let home = new PO_Home();
-        home.new_project_input_name()
+        let project = new PO_Project();
+        project.title()
             .should("be.visible")
-            .type(project_name)
+            .and("contain.text", 'Projects');
 
-        home.new_project_add_button()
+        project.project_setup_items()
+            .should("be.visible");
+
+        project.header.projects_link()
             .should("be.visible")
             .click({force: true});
 
-        let project = new PO_Project();
+        let projects = new PO_Projects();
+        projects.new_project_name_input()
+            .should("be.visible")
+            .type(project_name)
+
+        projects.new_project_create_button()
+            .should("be.visible")
+            .click({force: true});
+
+        project = new PO_Project();
 
         project.title()
             .should("be.visible")
             .and("contain.text", project_name);
+
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
 
         project.settings_tab()
             .should("be.visible");
@@ -57,13 +73,18 @@ describe('Create a project, verify that a consent survey was created (the consen
         cy.open_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.settings_tab()
             .should("be.visible")
             .click({force: true})
 
         project.settings.menu_items()
             .should("be.visible")
-            .contains('General')
+            .contains('About')
             .click({force: true});
 
         project.settings.general_project_id_label()
@@ -84,15 +105,20 @@ describe('Create a project, verify that a consent survey was created (the consen
         project.settings.general_project_type_select()
             .should("be.visible");
 
-        project.settings.general_consent_survey_select()
+        project.settings.menu_items()
+            .should("be.visible")
+            .contains('Enrollment')
+            .click({force: true});
+
+        project.settings.enrollment_consent_survey_select()
             .should("be.visible")
             .find('option:selected')
             .should('have.text', project_name.concat(' Project Consent'));
 
-        project.settings.general_consent_survey_edit_button()
+        project.settings.enrollment_consent_survey_edit_button()
             .should("be.visible");
 
-        project.settings.general_consent_survey_preview_button()
+        project.settings.enrollment_consent_survey_preview_button()
             .should("be.visible");
 
         project.settings.menu_items()
@@ -134,55 +160,69 @@ describe('Create a project, verify that a consent survey was created (the consen
         cy.open_project(project_name);
 
         let project = new PO_Project();
-        project.settings_tab()
+        project.project_setup_items()
             .should("be.visible")
+            .contains('About')
             .click({force: true});
 
-        project.settings.general_platforms_list()
+        project.settings_tab()
+            .should("be.visible")
+            .click({force: true})
+
+        project.settings.menu_items()
+            .should("be.visible")
+            .contains('Enrollment')
+            .click({force: true});
+
+        project.settings.enrollment_platforms_list()
             .last()
             .scrollIntoView()
             .should("be.visible");
 
-        project.settings.general_platforms_list()
+        project.settings.enrollment_platforms_list()
             .find("input")
             .uncheck({force: true})
             .should('not.be.checked');
 
         project.settings.general_save_button()
-            .scrollIntoView()
             .should("be.visible")
-            .click({force: true});
+            .click({force: true, multiple: true});
 
-        cy.open_project(project_name);
+        cy.reload();
 
         project.settings_tab()
             .should("be.visible")
+            .click({force: true})
+
+        project.settings.menu_items()
+            .should("be.visible")
+            .contains('Enrollment')
             .click({force: true});
 
-        project.settings.general_platforms_list()
-            .last()
-            .scrollIntoView()
-            .should("be.visible");
-
-        project.settings.general_platforms_list()
+        project.settings.enrollment_platforms_list()
+            .should("be.visible")
             .find("input")
             .should('not.be.checked');
 
-        project.settings.general_platforms_list()
+        project.settings.enrollment_platforms_list()
             .find("input")
             .check({force: true})
             .should('be.checked');
 
         project.settings.general_save_button()
-            .scrollIntoView()
             .should("be.visible")
-            .click({force: true});
+            .click({force: true, multiple: true});
     });
 
     it("Enable sensor data (e.g., Steps, Active Summary, Exercise Time) - e.g., Apple Health ", () => {
         cy.open_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.sensor_data_tab()
             .should("be.visible")
             .click({force: true});
@@ -301,11 +341,17 @@ describe('Create a project, verify that a consent survey was created (the consen
     });
 
     it('Remove created project', () => {
-        let home = new PO_Home();
-        home.header
-            .projects_link()
+        let project = new PO_Project();
+        project.title()
             .should("be.visible")
-            .click({force: true})
+            .and("contain.text", 'Projects');
+
+        project.project_setup_items()
+            .should("be.visible");
+
+        project.header.projects_link()
+            .should("be.visible")
+            .click({force: true});
 
         let projects = new PO_Projects();
         projects.projects_list()
@@ -318,7 +364,7 @@ describe('Create a project, verify that a consent survey was created (the consen
         projects.projects_list()
             .should("not.contain.text", project_name);
 
-        home.header.surveys_link()
+        projects.header.surveys_link()
             .should("be.visible")
             .click({force: true});
 

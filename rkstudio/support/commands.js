@@ -223,11 +223,17 @@ Cypress.Commands.add('remove_project', (name) => {
 })
 
 Cypress.Commands.add('open_project', (name) => {
-    let home = new PO_Home();
-    home.header
-        .projects_link()
+    let project = new PO_Project();
+    project.title()
         .should("be.visible")
-        .click({force: true})
+        .and("contain.text", 'Projects');
+
+    project.project_setup_items()
+        .should("be.visible");
+
+    project.header.projects_link()
+        .should("be.visible")
+        .click({force: true});
 
     let projects = new PO_Projects();
     projects.projects_list()
