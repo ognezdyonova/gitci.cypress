@@ -10,6 +10,7 @@ import PO_Welcome_Participant_Web_page from "../../../pages/ParticipantWeb/PO_We
 import PO_Dashboard_Participant_Web_page from "../../../pages/ParticipantWeb/PO_Dashboard_Participant_Web_page";
 import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 import PO_Project_Participants_list_Tab from "../../../pages/ResearchKitStudio/PO_Project_Participants_list_Tab";
+import PO_Projects from "../../../pages/ResearchKitStudio/PO_Projects";
 
 describe('Joining a project - after each method, verify that participant displays in RKStudio\n  -Via Email invitation', () => {
     let project_name = 'test project for invite'.concat(new Date().getTime().toString());
@@ -74,22 +75,46 @@ describe('Joining a project - after each method, verify that participant display
     after('remove created project', () => {
         cy.login();
         cy.open_project(project_name);
+
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         cy.remove_paticipant();
+
         cy.remove_project(project_name);
     });
 
     it('Get Invite for a participant from email', () => {
-        cy.open_project(project_name);
+        let survey_page = new PO_Survey();
+        survey_page.header.projects_link()
+            .should("be.visible")
+            .click({force:true});
+
+        let projects = new PO_Projects();
+        projects.projects_list()
+            .should("be.visible")
+            .contains(project_name)
+            .parents('.items-list-item')
+            .click({force: true});
+
         let temp = new TempMail();
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.settings_tab()
             .should("be.visible")
             .click({force: true});
 
         project.settings.menu_items()
             .should("be.visible")
-            .contains('About')
+            .contains('Enrollment')
             .click({force: true});
 
         project.settings.general_copy_project_url_button()
@@ -170,6 +195,11 @@ describe('Joining a project - after each method, verify that participant display
         cy.open_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force: true});
+
         project.participants_tab()
             .should("be.visible")
             .click({force: true});
@@ -180,6 +210,6 @@ describe('Joining a project - after each method, verify that participant display
             .should("be.visible")
             .and("have.length", 1)
             .and("include.text", Cypress.env('account'))
-            .and("include.text", Cypress.moment().format('M/DD/YY'));
+            .and("include.text", Cypress.moment().format('M/D/YY'));
     });
 })
