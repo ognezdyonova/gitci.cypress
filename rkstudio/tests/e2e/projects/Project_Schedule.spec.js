@@ -22,8 +22,12 @@ describe('Project Scheduling', () => {
 
     it("Schedule a survey using \"Based On A Specific Date\"", () => {
         cy.add_project(project_name);
-
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
         project.schedules_tab()
             .should("be.visible")
             .click({force: true});
@@ -163,6 +167,11 @@ describe('Project Scheduling', () => {
         cy.add_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
         project.schedules_tab()
             .should("be.visible")
             .click({force: true});
@@ -293,6 +302,11 @@ describe('Project Scheduling', () => {
         cy.add_project(project_name);
 
         let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
+
         project.schedules_tab()
             .should("be.visible")
             .click({force: true});
@@ -395,9 +409,13 @@ describe('Project Scheduling', () => {
     it("Add a new segment, verify the resulting number of participants is correct", () => {
         cy.add_project(project_name);
 
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains("About")
+            .click({force:true});
         cy.add_paticipant();
 
-        let project = new PO_Project();
         project.schedules_tab()
             .should("be.visible")
             .click({force: true});
