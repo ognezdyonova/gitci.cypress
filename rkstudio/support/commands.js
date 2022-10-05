@@ -148,16 +148,34 @@ Cypress.Commands.add('new_login_session', (session_name) => {
 });
 
 Cypress.Commands.add('add_project', (project_name) => {
-    let home = new PO_Home();
-    home.new_project_input_name()
+    let project = new PO_Project();
+    project.title()
         .should("be.visible")
-        .type(project_name)
+        .and("contain.text", 'Projects');
 
-    home.new_project_add_button()
+    project.project_setup_items()
+        .should("be.visible");
+
+    project.enrollment_instructions_items()
+        .should("be.visible");
+
+    project.project_segment_items()
+        .should("be.visible");
+
+    project.header.projects_link()
         .should("be.visible")
         .click({force: true});
 
-    let project = new PO_Project();
+    let projects = new PO_Projects();
+    projects.new_project_name_input()
+        .should("be.visible")
+        .type(project_name)
+
+    projects.new_project_create_button()
+        .should("be.visible")
+        .click({force: true});
+
+    project = new PO_Project();
 
     project.title()
         .should("be.visible")
@@ -165,8 +183,8 @@ Cypress.Commands.add('add_project', (project_name) => {
 })
 
 Cypress.Commands.add('remove_project', (name) => {
-    let home = new PO_Home();
-    home.header
+    let project = new PO_Project();
+    project.header
         .projects_link()
         .should("be.visible")
         .click({force: true})
@@ -182,7 +200,7 @@ Cypress.Commands.add('remove_project', (name) => {
     projects.projects_list()
         .should("not.contain.text", name);
 
-    home.header.surveys_link()
+    projects.header.surveys_link()
         .should("be.visible")
         .click({force: true});
 
