@@ -14,7 +14,6 @@ describe('Testing the Beacon Admin page', () => {
         cy.login(null, null, 'Beacon Admin');
 
         let beacon = new PO_AdminRKS_Beacon_Queries();
-
         beacon.header
             .navigation_tab('Tester')
             .should("be.visible")

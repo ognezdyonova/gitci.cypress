@@ -30,14 +30,14 @@ class PO_AdminRKS_Beacon_Tester {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     add_patient_select_query_button() {
-        return cy.get('add-patients-control query-dropdown-selector[selected-query="$ctrl.selectedQuery"] button');
+        return cy.get('.add-patients-control-container query-dropdown-selector[on-selected="$ctrl.setSelectedQuery(selectedQueryID)"] button');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     add_patient_select_query_options() {
-        return cy.get('add-patients-control query-dropdown-selector[selected-query="$ctrl.selectedQuery"] ul.dropdown-menu li a');
+        return cy.get('.add-patients-control-container query-dropdown-selector[on-selected="$ctrl.setSelectedQuery(selectedQueryID)"] ul.dropdown-menu li a');
     }
 
     /**
@@ -107,14 +107,14 @@ class PO_AdminRKS_Beacon_Tester {
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     test_loops_select_query_button() {
-        return cy.get('loop-control query-dropdown-selector[selected-query="$ctrl.selectedQuery"] button');
+        return cy.get('loop-control query-dropdown-selector[on-selected="$ctrl.setSelectedQuery(selectedQueryID)"] button');
     }
 
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
     test_loops_select_query_options() {
-        return cy.get('loop-control query-dropdown-selector[selected-query="$ctrl.selectedQuery"] ul.dropdown-menu li a');
+        return cy.get('loop-control query-dropdown-selector[on-selected="$ctrl.setSelectedQuery(selectedQueryID)"] ul.dropdown-menu li a');
     }
 
     /**
