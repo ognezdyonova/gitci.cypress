@@ -4,6 +4,7 @@
 
 
 import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe("Using 'Surveys' screen, 'Try it Out' the new survey", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
@@ -11,6 +12,12 @@ describe("Using 'Surveys' screen, 'Try it Out' the new survey", () => {
 
     beforeEach(() => {
         cy.login();
+
+        let project = new PO_Project();
+        project.header
+            .surveys_link()
+            .should("be.visible")
+            .click({force:true})
     })
 
     afterEach('Remove survey', () => {

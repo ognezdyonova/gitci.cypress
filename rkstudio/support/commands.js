@@ -262,12 +262,12 @@ Cypress.Commands.add('open_survey', (name) => {
 })
 
 Cypress.Commands.add('add_survey', (survey_name) => {
-    let home = new PO_Home();
-    home.new_survey_input_name()
+    let surveys = new PO_Surveys();
+    surveys.new_survey_input_name()
         .should("be.visible")
         .type(survey_name);
 
-    home.new_survey_add_button()
+    surveys.new_survey_add_button()
         .should("be.visible")
         .click({force: true});
 
