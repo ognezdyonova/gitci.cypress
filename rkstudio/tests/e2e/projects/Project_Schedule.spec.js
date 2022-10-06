@@ -218,6 +218,11 @@ describe('Project Scheduling', () => {
             .type(schedule_name);
 
         project.event_based_schedule_modal
+            .start_delivery_event_name_select()
+            .should("be.visible")
+            .select(1);
+
+        project.event_based_schedule_modal
             .category_select()
             .should("be.visible");
 

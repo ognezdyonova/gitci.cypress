@@ -3,9 +3,9 @@
  - You are able to select other versions on mature surveys
  */
 
-import PO_Home from "../../../pages/ResearchKitStudio/PO_Home";
 import PO_Surveys from "../../../pages/ResearchKitStudio/PO_Surveys";
 import PO_Survey from "../../../pages/ResearchKitStudio/PO_Survey";
+import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 
 describe("Publish the new survey (test that you are able to select other versions on mature surveys)", () => {
     let survey_name = 'test survey '.concat(new Date().getTime().toString());
@@ -15,8 +15,8 @@ describe("Publish the new survey (test that you are able to select other version
     })
 
     after('Remove survey', () => {
-        let home = new PO_Home();
-        home.header.surveys_link()
+        let project = new PO_Project();
+        project.header.surveys_link()
             .should("be.visible")
             .click({force: true});
 
@@ -43,13 +43,17 @@ describe("Publish the new survey (test that you are able to select other version
     });
 
     it("Publish survey", () => {
-        let home = new PO_Home();
+        let project = new PO_Project();
+        project.header.surveys_link()
+            .should("be.visible")
+            .click({force: true});
 
-        home.new_survey_input_name()
+        let surveys = new PO_Surveys();
+        surveys.new_survey_input_name()
             .should("be.visible")
             .type(survey_name);
 
-        home.new_survey_add_button()
+        surveys.new_survey_add_button()
             .should("be.visible")
             .click({force: true});
 
@@ -248,7 +252,6 @@ describe("Publish the new survey (test that you are able to select other version
             .should("be.visible")
             .find('option:selected')
             .should('have.text', 'Reaction Time');
-
     });
 });
 

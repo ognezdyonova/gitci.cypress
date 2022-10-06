@@ -121,6 +121,13 @@ class PO_EventBasedScheduleModal {
     /**
      * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
      */
+    start_delivery_event_name_select() {
+        return cy.get('[ng-model="selectedEventName"]');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
     action_custom_field_items() {
         return cy.get('[ng-show="SetCustomFieldActions.length"] tbody .action-row');
     }

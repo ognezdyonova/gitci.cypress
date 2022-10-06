@@ -148,6 +148,20 @@ class PO_Surveys {
     shared_survey_items_search_results() {
         return cy.get('.shared-surveys .search-results .shared-survey-category .shared-survey');
     }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    new_survey_search_input() {
+        return cy.get('.wizard-section .wizard-items-list .survey-store-search input');
+    }
+
+    /**
+     * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+     */
+    new_survey_add_button() {
+        return cy.get('button[ng-click="addSurvey(newSurveyName)"]');
+    }
 }
 
 export default PO_Surveys;
