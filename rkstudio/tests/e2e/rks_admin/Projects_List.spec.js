@@ -271,6 +271,11 @@ describe('RKS Admin: Project list', () => {
 
     it("Not Change/Update user email", () => {
         cy.add_project(project_name);
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force:true})
         cy.add_paticipant();
 
         cy.login(null, null, 'MyDataHelps Designer Administration');
@@ -348,7 +353,11 @@ describe('RKS Admin: Project list', () => {
         cy.login();
         cy.open_project(project_name);
 
-        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible")
+            .contains('About')
+            .click({force:true})
+
         project.participants_tab()
             .should("be.visible")
             .click({force: true});
