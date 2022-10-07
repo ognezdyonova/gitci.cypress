@@ -16,6 +16,20 @@ import PO_Project from "../../../pages/ResearchKitStudio/PO_Project";
 describe("General site navigation", () => {
     beforeEach(() => {
         cy.login();
+        let project = new PO_Project();
+        project.project_setup_items()
+            .should("be.visible");
+
+        project.header.projects_link()
+            .should("be.visible")
+            .click({force:true});
+
+        let projects = new PO_Projects();
+        projects.projects_list()
+            .should("be.visible")
+            .contains('Test')
+            .parents('.items-list-item')
+            .click({force: true});
     })
 
     it("Check navigation to Projects page", () => {
