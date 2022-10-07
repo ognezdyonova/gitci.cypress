@@ -1,3 +1,7 @@
 /node_modules/
 /.idea/
 
+/allure-report/
+/allure-results/
+/rkstudio/logs/screenshots/
+/rkstudio/logs/videos/
