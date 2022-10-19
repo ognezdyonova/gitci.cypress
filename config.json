@@ -1,0 +1,37 @@
+{
+  "reports": [
+    {
+      "targets": [
+        {
+          "name": "slack",
+          "inputs": {
+            "title": "RKStudio Cypress report",
+            "url": "https://hooks.slack.com/services/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",
+            "publish": "failure-details"
+          },
+          "extensions": [
+            {
+              "name": "hyperlinks",
+              "inputs": {
+                "links": [
+                  {
+                    "text": "Logs",
+                    "url": "https://hooks.slack.com/services/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"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "results": [
+        {
+          "type": "junit",
+          "files": [
+            "./reports/junit.*.xml"
+          ]
+        }
+      ]
+    }
+  ]
+}

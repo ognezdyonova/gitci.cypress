@@ -25,3 +25,10 @@ Start running tests:
     - `npm run allure:report`
     - `npm run allure:server`
 
+  
+__GITHUB Actions__
+- https://github.com/marketplace/actions/html-preview - publishing reports
+- https://github.com/marketplace/actions/cypress-io - Cypress provider
+- https://github.com/marketplace/actions/slack-send - Slack provider
+- https://github.com/marketplace/actions/upload-a-build-artifact publishing artifacts
+

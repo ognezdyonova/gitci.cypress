@@ -4,8 +4,10 @@
   "description": "This framework for testing UI",
   "main": "index.js",
   "scripts": {
-    "cy:run": "TZ=America/Denver ./node_modules/.bin/cypress run --browser chrome --env allure=true",
+    "cy:run": "TZ=America/Denver ./node_modules/.bin/cypress run --browser chrome --env allure=true --reporter mocha-junit-reporter",
+    "cy:only_run_one_spec": "TZ=America/Denver ./node_modules/.bin/cypress run --browser chrome --env allure=true --reporter mocha-junit-reporter --spec rkstudio/tests/e2e/account/LogOut.spec.js",
     "cy:open": "TZ=America/Denver ./node_modules/.bin/cypress open",
+    "slack:publish": "./node_modules/.bin/test-results-reporter publish",
     "cy:install": "TZ=America/Denver ./node_modules/.bin/cypress install",
     "cy:verify": "$(npm bin)/cypress verify",
     "cy:info": "cypress info",
@@ -37,12 +39,13 @@
     "form-data": "^2.3.3",
     "fs": "^0.0.1-security",
     "json-update": "^5.3.0",
-    "mocha-junit-reporter": "^2.0.0",
+    "mocha-junit-reporter": "^2.1.0",
     "pdf-parse": "^1.1.1",
     "sleep": "^6.3.0",
     "tr_cypress_reporter_simple": "1.0.18",
     "unirest": "^0.6.0",
-    "xmlhttprequest": "^1.8.0"
+    "xmlhttprequest": "^1.8.0",
+    "test-results-reporter": "^1.0.13"
   },
   "repository": {
     "type": "git",

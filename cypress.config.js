@@ -33,6 +33,11 @@ const hasFile = (filename, ms) => {
 };
 
 module.exports = defineConfig({
+    reporter: "mocha-junit-reporter",
+    reporterOptions: {
+        testsuitesTitle: true,
+        mochaFile: "./reports/junit.[hash].xml"
+    },
     e2e: {
         viewportWidth: 1920,
         viewportHeight: 1080,
@@ -47,8 +52,8 @@ module.exports = defineConfig({
         globals: {
             cy: true
         },
-        defaultCommandTimeout: 60000,
-        pageLoadTimeout: 60000,
+        defaultCommandTimeout: 1000,
+        pageLoadTimeout: 1000,
         waitForAnimations: true,
         projectId: "j7j39s",
         video: true,
