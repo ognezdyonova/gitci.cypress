@@ -9,14 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Starting Cypress tests
-        uses: cypress-io/github-action@v4.2.0
         with:
-          browser: chrome
-          build: chmod 755 rkstudio/logs
+          build: chmod 755 rkstudio
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
