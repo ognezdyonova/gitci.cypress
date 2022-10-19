@@ -5,7 +5,7 @@ on: [push]
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node17.8.0-chrome99-ff97-slim
+    container: cypress/browsers:node18.6.0-chrome105-ff104
     steps:
       - name: Checkout
         uses: actions/checkout@v2
