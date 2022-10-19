@@ -17,6 +17,8 @@ jobs:
         with:
           browser: chrome
           build: npm run cy:only_run_one_spec
+          group: 'E2E - Chrome'
+          config: videosFolder=rkstudio/logs/videos, screenshotsFolder=rkstudio/logs/screenshots
 
       - name: Send report to slack
         uses: cypress-io/github-action@v4.2.0
