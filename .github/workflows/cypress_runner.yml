@@ -14,7 +14,14 @@ jobs:
       # and run all Cypress tests
       - name: Starting Cypress tests
         uses: cypress-io/github-action@v4.2.0
-      - run: chmod 755 rkstudio/logs
+        with:
+          browser: chrome
+          build: chmod 755 rkstudio/logs
+
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Starting Cypress tests
+        uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
           build: npm run cy:only_run_one_spec
