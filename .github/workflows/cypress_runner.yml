@@ -19,7 +19,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          build: npm run cy:only_run_one_spec
+          build: sudo chown -R $(whoami) ./ & npm run cy:only_run_one_spec
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
 
