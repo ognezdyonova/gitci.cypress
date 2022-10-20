@@ -29,11 +29,10 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          run: |
-            npm run cy:only_run_one_spec
-            npm run slack:publish
-            npm run allure:report
-            allure:server
+          start: npm run cy:only_run_one_spec
+
+      - run: npm run slack:publish
+      - run: npm run allure:report & allure:server
 
 #      - name: Send report to slack
 #        uses: cypress-io/github-action@v4.2.0
