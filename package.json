@@ -1,5 +1,5 @@
 {
-  "name": "RKStudio Cypress UI Tests",
+  "name": "RKStudio",
   "version": "1.0.0",
   "description": "This framework for testing UI",
   "main": "index.js",
