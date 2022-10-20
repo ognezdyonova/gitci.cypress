@@ -29,7 +29,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          start: |
+          run: |
             npm run cy:only_run_one_spec
             npm run slack:publish
             npm run allure:report
