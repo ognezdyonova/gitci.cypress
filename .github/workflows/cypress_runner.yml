@@ -195,8 +195,12 @@ jobs:
           authToken: ${{secrets.GITHUB_TOKEN}}
           context: 'RKStudio Allure report'
           state: 'success'
+          description: 'Full report from tests'
           sha: ${{ github.event.pull_request.head.sha }}
-          target_url: simple-elf.github.io/github-allure-history/${{ github.run_number }}
+          #https://github.com/CareEvolution/rkstudio.cypress_tests/actions/runs/3289996922/jobs/5422410429
+          #https://github.com/CareEvolution/rkstudio.cypress_tests/tree/gh-pages/59
+          #https://github.com/CareEvolution/rkstudio.cypress_tests.git
+          target_url: ognezdyonova.github.io/rkstudio.cypress_tests/${{ github.run_number }}
 
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
@@ -205,7 +209,7 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": "Report tests: simple-elf.github.io/github-allure-history/${{ github.run_number }}"
+              "text": "Report tests: CareEvolution.github.io/github-allure-history/${{ github.run_number }}"
             }
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
