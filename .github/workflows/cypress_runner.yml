@@ -1,6 +1,12 @@
 name: RKStudio Cypress testing
 
 on: [push]
+env:
+  DAY_OF_WEEK: Monday
+  QT_X11_NO_MITSHM: 1
+  _X11_NO_MITSHM: 1
+  _MITSHM: 0
+  CI: 1
 
 jobs:
   cypress-run:
@@ -19,7 +25,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           browser: chrome
-          build: sudo chown -R $(whoami) ./ & npm run cy:only_run_one_spec
+          build: npm run cy:only_run_one_spec
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
 
