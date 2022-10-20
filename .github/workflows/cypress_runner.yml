@@ -59,13 +59,6 @@ jobs:
       #          name: build
       #          path: build
 
-      - name: Cypress info
-        run: npx cypress info
-
-      - name: __e Dir
-        run: ls /__e
-
-
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Starting Cypress tests
