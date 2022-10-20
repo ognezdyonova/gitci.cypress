@@ -28,16 +28,12 @@ jobs:
       - name: Starting Cypress tests
         uses: cypress-io/github-action@v4.2.0
         with:
-          TZ: America/Denver
           browser: chrome
-          spec: ./rkstudio/tests/e2e/account/LogOut.spec.js
-          record: true
-          key: 5b45388a-20ce-407b-806d-ef2747fe8c58
-          env: allure=true
-          reporter: mocha-junit-reporter
-
-      - run: npm run slack:publish
-      - run: npm run allure:report & allure:server
+          start: |
+            npm run cy:only_run_one_spec
+            npm run slack:publish
+            npm run allure:report
+            allure:server
 
 #      - name: Send report to slack
 #        uses: cypress-io/github-action@v4.2.0
