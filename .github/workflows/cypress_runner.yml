@@ -26,10 +26,10 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Starting Cypress tests
-        uses: cypress-io/github-action@v4.2.0
+        uses: actions/setup-node@v1
         with:
-          browser: chrome
-          start: npm run cy:only_run_one_spec
+          build: npm ci
+          run: npm run cy:only_run_one_spec
 
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
