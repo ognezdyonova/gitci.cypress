@@ -30,7 +30,7 @@ jobs:
         with:
           browser: chrome
           build: npm run cy:only_run_one_spec
-          start: npm install
+
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
 
