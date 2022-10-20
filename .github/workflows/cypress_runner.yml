@@ -31,6 +31,7 @@ jobs:
           browser: chrome
           build: npm run cy:only_run_one_spec
 
+
   report_data:
      steps:
       - run: npm run slack:publish
