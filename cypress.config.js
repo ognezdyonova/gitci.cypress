@@ -55,7 +55,7 @@ module.exports = defineConfig({
         defaultCommandTimeout: 1000,
         pageLoadTimeout: 1000,
         waitForAnimations: true,
-        projectId: "j7j39s",
+        projectId: "zzs7gf",
         video: true,
         videoUploadOnPasses: false,
         numTestsKeptInMemory: 9,
