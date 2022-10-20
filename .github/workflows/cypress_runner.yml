@@ -35,11 +35,6 @@ jobs:
           key: 5b45388a-20ce-407b-806d-ef2747fe8c58
           env: allure=true
           reporter: mocha-junit-reporter
-        env:
-          # pass the Dashboard record key as an environment variable
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # pass GitHub token to allow accurately detecting a build vs a re-run build
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
