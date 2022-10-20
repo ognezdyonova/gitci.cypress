@@ -153,38 +153,10 @@ jobs:
           name: allure_report
           if-no-files-found: error
 
-      - name: Install Cypress
-        uses: cypress-io/github-action@v4.2.0
-        with:
-          runTests: false
-
-      - name: Install Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'corretto'
-          java-version: '11'
-
-      - name: Publishing report
-        uses: pavi2410/html-preview-action@v2
-        with:
-          html_file: 'allure-report/index.html'
-      - run: ${{ steps.html_preview.outputs.url }}
-
-  send-published-allure-report-to-slack:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
-      options: --user 1001
-    needs: publish-allure-report
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download Allure Report
+      - name: Download reports
         uses: actions/download-artifact@v3
         with:
-          name: allure_report
+          name: slack_report
           if-no-files-found: error
 
       - name: Install Cypress
@@ -198,6 +170,34 @@ jobs:
           distribution: 'corretto'
           java-version: '11'
 
+      - name: Test marketplace action
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          gh_pages: gh-pages
+          allure_report: allure-report
+          allure_history: allure-history
+
+      - name: Deploy report to Github Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v2
+        env:
+          PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_BRANCH: gh-pages
+          PUBLISH_DIR: allure-history
+
+      - name: Post the link to the report
+        if: always()
+        uses: Sibz/github-status-action@v1
+        with:
+          authToken: ${{secrets.GITHUB_TOKEN}}
+          context: 'RKStudio Allure report'
+          state: 'success'
+          sha: ${{ github.event.pull_request.head.sha }}
+          target_url: simple-elf.github.io/github-allure-history/${{ github.run_number }}
+
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
@@ -205,16 +205,32 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Web Reports: ${{ steps.html_preview.outputs.url }}"
-                  }
-                }
-              ]
+              "text": "Report tests: simple-elf.github.io/github-allure-history/${{ github.run_number }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
+  commit_state-to-slack:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+      options: --user 1001
+    needs: publish-allure-report
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "GitHub Commit tests: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
             }
         env:
           SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
