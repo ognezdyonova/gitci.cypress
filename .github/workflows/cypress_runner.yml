@@ -27,8 +27,10 @@ jobs:
       # and run all Cypress tests
       - name: Starting Cypress tests
         uses: cypress-io/github-action@v4.2.0
-
-      - run: npm run cy:only_run_one_spec
+        with:
+          browser: chrome
+          build: npm run cy:only_run_one_spec
+          start: npm install
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
 
