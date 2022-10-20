@@ -26,8 +26,9 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Starting Cypress tests
-        uses: actions/setup-node@v1
+        uses: cypress-io/github-action@v4.2.0
         with:
+          browser: chrome
           build: npm run cy:only_run_one_spec
 
       - run: npm run slack:publish
