@@ -72,7 +72,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           runTests: false
-        build: npm run cy:only_run_one_spec
+        run: npm run cy:only_run_one_spec
 
       - name: Save Slack report
         uses: actions/upload-artifact@v3
