@@ -1,6 +1,6 @@
 name: RKStudio Cypress testing
 
-on: [push]
+on: [ push ]
 env:
   QT_X11_NO_MITSHM: 1
   _X11_NO_MITSHM: 1
@@ -25,13 +25,13 @@ jobs:
       - run: yarn cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
-
-      - name: Save build folder
-        uses: actions/upload-artifact@v3
-        with:
-          name: build
-          if-no-files-found: error
-          path: build
+  #
+  #      - name: Save build folder
+  #        uses: actions/upload-artifact@v3
+  #        with:
+  #          name: build
+  #          if-no-files-found: error
+  #          path: build
 
   cypress-run:
     timeout-minutes: 15
@@ -41,28 +41,23 @@ jobs:
       options: --user 1001
     needs: install
     strategy:
-        # when one test fails, DO NOT cancel the other
-        # containers, because this will kill Cypress processes
-        # leaving the Dashboard hanging ...
-        # https://github.com/cypress-io/github-action/issues/48
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving the Dashboard hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
       fail-fast: false
       matrix:
-          # run copies of the current job in parallel
-        containers: [1]
+        # run copies of the current job in parallel
+        containers: [ 1 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 17
-
-      - name: Download the build folders
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: build
+      #      - name: Download the build folders
+      #        uses: actions/download-artifact@v3
+      #        with:
+      #          name: build
+      #          path: build
 
       - name: Cypress info
         run: npx cypress info
@@ -76,82 +71,83 @@ jobs:
       - name: Starting Cypress tests
         uses: cypress-io/github-action@v4.2.0
         with:
-          start: yarn start:ci
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
-          browser: chrome
-          record: true
-          parallel: true
-          group: "UI - Chrome"
-          spec: rkstudio/tests/e2e/account/LogOut.spec.js
-          config-file: cypress.config.js
-        env:
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          # Recommended: pass the GitHub token lets this action correctly
-          # determine the unique run id necessary to re-run the checks
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEBUG: "cypress:server:args"
+          runTests: false
+        build: npm run cy:only_run_one_spec
 
-
-      - run: npm run slack:publish
-      - run: npm run allure:report & allure:server
-
-#      - name: Send report to slack
-#        uses: cypress-io/github-action@v4.2.0
-#        with:
-#          browser: chrome
-#          build: npm run slack:publish
-#
-#      - name: Allure report
-#        uses: cypress-io/github-action@v4.2.0
-#        with:
-#          browser: chrome
-#          build: npm run allure:report & allure:server
-
-      - name: Publish report
-        uses: pavi2410/html-preview-action@v2
+      - name: Save Slack report
+        uses: actions/upload-artifact@v3
         with:
-            html_file: 'allure-report/index.html'
-
-      - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          # This data can be any valid JSON from a previous step in the GitHub Action
-          payload: |
-            {
-              "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "GitHub Action build result: ${{ job.status }}\n
-                    ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n
-                    Web Reports: ${{ steps.html_preview.outputs.url }}"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-      - name: Allure report artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: Allure report
-          path: allure-report
-
-      - name: Allure results artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: Allure results
-          path: allure-results
-
-      - name: Slack report artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: Slack
+          name: slack_report
+          if-no-files-found: error
           path: reports
+
+
+#  Reporter:
+#    timeout-minutes: 15
+#    runs-on: ubuntu-latest
+#    container:
+#      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+#      options: --user 1001
+#    needs: cypress-run
+#      steps:
+#          - run: npm run slack:publish
+#            - run: npm run allure:report & allure:server
+#
+#                #      - name: Send report to slack
+#                #        uses: cypress-io/github-action@v4.2.0
+#                #        with:
+#                #          browser: chrome
+#                #          build: npm run slack:publish
+#                #
+#                #      - name: Allure report
+#                #        uses: cypress-io/github-action@v4.2.0
+#                #        with:
+#                #          browser: chrome
+#              #          build: npm run allure:report & allure:server
+#
+#            - name: Publish report
+#              uses: pavi2410/html-preview-action@v2
+#              with:
+#                html_file: 'allure-report/index.html'
+#
+#            - name: Send GitHub Action trigger data to Slack workflow
+#              id: slack
+#              uses: slackapi/slack-github-action@v1.23.0
+#              with:
+#                # This data can be any valid JSON from a previous step in the GitHub Action
+#                payload: |
+#                  {
+#                    "text": "GitHub Action build result: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}",
+#                    "blocks": [
+#                      {
+#                        "type": "section",
+#                        "text": {
+#                          "type": "mrkdwn",
+#                          "text": "GitHub Action build result: ${{ job.status }}\n
+#                          ${{ github.event.pull_request.html_url || github.event.head_commit.url }}\n
+#                          Web Reports: ${{ steps.html_preview.outputs.url }}"
+#                        }
+#                      }
+#                    ]
+#                  }
+#                env:
+#                  SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+#                #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#
+#                - name: Allure report artifact
+#                  uses: actions/download-artifact@v2
+#                  with:
+#                    name: Allure report
+#                    path: allure-report
+#
+#                - name: Allure results artifact
+#                  uses: actions/download-artifact@v2
+#                  with:
+#                    name: Allure results
+#                    path: allure-results
+#
+#                - name: Slack report artifact
+#                  uses: actions/download-artifact@v2
+#                  with:
+#                    name: Slack
+#                    path: reports
