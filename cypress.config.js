@@ -53,7 +53,7 @@ module.exports = defineConfig({
             cy: true
         },
         defaultCommandTimeout: 1000,
-        pageLoadTimeout: 1000,
+        pageLoadTimeout: 60000,
         waitForAnimations: true,
         projectId: "zzs7gf",
         video: true,
