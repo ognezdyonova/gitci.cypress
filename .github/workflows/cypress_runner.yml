@@ -84,6 +84,9 @@ jobs:
       options: --user 1001
     needs: cypress-run
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Download reports
         uses: actions/download-artifact@v3
         with:
@@ -92,7 +95,12 @@ jobs:
           path: |
             reports
             allure-results
-      - run: npm run allure:report & allure:server
+
+      - name: Generation Allure report
+        uses: cypress-io/github-action@v4.2.0
+        with:
+          runTests: false
+          build: npm run allure:report & allure:server
 
   slack-report:
     timeout-minutes: 15
@@ -102,6 +110,9 @@ jobs:
       options: --user 1001
     needs: cypress-run
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Download reports
         uses: actions/download-artifact@v3
         with:
@@ -110,8 +121,12 @@ jobs:
           path: |
             reports
             allure-results
-      - run: npm run slack:publish
 
+      - name: Publishing Slack report
+        uses: cypress-io/github-action@v4.2.0
+        with:
+          runTests: false
+          build: npm run slack:publish
 
 
 #  Reporter:
