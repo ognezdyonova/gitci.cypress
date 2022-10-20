@@ -28,8 +28,7 @@ jobs:
       - name: Starting Cypress tests
         uses: actions/setup-node@v1
         with:
-          build: npm ci
-          run: npm run cy:only_run_one_spec
+          build: npm run cy:only_run_one_spec
 
       - run: npm run slack:publish
       - run: npm run allure:report & allure:server
