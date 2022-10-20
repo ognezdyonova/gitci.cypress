@@ -83,41 +83,41 @@ jobs:
             reports
             allure-results
 
-Generation_Allure_Report:
-  timeout-minutes: 15
-  runs-on: ubuntu-latest
-  container:
-    image: cypress/browsers:node17.8.0-chrome99-ff97-slim
-    options: --user 1001
-  needs: cypress-run
-  steps:
-    - name: Download reports
-      uses: actions/download-artifact@v3
-      with:
-        name: slack_report
-        if-no-files-found: error
-        path: |
-          reports
-          allure-results
-    - run: npm run allure:report & allure:server
+  allure-report:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+      options: --user 1001
+    needs: cypress-run
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@v3
+        with:
+          name: slack_report
+          if-no-files-found: error
+          path: |
+            reports
+            allure-results
+      - run: npm run allure:report & allure:server
 
-Publishing_failed_tests_to_Slack:
-  timeout-minutes: 15
-  runs-on: ubuntu-latest
-  container:
-    image: cypress/browsers:node17.8.0-chrome99-ff97-slim
-    options: --user 1001
-  needs: cypress-run
-  steps:
-    - name: Download reports
-      uses: actions/download-artifact@v3
-      with:
-        name: slack_report
-        if-no-files-found: error
-        path: |
-          reports
-          allure-results
-    - run: npm run slack:publish
+  slack-report:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
+      options: --user 1001
+    needs: cypress-run
+    steps:
+      - name: Download reports
+        uses: actions/download-artifact@v3
+        with:
+          name: slack_report
+          if-no-files-found: error
+          path: |
+            reports
+            allure-results
+      - run: npm run slack:publish
 
 
 
