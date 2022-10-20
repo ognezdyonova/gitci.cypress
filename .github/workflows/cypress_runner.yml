@@ -30,7 +30,7 @@ jobs:
         with:
           TZ: America/Denver
           browser: chrome
-          spec: rkstudio/tests/e2e/account/LogOut.spec.js
+          spec: ./rkstudio/tests/e2e/account/LogOut.spec.js
           record: true
           key: 5b45388a-20ce-407b-806d-ef2747fe8c58
           env: allure=true
