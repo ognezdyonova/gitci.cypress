@@ -83,7 +83,7 @@ jobs:
             reports
             allure-results
 
-Generation Allure Report:
+Generation_Allure_Report:
   timeout-minutes: 15
   runs-on: ubuntu-latest
   container:
@@ -101,7 +101,7 @@ Generation Allure Report:
           allure-results
     - run: npm run allure:report & allure:server
 
-Publishing failed tests to Slack:
+Publishing_failed_tests_to_Slack:
   timeout-minutes: 15
   runs-on: ubuntu-latest
   container:
