@@ -92,15 +92,19 @@ jobs:
         with:
           name: slack_report
           if-no-files-found: error
-          path: |
-            reports
-            allure-results
 
-      - name: Generation Allure report
+      - name: Install Cypress
         uses: cypress-io/github-action@v4.2.0
         with:
           runTests: false
-          build: npm run allure:report & allure:server
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+
+      - run: npm run allure:report & allure:server
 
   slack-report:
     timeout-minutes: 15
@@ -118,9 +122,6 @@ jobs:
         with:
           name: slack_report
           if-no-files-found: error
-          path: |
-            reports
-            allure-results
 
       - name: Publishing Slack report
         uses: cypress-io/github-action@v4.2.0
