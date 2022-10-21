@@ -236,5 +236,5 @@ jobs:
               "text": "GitHub Commit tests: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
             }
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
           #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
