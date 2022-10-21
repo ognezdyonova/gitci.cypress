@@ -6,7 +6,7 @@
           "name": "slack",
           "inputs": {
             "title": "RKStudio Cypress report",
-            "url": "https://hooks.slack.com/services/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",
+            "url": "https://hooks.slack.com/services/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",
             "publish": "failure-details"
           },
           "extensions": [
@@ -16,7 +16,7 @@
                 "links": [
                   {
                     "text": "Logs",
-                    "url": "https://hooks.slack.com/services/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"
+                    "url": "https://hooks.slack.com/services/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"
                   }
                 ]
               }
