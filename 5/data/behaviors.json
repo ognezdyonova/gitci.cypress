@@ -1,1 +1,0 @@
-{"uid":"b1a8273437954620fa374b796ffaacdd","children":[{"name":"Log out","uid":"80c188d1e720fb0d","parentUid":"b1a8273437954620fa374b796ffaacdd","status":"broken","time":{"start":1666344064350,"stop":1666344064352,"duration":2},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":0,"retriesStatusChange":false,"parameters":[]}],"name":"behaviors"}
