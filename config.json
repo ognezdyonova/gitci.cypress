@@ -6,19 +6,9 @@
           "name": "slack",
           "inputs": {
             "title": "RKStudio Cypress report",
+            "incoming-webhook-url": "http://localhost:9393/message",
             "publish": "failure-details"
-          },
-          "extensions": [
-            {
-              "name": "hyperlinks",
-              "inputs": {
-                "links": [
-                  {
-                    "text": "Logs"                  }
-                ]
-              }
-            }
-          ]
+          }
         }
       ],
       "results": [
