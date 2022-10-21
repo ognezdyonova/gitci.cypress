@@ -199,8 +199,7 @@ jobs:
           sha: ${{ github.event.pull_request.head.sha }}
 
           #http://ognezdyonova.github.io/gitci.cypress
-          target_url: ${{ github.repository_owner }}/.github.io/${{ github.event.repository.name }}/${{ github.run_number }}
-
+          target_url: ${{ github.repository_owner%/* }}/.github.io/${{ github.event.repository.name }}/${{ github.run_number }}
 
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
@@ -209,10 +208,10 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": "Report tests: ${{ github.repository_owner }}/.github.io/${{ github.event.repository.name }}/${{ github.run_number }}"
+              "text": "Report tests: ${{ github.repository_owner%/* }}/.github.io/${{ github.event.repository.name }}/${{ github.run_number }}"
             }
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
           #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
@@ -237,5 +236,5 @@ jobs:
               "text": "GitHub Commit tests: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
             }
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
           #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
