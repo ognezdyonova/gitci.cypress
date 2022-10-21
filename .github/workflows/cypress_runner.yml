@@ -135,7 +135,7 @@ jobs:
         uses: cypress-io/github-action@v4.2.0
         with:
           runTests: false
-          build: npm run slack:publish
+
       - run: npx test-results-reporter publish -c config.json
         if: always()
         env:
