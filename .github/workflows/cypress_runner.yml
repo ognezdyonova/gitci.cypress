@@ -75,6 +75,7 @@ jobs:
           path: |
             reports
             allure-results
+            config.json
 
   allure-report:
     timeout-minutes: 15
@@ -135,6 +136,11 @@ jobs:
         with:
           runTests: false
           build: npm run slack:publish
+      - run: npx test-results-reporter publish -c config.json
+        if: always()
+        env:
+          SLACK_URL: ${{secrets.SLACK_WEBHOOK}}
+
 
   publish-allure-report:
     timeout-minutes: 15
