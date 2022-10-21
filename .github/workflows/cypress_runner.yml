@@ -48,19 +48,24 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1 ]
+        containers: [ 1, 2, 3, 4, 5]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      #      - name: Download the build folders
-      #        uses: actions/download-artifact@v3
-      #        with:
-      #          name: build
-      #          path: build
+      - name: Send GitHub Action trigger data to Slack workflow
+        id: slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "text": "Starting tests for: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
+          #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
       - name: Starting Cypress tests
         uses: cypress-io/github-action@v4.2.0
         with:
@@ -113,34 +118,6 @@ jobs:
           name: allure_report
           if-no-files-found: error
           path: allure-report
-
-  slack-report:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
-      options: --user 1001
-    needs: cypress-run
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download reports
-        uses: actions/download-artifact@v3
-        with:
-          name: slack_report
-          if-no-files-found: error
-
-      - name: Publishing Slack report
-        uses: cypress-io/github-action@v4.2.0
-        with:
-          runTests: false
-
-      - run: npx test-results-reporter publish -c config.json
-        if: always()
-        env:
-          SLACK_URL: ${{secrets.SLACK_WEBHOOK}}
-
 
   publish-allure-report:
     timeout-minutes: 15
@@ -214,32 +191,7 @@ jobs:
           # This data can be any valid JSON from a previous step in the GitHub Action
           payload: |
             {
-              "text": "Report tests: ${{secrets.PAGES_OWNER_DOMAIN}}${{ github.event.repository.name }}/${{ github.run_number }}"
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
-          #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-
-  commit_state-to-slack:
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    container:
-      image: cypress/browsers:node17.8.0-chrome99-ff97-slim
-      options: --user 1001
-    needs: publish-allure-report
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Send GitHub Action trigger data to Slack workflow
-        id: slack
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          # This data can be any valid JSON from a previous step in the GitHub Action
-          payload: |
-            {
-              "text": "GitHub Commit tests: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+              "text": "Allure Report: ${{secrets.PAGES_OWNER_DOMAIN}}${{ github.event.repository.name }}/${{ github.run_number }}"
             }
         env:
           SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}

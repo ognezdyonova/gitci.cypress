@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "cy:run": "TZ=America/Denver ./node_modules/.bin/cypress run --browser chrome --env allure=true --reporter mocha-junit-reporter",
-    "cy:only_run_one_spec": "TZ=America/Denver ./node_modules/.bin/cypress run --record --key 5b45388a-20ce-407b-806d-ef2747fe8c58 --browser chrome --env allure=true --reporter mocha-junit-reporter --spec rkstudio/tests/e2e/account/LogOut.spec.js || true",
+    "cy:only_run_one_spec": "TZ=America/Denver ./node_modules/.bin/cypress run --group Chrome-regression-in-$CI_ID --browser chrome --headless --parallel --ci-build-id $CI_ID --record --key 5b45388a-20ce-407b-806d-ef2747fe8c58 --env allure=true --reporter mocha-junit-reporter --spec rkstudio/tests/e2e/account/*.spec.js || true",
     "cy:open": "TZ=America/Denver ./node_modules/.bin/cypress open",
-    "slack:publish": "./node_modules/.bin/test-results-reporter publish",
     "cy:install": "TZ=America/Denver ./node_modules/.bin/cypress install",
     "cy:verify": "$(npm bin)/cypress verify",
     "cy:info": "cypress info",
@@ -44,8 +43,7 @@
     "sleep": "^6.3.0",
     "tr_cypress_reporter_simple": "1.0.18",
     "unirest": "^0.6.0",
-    "xmlhttprequest": "^1.8.0",
-    "test-results-reporter": "^1.0.13"
+    "xmlhttprequest": "^1.8.0"
   },
   "repository": {
     "type": "git",
