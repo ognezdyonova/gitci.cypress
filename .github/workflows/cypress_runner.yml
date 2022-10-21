@@ -201,6 +201,7 @@ jobs:
           #http://ognezdyonova.github.io/gitci.cypress
           target_url: ${{ github.event.repository.name }}/.github.io/${{ github.event.repository.name }}/${{ github.run_number }}
 
+
       - name: Send GitHub Action trigger data to Slack workflow
         id: slack
         uses: slackapi/slack-github-action@v1.23.0
