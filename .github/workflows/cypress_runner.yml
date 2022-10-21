@@ -211,7 +211,7 @@ jobs:
               "text": "Report tests: ${{secrets.PAGES_OWNER_DOMAIN}}${{ github.event.repository.name }}/${{ github.run_number }}"
             }
         env:
-          SLACK_WEBHOOK_URL: ${{secrets.API_KEY}}
+          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK}}
           #          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 
